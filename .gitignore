@@ -1,0 +1,10 @@
+# dependencies (npm install)
+node_modules/
+
+# vendored GSAP/Three.js from deck v1; current deck does not load them
+lib/
+
+# build output: regenerate with `node scripts/pdf.mjs Business-Immersion-Pertamina.pdf`
+*.pdf
+
+.DS_Store

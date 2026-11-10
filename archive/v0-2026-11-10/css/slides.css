@@ -1,0 +1,92 @@
+/* ---------- cover ---------- */
+.cover .three { inset: 0; }
+.cover .kick { position: absolute; left: 96px; top: 96px; }
+.cover h1 { position: absolute; left: 96px; top: 300px; width: 1000px; font-size: 118px; line-height: .98; font-weight: 800; letter-spacing: -.04em; }
+.cover h1 .r { color: var(--red); }
+.cover .sub { position: absolute; left: 100px; top: 580px; width: 860px; font-size: 28px; line-height: 1.4; color: rgba(238,242,246,.72); }
+.cover .groups { position: absolute; left: 96px; bottom: 120px; display: flex; gap: 14px; }
+.cover .groups .g { border: 1px solid rgba(255,255,255,.16); border-radius: 14px; padding: 14px 18px 12px; min-width: 190px; background: rgba(255,255,255,.03); }
+.cover .groups .g b { display: block; font-size: 15px; font-family: "JBM"; letter-spacing: .1em; color: var(--c); }
+.cover .groups .g span { font-size: 22px; font-weight: 650; }
+.cover .logo2d { position: absolute; right: 96px; bottom: 96px; height: 52px; opacity: .92; }
+.cover .glow { position: absolute; right: -200px; top: 60px; width: 1300px; height: 1000px; background: radial-gradient(closest-side, rgba(8,109,181,.32), transparent); pointer-events: none; }
+
+/* ---------- hook ---------- */
+.hook { background: radial-gradient(120% 90% at 50% 70%, #10263c 0%, #07121E 60%, #050c15 100%); }
+.hook .three { inset: 0; }
+.hook .kick { position: absolute; left: 96px; top: 70px; display: flex; gap: 14px; align-items: center; }
+.hook .q { position: absolute; left: 96px; top: 118px; width: 1250px; font-size: 70px; line-height: 1.04; font-weight: 780; letter-spacing: -.03em; }
+.hook .q em { font-style: normal; color: #7FD3FF; }
+.hook .q .dim { color: rgba(238,242,246,.55); }
+.hook .ans { position: absolute; left: 96px; top: 118px; width: 1300px; }
+.hook .ans h3 { font-size: 104px; line-height: .95; font-weight: 820; letter-spacing: -.04em; color: #fff; }
+.hook .ans h3 i { font-style: normal; color: var(--green); }
+.hook .ans p { margin-top: 18px; font-size: 30px; line-height: 1.35; color: rgba(238,242,246,.78); max-width: 600px; }
+.hook .opts { position: absolute; left: 96px; right: 96px; bottom: 70px; display: flex; gap: 22px; justify-content: space-between; }
+.hook .opt {
+  width: 560px; display: flex; align-items: center; gap: 22px; padding: 22px 28px; cursor: pointer;
+  border-radius: 20px; border: 1.5px solid rgba(255,255,255,.18); background: rgba(10,26,42,.66); backdrop-filter: blur(10px);
+  transition: border-color .35s, background .35s, opacity .5s, transform .35s;
+}
+.hook .opt:hover { border-color: rgba(255,255,255,.4); transform: translateY(-3px); }
+.hook .opt .L { width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; font-family: "JBM"; font-weight: 700; font-size: 30px; background: rgba(255,255,255,.08); color: #fff; flex: none; transition: .35s; }
+.hook .opt .t { font-size: 34px; font-weight: 700; }
+.hook .opt .s { font-size: 19px; color: rgba(238,242,246,.55); margin-top: 2px; }
+.hook .opt.pick { border-color: #7FD3FF; background: rgba(20,60,92,.7); }
+.hook .opt.pick .L { background: #7FD3FF; color: #07121E; }
+.hook .opt.correct { border-color: var(--green); background: rgba(80,110,20,.45); }
+.hook .opt.correct .L { background: var(--green); color: #07121E; }
+.hook .opt.wrong { opacity: .35; }
+.hook .opt .mark { margin-left: auto; font-size: 40px; color: var(--green); opacity: 0; transform: scale(.4); transition: .5s cubic-bezier(.3,1.6,.5,1); }
+.hook .opt.correct .mark { opacity: 1; transform: none; }
+.hook .timer { position: absolute; right: 96px; top: 70px; width: 120px; height: 120px; }
+.hook .timer svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.hook .timer .n { position: absolute; inset: 0; display: grid; place-items: center; font-family: "JBM"; font-weight: 700; font-size: 42px; color: #fff; }
+.hook .timer .cap { position: absolute; top: 128px; width: 100%; text-align: center; font-family: "JBM"; font-size: 13px; letter-spacing: .12em; color: rgba(238,242,246,.5); text-transform: uppercase; }
+
+/* 3D labels on the truck */
+.lbl { opacity: 0; transition: opacity .4s; }
+.lbl.on { opacity: 1; }
+.lbl .tag { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 14px 8px; border-radius: 12px; background: rgba(7,18,30,.82); border: 1.5px solid var(--c, #7FD3FF); box-shadow: 0 10px 30px -10px rgba(0,0,0,.6); transform: translateY(12px) scale(.8); transition: transform .5s cubic-bezier(.3,1.6,.5,1); }
+.lbl.on .tag { transform: none; }
+.lbl .tag b { font-family: "JBM"; font-size: 14px; letter-spacing: .08em; color: var(--c); }
+.lbl .tag span { font-size: 20px; font-weight: 750; color: #fff; }
+.lbl .tag small { font-family: "JBM"; font-size: 13px; color: rgba(238,242,246,.6); }
+.lbl .stem { width: 2px; height: 26px; margin: 0 auto; background: linear-gradient(var(--c), transparent); }
+.lbl.total .tot { font-family: "JBM"; font-size: 18px; letter-spacing: .1em; color: rgba(238,242,246,.7); text-align: center; background: rgba(7,18,30,.75); padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,.15); }
+.lbl.total .tot b { color: #fff; font-size: 26px; margin-left: 8px; }
+
+/* ---------- bridge ---------- */
+.bridge { background: radial-gradient(100% 90% at 30% 65%, #10263c 0%, #07121E 60%); }
+.bridge .three { inset: 0; }
+.bridge .kick { position: absolute; left: 96px; top: 70px; }
+.bridge h2 { position: absolute; left: 96px; top: 112px; width: 1500px; font-size: 60px; line-height: 1.05; font-weight: 780; letter-spacing: -.03em; }
+.bridge h2 em { font-style: normal; color: #7FD3FF; }
+.bridge .why { position: absolute; left: 1010px; top: 300px; width: 814px; display: flex; flex-direction: column; gap: 18px; }
+.bridge .why .row { display: grid; grid-template-columns: 64px 1fr; gap: 20px; padding: 22px 26px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); }
+.bridge .why .i { width: 64px; height: 64px; border-radius: 14px; display: grid; place-items: center; font-family: "JBM"; font-weight: 700; font-size: 22px; color: #07121E; }
+.bridge .why .t { font-size: 27px; line-height: 1.3; font-weight: 500; color: rgba(238,242,246,.86); }
+.bridge .why .t b { color: #fff; font-weight: 750; }
+.bridge .why .t .ref { display: inline-block; margin-top: 6px; font-family: "JBM"; font-size: 14px; letter-spacing: .08em; color: rgba(238,242,246,.5); }
+.bridge .close { position: absolute; left: 96px; right: 96px; bottom: 74px; font-size: 38px; font-weight: 700; letter-spacing: -.02em; }
+.bridge .close span { color: var(--green); }
+
+/* ---------- agenda / journey ---------- */
+.agenda .road { position: absolute; left: 96px; top: 330px; width: 1728px; height: 120px; }
+.agenda .stops { position: absolute; left: 96px; top: 470px; width: 1728px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.agenda .stop { padding: 26px 26px 22px; border-top: 6px solid var(--c); }
+.agenda .stop .lt { display: flex; align-items: baseline; gap: 12px; }
+.agenda .stop .lt b { font-size: 76px; font-weight: 820; line-height: .9; color: var(--c); letter-spacing: -.04em; }
+.agenda .stop .lt span { font-size: 30px; font-weight: 760; }
+.agenda .stop h4 { margin: 14px 0 12px; font-size: 22px; font-weight: 650; color: var(--ink-2); line-height: 1.3; min-height: 58px; }
+.agenda .stop ol { list-style: none; counter-reset: s; }
+.agenda .stop ol li { counter-increment: s; font-size: 19px; line-height: 1.35; color: var(--ink-2); padding: 7px 0 7px 36px; position: relative; border-top: 1px solid var(--line); }
+.agenda .stop ol li::before { content: counter(s); position: absolute; left: 0; top: 8px; font-family: "JBM"; font-size: 14px; font-weight: 700; width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; background: var(--paper-2); color: var(--ink-2); }
+.agenda .stop .pic { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+
+.hook .ans .sum { position: absolute; left: 574px; top: 826px; width: 600px; justify-content: center; flex-wrap: wrap; row-gap: 6px; display: flex; align-items: center; gap: 16px; font-family: "JBM"; font-size: 24px; color: rgba(238,242,246,.7); }
+.hook .ans .sum b { color: #fff; font-size: 34px; font-weight: 700; }
+.hook .ans .sum .x { color: rgba(238,242,246,.4); }
+.hook .ans .sum .tot { padding: 6px 16px; border-radius: 12px; background: rgba(170,194,55,.16); border: 1.5px solid var(--green); color: var(--green); }
+.hook .ans .sum .tot b { color: var(--green); }
+.hook .ans .sum .cfg { width: 100%; text-align: center; font-size: 16px; letter-spacing: .06em; color: rgba(238,242,246,.45); }

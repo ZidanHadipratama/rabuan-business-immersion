@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Immersion · Pertamina Patra Niaga</title>
+<style>
+@font-face { font-family: "Rethink Sans"; src: url(fonts/rethink-sans-latin.woff2) format("woff2"); font-weight: 400 800; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Rethink Sans"; src: url(fonts/rethink-sans-latin-ext.woff2) format("woff2"); font-weight: 400 800; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "JetBrains Mono"; src: url(fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2"); font-weight: 500; }
+
+:root {
+  --red: #EA1E30; --red-text: #C41425; --red-tint: #FDEDEF;
+  --blue: #086DB5; --blue-text: #0762A3; --blue-tint: #E8F1F9;
+  --green: #AAC237; --green-text: #5E6F12; --green-tint: #F3F7E3;
+  --navy: #05416D;
+  --ink: #0F172A; --ink-2: #334155; --ink-3: #5B6B80;
+  --panel: #F1F5F9; --line: rgba(15, 23, 42, .10);
+  --ease: cubic-bezier(.2, 0, 0, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #0B1220; overflow: hidden; }
+body { font-family: "Rethink Sans", system-ui, sans-serif; color: var(--ink); font-feature-settings: "calt" 0, "liga" 0, "dlig" 0; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--blue); color: #fff; }
+
+#stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.slide { position: absolute; inset: 0; background: #fff; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity .35s var(--ease), visibility 0s linear .35s; }
+.slide.on { opacity: 1; visibility: visible; transition: opacity .35s var(--ease); z-index: 2; }
+
+/* entrance: content fades and rises once per visit */
+[data-a] { opacity: 0; transform: translateY(18px); }
+.slide.on [data-a] { opacity: 1; transform: none; transition: opacity .5s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--i, 0) * 70ms + 120ms); }
+@media (prefers-reduced-motion: reduce) { [data-a] { opacity: 1; transform: none; } .slide.on [data-a] { transition: none; } }
+
+/* print / pdf: every slide is a page */
+html.print, html.print body { overflow: visible; background: #fff; height: auto; }
+html.print #stage { position: static; transform: none; height: auto; }
+html.print .slide { position: relative; opacity: 1; visibility: visible; page-break-after: always; break-after: page; width: 1920px; height: 1080px; }
+html.print [data-a] { opacity: 1; transform: none; }
+@page { size: 1920px 1080px; margin: 0; }
+
+/* ---------- chrome shared by content slides ---------- */
+.hd { position: absolute; left: 96px; top: 56px; right: 420px; }
+.hd h2 { font-size: 52px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+.hd .lede { margin-top: 12px; font-size: 26px; line-height: 1.32; font-weight: 500; color: var(--blue-text); text-wrap: pretty; max-width: 1340px; }
+.logo { position: absolute; right: 92px; top: 60px; width: 236px; }
+.body { position: absolute; left: 96px; right: 96px; top: 252px; bottom: 132px; }
+.ft { position: absolute; left: 96px; right: 420px; bottom: 34px; display: flex; align-items: flex-end; gap: 36px; }
+.ft .tagline { flex: none; width: 128px; font-size: 17px; line-height: 1.05; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
+.ft .src { font-size: 15px; line-height: 1.35; color: var(--ink-3); max-width: 1380px; }
+.ft .src b { font-weight: 600; color: var(--ink-2); }
+.code { position: absolute; right: 120px; bottom: 34px; font: 500 15px/1 "JetBrains Mono", monospace; color: var(--ink-3); }
+.tri { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; display: grid; grid-template-columns: 2fr 1fr 1fr; }
+.tri i:nth-child(1) { background: var(--blue); } .tri i:nth-child(2) { background: var(--green); } .tri i:nth-child(3) { background: var(--red); }
+.pg { position: absolute; right: 0; bottom: 10px; width: 92px; height: 92px; background: var(--navy); clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+.pg span { position: absolute; right: 16px; bottom: 12px; font: 500 20px/1 "JetBrains Mono", monospace; color: #fff; }
+
+/* ---------- building blocks ---------- */
+.tag { display: flex; align-items: center; height: 50px; padding: 0 40px 0 24px; background: var(--navy); color: #fff; font-size: 23px; font-weight: 600; letter-spacing: -0.005em; clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%); }
+.tag.flat { clip-path: none; padding-right: 24px; }
+.tag.red { background: var(--red-text); }
+.n { flex: none; display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--red); color: #fff; font-size: 23px; font-weight: 700; box-shadow: 0 2px 6px rgba(15, 23, 42, .18); font-variant-numeric: tabular-nums; }
+.n.sm { width: 36px; height: 36px; font-size: 18px; }
+.n.navy { background: var(--navy); }
+.card { background: var(--panel); padding: 24px 28px; }
+.hl { background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); }
+.fig { font-size: 60px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--blue-text); font-variant-numeric: tabular-nums; }
+.fig.red { color: var(--red-text); }
+.fig small { font-size: .5em; font-weight: 600; letter-spacing: 0; margin-left: 4px; }
+.cap { margin-top: 6px; font-size: 21px; line-height: 1.3; color: var(--ink-2); }
+h3 { font-size: 26px; line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; }
+p, li { font-size: 22px; line-height: 1.4; color: var(--ink-2); }
+ul.dots { list-style: none; display: grid; gap: 10px; }
+ul.dots li { position: relative; padding-left: 22px; }
+ul.dots li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); }
+.ev { font: 500 15px/1 "JetBrains Mono", monospace; color: var(--ink-3); white-space: nowrap; }
+.ic { width: 1em; height: 1em; stroke-width: 1.75; flex: none; }
+.mono { font-family: "JetBrains Mono", monospace; font-weight: 500; }
+.lvl { display: inline-block; padding: 5px 12px; font-size: 16px; font-weight: 600; line-height: 1; border-radius: 4px; }
+.lvl.hi { background: var(--red); color: #fff; }
+.lvl.md { background: #CBD5E1; color: var(--ink); }
+.photo { position: relative; overflow: hidden; background: var(--panel); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo figcaption { position: absolute; left: 0; bottom: 0; padding: 8px 14px; background: rgba(5, 65, 109, .92); color: #fff; font-size: 17px; line-height: 1.3; max-width: 92%; }
+
+/* ---------- cover ---------- */
+.cover .c-logo { position: absolute; left: 96px; top: 72px; width: 300px; }
+.cover .c-txt { position: absolute; left: 96px; top: 300px; width: 860px; }
+.cover h1 { font-size: 104px; line-height: .98; font-weight: 700; letter-spacing: -0.035em; color: var(--ink); }
+.cover .co { margin-top: 20px; font-size: 52px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; color: var(--red-text); }
+.cover .site { margin-top: 28px; font-size: 30px; line-height: 1.3; font-weight: 500; color: var(--blue-text); }
+.cover .meta { position: absolute; left: 96px; bottom: 96px; display: grid; gap: 8px; }
+.cover .meta p { font-size: 24px; color: var(--ink-2); }
+.cover .meta b { color: var(--ink); font-weight: 600; }
+.cover .c-ph { position: absolute; top: 0; bottom: 10px; right: 0; width: 1010px; clip-path: polygon(34% 0, 100% 0, 100% 100%, 0 100%); }
+.cover .c-ph img { width: 100%; height: 100%; object-fit: cover; object-position: 58% 50%; }
+.slant { position: absolute; top: 0; bottom: 10px; width: 120px; }
+.slant i { position: absolute; top: 0; bottom: 0; width: 26px; transform: skewX(-17.4deg); transform-origin: 0 100%; }
+
+/* ---------- dividers ---------- */
+.div .d-ph { position: absolute; top: 0; bottom: 10px; right: 0; width: 1060px; clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%); }
+.div .d-ph img { width: 100%; height: 100%; object-fit: cover; }
+.div .d-logo { position: absolute; left: 96px; top: 72px; width: 236px; }
+.div .d-txt { position: absolute; left: 96px; top: 250px; width: 860px; }
+.div .letter { font-size: 240px; line-height: .8; font-weight: 800; letter-spacing: -0.04em; color: var(--sc); }
+.div h2 { margin-top: 36px; font-size: 60px; line-height: 1.05; font-weight: 700; letter-spacing: -0.025em; text-wrap: balance; }
+.div .grp { margin-top: 18px; font-size: 26px; font-weight: 500; color: var(--ink-2); }
+.div .grp b { color: var(--sc-t); font-weight: 700; }
+.div ol { margin-top: 44px; list-style: none; display: grid; gap: 12px; }
+.div ol li { display: flex; align-items: baseline; gap: 16px; font-size: 24px; color: var(--ink-2); }
+.div ol li .mono { width: 40px; font-size: 18px; color: var(--sc-t); }
+.div .note { margin-top: 28px; padding: 14px 20px; background: var(--green-tint); font-size: 19px; line-height: 1.4; color: var(--ink-2); max-width: 760px; }
+
+/* ---------- slide-specific ---------- */
+/* 2 overview */
+.ov { display: grid; grid-template-columns: 580px 1fr; gap: 56px; }
+.ov .photo { height: 340px; }
+.ov .facts { margin-top: 24px; display: grid; gap: 14px; }
+.ov .facts p b { display: block; font-size: 17px; font-weight: 600; color: var(--ink-3); margin-bottom: 2px; }
+.ov .rows { display: grid; gap: 14px; align-content: start; }
+.ov .row { display: grid; grid-template-columns: 96px 1fr; background: var(--panel); min-height: 158px; }
+.ov .row .L { display: grid; place-items: center; font-size: 64px; font-weight: 800; color: #fff; }
+.ov .row .R { padding: 18px 28px; }
+.ov .row .R .top { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+.ov .row .R .top span { font-size: 19px; color: var(--ink-3); white-space: nowrap; }
+.ov .row .R p { margin-top: 8px; font-size: 19px; }
+
+/* A1 */
+.a1 { display: grid; grid-template-columns: 500px 560px 1fr; grid-template-rows: minmax(0, 1fr); gap: 48px; }
+.a1 > div { display: flex; flex-direction: column; min-height: 0; }
+.stat-list { margin-top: 26px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.stat-list > div { display: grid; grid-template-columns: 52px 1fr; gap: 18px; align-items: center; }
+.stat-list .ic { width: 44px; height: 44px; color: var(--ink-3); stroke-width: 1.5; }
+.stat-list .fig { font-size: 54px; }
+.stat-list .cap { margin-top: 2px; font-size: 21px; }
+.tl { margin-top: 26px; display: grid; gap: 22px; }
+.tl > div { display: grid; grid-template-columns: 34px 1fr; gap: 16px; }
+.tl .chev { width: 34px; height: 22px; margin-top: 6px; background: var(--red); clip-path: polygon(0 100%, 50% 0, 100% 100%, 76% 100%, 50% 42%, 24% 100%); }
+.tl .chev.g { background: #94A3B8; }
+.tl b { display: block; font-size: 24px; color: var(--red-text); font-weight: 700; }
+.tl p { font-size: 21px; }
+.lines { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+.lines > div .ic { width: 44px; height: 44px; color: var(--red); stroke-width: 1.5; }
+.lines h4 { margin-top: 8px; font-size: 21px; font-weight: 700; line-height: 1.2; }
+.lines p { margin-top: 4px; font-size: 19px; line-height: 1.35; }
+.a1 .photo { margin-top: 28px; flex: 1; min-height: 236px; }
+.a1 .hl { margin-top: auto; padding: 22px 26px; }
+.a1 .hl h4 { font-size: 20px; font-weight: 700; color: var(--red-text); }
+.a1 .hl p { margin-top: 8px; font-size: 21px; }
+
+/* A2 */
+.a2b { display: flex; flex-direction: column; }
+.vc { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1.55fr 1fr; gap: 10px; }
+.vc .stage { display: flex; flex-direction: column; }
+.vc .tag { height: 54px; }
+.vc .stage:first-child .tag { background: #64748B; }
+.vc .stage:nth-child(2) .tag { background: #475569; }
+.vc .stage:nth-child(4) .tag { background: var(--blue-text); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+.vc .box { flex: 1; margin-top: 10px; padding: 26px 24px; background: var(--panel); display: grid; gap: 18px; align-content: start; }
+.vc .box p { font-size: 21px; line-height: 1.3; }
+.vc .box p b { display: block; color: var(--ink); font-weight: 700; font-size: 22px; }
+.vc .stage.focus .box { background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); }
+.vc .flow { display: grid; gap: 16px; }
+.vc .flow div { display: flex; align-items: center; gap: 12px; font-size: 21px; color: var(--ink-2); }
+.vc .flow div .n { width: 34px; height: 34px; font-size: 17px; box-shadow: none; }
+.vc .flow div b { color: var(--ink); font-weight: 700; }
+.focus-lbl { margin-top: 6px; font-size: 20px; font-weight: 700; color: var(--red-text); }
+.sh { margin-top: 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.sh .tag { grid-column: 1 / -1; width: 560px; }
+.sh .card { padding: 22px 24px; min-height: 176px; }
+.sh .card h4 { font-size: 22px; font-weight: 700; }
+.sh .card p { margin-top: 8px; font-size: 20px; line-height: 1.35; }
+
+/* A3 */
+.a3 { display: grid; grid-template-columns: 800px 1fr; grid-template-rows: minmax(0, 1fr); gap: 56px; }
+.a3 > div { display: flex; flex-direction: column; }
+.a3 .photo { height: 100%; }
+.fac { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.fac span { padding: 8px 14px; background: var(--blue-tint); color: var(--blue-text); font-size: 18px; font-weight: 600; }
+.a3 .flow3 { margin-top: 28px; display: grid; gap: 18px; }
+.a3 .flow3 > div { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: start; }
+.a3 .flow3 h4 { font-size: 23px; font-weight: 700; }
+.a3 .flow3 p { font-size: 20px; line-height: 1.35; }
+.a3 .figs { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
+.a3 .figs > div { padding: 22px 0 20px; border-bottom: 1px solid var(--line); }
+.a3 .figs > div:nth-child(odd) { padding-right: 24px; border-right: 1px solid var(--line); }
+.a3 .figs > div:nth-child(even) { padding-left: 28px; }
+.a3 .figs .fig { font-size: 56px; }
+.a3 .figs .cap { font-size: 20px; }
+
+/* A4 */
+.bm { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.bm .card { padding: 22px 26px; min-height: 252px; }
+.bm .card .top { display: flex; align-items: center; gap: 14px; }
+.bm .card ul { margin-top: 14px; gap: 6px; }
+.bm .card li { font-size: 19px; line-height: 1.32; }
+.vflow { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr 1fr 1.25fr; gap: 10px; align-items: stretch; }
+.vflow .tag { height: 64px; font-size: 22px; }
+.vflow .tag:nth-child(1) { background: #475569; } .vflow .tag:nth-child(2) { background: #334155; }
+.vflow .ins { padding: 12px 20px; background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); font-size: 18px; line-height: 1.3; color: var(--ink); font-weight: 500; display: flex; align-items: center; }
+
+/* B1 */
+.b1 { display: grid; grid-template-columns: 430px 1fr; grid-template-rows: minmax(0, 1fr) 214px; gap: 22px 28px; }
+.b1 .stats { grid-row: 1; padding: 28px 32px; background: var(--panel); display: grid; gap: 18px; align-content: start; }
+.b1 .stats .fig { font-size: 50px; }
+.b1 .stats .cap { font-size: 18px; margin-top: 4px; }
+.b1 .stats .cap em { font-style: normal; color: var(--ink-3); font-size: 16px; display: block; }
+.b1 .photo { grid-row: 1; }
+.steps { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.steps .card { padding: 18px 20px; }
+.steps .card .top { display: flex; gap: 12px; align-items: center; }
+.steps .card h4 { font-size: 21px; line-height: 1.15; font-weight: 700; }
+.steps .card p { margin-top: 12px; font-size: 19px; line-height: 1.38; }
+
+/* B2 */
+.gate { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.b2b { display: flex; flex-direction: column; }
+.gate > div { position: relative; padding: 20px 20px 18px; background: var(--panel); min-height: 204px; }
+.gate > div h4 { margin-top: 14px; font-size: 22px; line-height: 1.2; font-weight: 700; }
+.gate > div p { margin-top: 6px; font-size: 18px; line-height: 1.35; }
+.gate > div.hl { background: var(--red-tint); }
+.b2low { margin-top: 24px; flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 560px; grid-template-rows: minmax(0, 1fr); gap: 28px; }
+table.pt { width: 100%; border-collapse: collapse; }
+table.pt th { text-align: left; padding: 0 16px 0 0; height: 50px; font-size: 19px; font-weight: 600; color: #fff; background: var(--navy); }
+table.pt th:first-child { padding-left: 18px; }
+table.pt td { padding: 14px 16px 14px 0; font-size: 20px; line-height: 1.32; color: var(--ink-2); border-bottom: 1px solid var(--line); vertical-align: top; }
+table.pt td:first-child { padding-left: 18px; font-weight: 600; color: var(--ink); width: 230px; }
+table.pt tr.warn td { background: var(--red-tint); }
+.b2low .photo { height: 100%; }
+
+/* B3 */
+.b3 { display: grid; grid-template-columns: 1fr 560px; gap: 36px; }
+.roles { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto 1fr 1fr; gap: 14px; height: 100%; }
+.roles .card { padding: 22px 24px; display: flex; flex-direction: column; }
+.roles .card .ev { margin-top: auto; padding-top: 12px; }
+.roles .card .top { display: flex; align-items: center; gap: 12px; }
+.roles .card .top .ic { width: 34px; height: 34px; color: var(--blue); stroke-width: 1.5; }
+.roles .card h4 { font-size: 22px; line-height: 1.2; font-weight: 700; }
+.roles .card p { margin-top: 12px; font-size: 21px; line-height: 1.4; }
+.chain { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.chain span { padding: 10px 16px; background: var(--navy); color: #fff; font-size: 18px; font-weight: 600; }
+.chain .ic { width: 22px; height: 22px; color: var(--ink-3); }
+.coord { display: flex; flex-direction: column; gap: 22px; }
+.coord .hl { margin-top: auto; }
+.rae { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.rae div { padding: 12px 14px; background: var(--panel); }
+.rae div b { display: block; font-size: 20px; color: var(--blue-text); }
+.rae div span { font-size: 18px; color: var(--ink-2); }
+.pill4 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.pill4 span { padding: 12px 14px; background: var(--panel); font-size: 18px; font-weight: 600; color: var(--ink); }
+.coord .hl { padding: 18px 22px; }
+.coord .hl h4 { font-size: 20px; font-weight: 700; color: var(--red-text); }
+.coord .hl p { margin-top: 8px; font-size: 20px; }
+.coord h4.sub { font-size: 20px; font-weight: 700; }
+
+/* B4 */
+.b4 { display: grid; grid-template-columns: 900px 1fr; grid-template-rows: minmax(0, 1fr); gap: 48px; }
+.pgrid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; height: 100%; }
+.finds { display: grid; gap: 14px; align-content: start; }
+.finds > div { display: grid; grid-template-columns: 46px 1fr; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.finds h4 { font-size: 21px; line-height: 1.25; font-weight: 700; }
+.finds p { margin-top: 4px; font-size: 18px; line-height: 1.35; }
+
+/* C1 */
+.c1 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.c1 .col { display: flex; flex-direction: column; }
+.c1 .head { display: flex; gap: 16px; align-items: flex-start; min-height: 150px; }
+.c1 .head h3 { font-size: 28px; }
+.c1 .head p { margin-top: 8px; font-size: 19px; }
+.c1 .card { flex: 1; padding: 22px 24px; }
+.c1 .card h4 { font-size: 19px; font-weight: 600; color: var(--ink-3); margin-bottom: 12px; }
+.c1 .card li { font-size: 21px; line-height: 1.4; }
+.c1 .col.hl-col .card { background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); }
+
+/* C2 */
+.rca { display: grid; grid-template-columns: 300px repeat(3, 1fr) 270px; gap: 10px; }
+.rca .tag { height: 52px; font-size: 21px; }
+.rca .tag.first { background: transparent; }
+.rca .tag.root { background: var(--red-text); }
+.rca .tag.st { background: #475569; clip-path: none; }
+.rca .rl { display: flex; gap: 14px; align-items: center; padding: 18px 16px 18px 0; }
+.rca .rl h4 { font-size: 23px; line-height: 1.2; font-weight: 700; }
+.rca .cell { padding: 22px 22px; background: var(--panel); font-size: 21px; line-height: 1.38; color: var(--ink-2); min-height: 196px; }
+.rca .cell.root { background: var(--red-tint); color: var(--ink); font-weight: 500; }
+.rca .cell.st { background: #fff; box-shadow: inset 0 0 0 1px var(--line); font-size: 19px; }
+
+/* C3 */
+.imp { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.imp { grid-template-rows: 1fr 1fr; height: 100%; }
+.imp .card { padding: 22px 24px; }
+.imp .card .top { display: flex; justify-content: space-between; align-items: center; }
+.imp .card h4 { font-size: 22px; font-weight: 700; }
+.imp .card ul { margin-top: 18px; gap: 14px; }
+.imp .card li { font-size: 20px; line-height: 1.4; }
+.imp .card li .t { font: 500 15px/1 "JetBrains Mono", monospace; color: var(--blue-text); }
+.imp .prio { background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); }
+.imp .prio ol { margin-top: 14px; list-style: none; display: grid; gap: 14px; }
+.imp .prio li { display: flex; gap: 12px; align-items: center; font-size: 21px; color: var(--ink); font-weight: 500; }
+
+/* C4 */
+.c4 { display: grid; grid-template-columns: 1fr 440px; gap: 36px; }
+.cap5 { display: grid; gap: 10px; grid-template-rows: auto repeat(5, 1fr); }
+.cap5 .hdr, .cap5 .r { display: grid; grid-template-columns: 290px 1fr 44px 1fr; gap: 0; align-items: stretch; }
+.cap5 .hdr span { font-size: 17px; font-weight: 600; color: var(--ink-3); padding: 0 20px 4px; }
+.cap5 .hdr span:first-child { padding-left: 0; }
+.cap5 .r .name { display: flex; gap: 14px; align-items: center; padding: 14px 18px; background: var(--navy); color: #fff; }
+.cap5 .r .name b { font-size: 23px; line-height: 1.15; }
+.cap5 .r .name div span { display: block; font-size: 16px; font-weight: 500; opacity: .8; }
+.cap5 .r .now, .cap5 .r .to { padding: 14px 22px; font-size: 20px; line-height: 1.38; display: flex; align-items: center; }
+.cap5 .r .now { background: var(--panel); color: var(--ink-2); }
+.cap5 .r .to { background: var(--blue-tint); color: var(--ink); font-weight: 500; }
+.cap5 .r .arr { display: grid; place-items: center; background: var(--panel); color: var(--blue); }
+.cap5 .r .arr .ic { width: 26px; height: 26px; }
+.c4 .hl { padding: 26px 28px; align-self: start; }
+.c4 .hl h4 { font-size: 22px; font-weight: 700; color: var(--red-text); }
+.c4 .hl ol { margin-top: 18px; list-style: none; display: grid; gap: 18px; }
+.c4 .hl li { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; font-size: 22px; color: var(--ink); font-weight: 500; }
+
+/* D1 */
+.d1 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.d1 .col { display: flex; flex-direction: column; gap: 12px; }
+.d1 .col > .top { display: flex; gap: 14px; align-items: center; min-height: 60px; }
+.d1 .col > .top h3 { font-size: 24px; }
+.d1 .prog { flex: 1; padding: 18px 22px; background: var(--panel); }
+.d1 .prog h4 { font-size: 21px; font-weight: 700; line-height: 1.25; display: flex; justify-content: space-between; gap: 12px; }
+.d1 .prog p { margin-top: 6px; font-size: 19px; line-height: 1.4; }
+.d1 .gap { margin-top: auto; padding: 14px 20px; background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); }
+.d1 .gap b { font-size: 18px; font-weight: 700; color: var(--red-text); display: block; }
+.d1 .gap p { margin-top: 6px; font-size: 19px; color: var(--ink); }
+
+/* D2 */
+.fl6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.fl6 .tag { height: 62px; font-size: 18px; line-height: 1.15; padding: 0 30px 0 16px; gap: 10px; }
+.fl6 .tag:nth-child(even) { background: #0B5486; }
+.fl6 .tag .mono { flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; background: #fff; color: var(--navy); font-size: 16px; border-radius: 50%; }
+.d2b { display: flex; flex-direction: column; }
+.mods { margin-top: 22px; flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.mods .card { padding: 20px 24px; }
+.mods .card .top { display: flex; gap: 14px; align-items: center; }
+.mods .card .top .mono { display: inline-grid; place-items: center; width: 46px; height: 46px; background: var(--navy); color: #fff; font-size: 22px; }
+.mods .card .top span { display: block; font-size: 15px; color: var(--ink-3); font-weight: 500; }
+.mods .card h5 { margin-top: 18px; font-size: 17px; font-weight: 600; color: var(--ink-3); }
+.mods .card p { margin-top: 6px; font-size: 20px; line-height: 1.4; }
+.mods .card.hl .top .mono { background: var(--red); }
+.qw { margin-top: 18px; display: grid; grid-template-columns: 300px repeat(4, 1fr); gap: 0; background: var(--red-tint); box-shadow: inset 0 0 0 3px var(--red); }
+.qw > div { padding: 18px 22px; font-size: 19px; line-height: 1.35; color: var(--ink); }
+.qw > div:first-child { background: var(--red-text); color: #fff; font-size: 20px; font-weight: 700; display: flex; align-items: center; }
+
+/* D3 plan */
+.gantt { display: grid; grid-template-columns: 480px 300px repeat(10, 1fr) 1.4fr; }
+.gantt .h { height: 46px; display: flex; align-items: center; background: var(--navy); color: #fff; font-size: 17px; font-weight: 600; padding: 0 10px; }
+.gantt .h:first-child { padding-left: 18px; }
+.gantt .h.m { justify-content: center; font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 15px; }
+.gantt .c { min-height: 60px; display: flex; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 19px; line-height: 1.25; color: var(--ink-2); }
+.gantt .c.t { padding-left: 18px; color: var(--ink); font-weight: 600; }
+.gantt .bar { grid-column-end: span 1; position: relative; border-bottom: 1px solid var(--line); }
+.gantt .bar i { position: absolute; top: 16px; bottom: 16px; left: 4px; right: 4px; background: var(--blue); }
+.gantt .bar.post i { background: var(--red); }
+.gantt .bar.post em { position: absolute; inset: 0; display: grid; place-items: center; font: 500 14px/1 "JetBrains Mono", monospace; color: #fff; font-style: normal; z-index: 1; }
+.gantt .ms { height: 40px; display: flex; align-items: center; justify-content: center; font: 500 15px/1 "JetBrains Mono", monospace; }
+.gantt .ms b { padding: 6px 10px; background: var(--red); color: #fff; font-weight: 500; }
+.d3c { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 20px; }
+.d3c .card { padding: 18px 22px; }
+.d3c h4 { font-size: 22px; font-weight: 700; }
+.d3c ul { margin-top: 10px; gap: 6px; }
+.d3c li { font-size: 19px; line-height: 1.38; }
+.d3c li b { color: var(--ink); font-weight: 600; }
+
+/* D3 KPI */
+table.kpi { width: 100%; border-collapse: collapse; }
+table.kpi th { height: 54px; padding: 0 16px; text-align: left; background: var(--navy); color: #fff; font-size: 19px; font-weight: 600; }
+table.kpi td { padding: 18px 16px; font-size: 20px; line-height: 1.32; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+table.kpi td:first-child { color: var(--ink); font-weight: 600; width: 560px; }
+table.kpi td.m { font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 19px; color: var(--ink); white-space: nowrap; }
+table.kpi td.tp { background: var(--blue-tint); color: var(--blue-text); }
+.meth { margin-top: 26px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.meth .card { padding: 16px 18px; }
+.meth .card .top { display: flex; gap: 10px; align-items: center; }
+.meth h4 { font-size: 20px; line-height: 1.2; font-weight: 700; }
+.meth p { margin-top: 10px; font-size: 18px; line-height: 1.38; }
+
+/* D4 */
+.d4 { display: grid; grid-template-columns: 640px 470px 1fr; grid-template-rows: minmax(0, 1fr); gap: 36px; }
+.d4 .imp5 { display: grid; gap: 10px; grid-auto-rows: 1fr; }
+.d4 .imp5 > div { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: center; padding: 14px 20px; background: var(--panel); }
+.d4 .imp5 h4 { font-size: 22px; font-weight: 700; }
+.d4 .imp5 p { margin-top: 4px; font-size: 19px; line-height: 1.38; }
+.d4 .hour { padding: 34px 34px; background: var(--navy); color: #fff; display: flex; flex-direction: column; }
+.d4 .hour small { margin-top: auto !important; }
+.d4 .hour h4 { font-size: 20px; font-weight: 600; opacity: .85; }
+.d4 .hour .fig { margin-top: 18px; color: #fff; font-size: 92px; }
+.d4 .hour .cap { color: #DCE7F2; font-size: 21px; }
+.d4 .hour .div2 { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.25); }
+.d4 .hour .fig2 { font-size: 54px; font-weight: 700; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+.d4 .hour p { color: #DCE7F2; font-size: 21px; margin-top: 10px; }
+.d4 .hour small { display: block; margin-top: 18px; font-size: 16px; color: #B7CADD; line-height: 1.4; }
+.d4 .les { display: flex; flex-direction: column; }
+.d4 .les ol { margin-top: 22px; flex: 1; list-style: none; display: flex; flex-direction: column; justify-content: space-between; }
+.d4 .les li { display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
+.d4 .les li b { display: block; font-size: 22px; color: var(--ink); line-height: 1.25; }
+.d4 .les li span:not(.n) { display: block; margin-top: 4px; font-size: 19px; line-height: 1.38; color: var(--ink-2); }
+
+/* sources */
+.srcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.srcs h4 { font-size: 20px; font-weight: 700; padding-bottom: 10px; border-bottom: 3px solid var(--sc); margin-bottom: 12px; }
+.srcs p { font-size: 15.5px; line-height: 1.42; margin-bottom: 8px; }
+.srcs p b { color: var(--ink); font-weight: 600; }
+
+/* closing */
+.close .bg { position: absolute; inset: 0 0 10px 0; }
+.close .bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
+.close .t { position: absolute; left: 96px; top: 64px; }
+.close .t h2 { font-size: 104px; font-weight: 700; letter-spacing: -0.035em; color: var(--navy); }
+.close .t p { margin-top: 12px; font-size: 28px; font-weight: 500; color: var(--ink); }
+
+#hint { position: fixed; right: 16px; bottom: 12px; font: 500 13px/1 "JetBrains Mono", monospace; color: rgba(255,255,255,.6); }
+html.print #hint, html.shot #hint { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ================================================= 1 COVER -->
+<section class="slide cover">
+  <img class="c-logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="c-txt">
+    <h1 data-a>Business Immersion</h1>
+    <p class="co" data-a style="--i:1">PT Pertamina Patra Niaga</p>
+    <p class="site" data-a style="--i:2">Integrated Terminal Jakarta · Fuel Terminal Plumpang, Koja, Jakarta Utara</p>
+  </div>
+  <div class="meta" data-a style="--i:3">
+    <p><b>Rabu, 7 Oktober 2026</b></p>
+    <p>Action Learning Project P3MD · Kelompok 9, 11, 12 dan 13</p>
+  </div>
+  <div class="c-ph"><img src="assets/photos/bi2387.jpg" alt="Peserta mendengarkan briefing HSSE di depan mobil tangki 32.000 liter di area pengisian"></div>
+  <div class="slant" style="left:904px"><i style="left:0;background:var(--red)"></i><i style="left:36px;background:var(--green)"></i><i style="left:72px;background:var(--blue)"></i></div>
+  <div class="tri"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ================================================= 2 OVERVIEW -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Satu kunjungan, empat bagian cerita</h2><p class="lede" data-a style="--i:1">Hasil Business Immersion di Integrated Terminal Jakarta, disusun bersama oleh empat kelompok ALP</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body ov">
+    <div data-a style="--i:2">
+      <figure class="photo"><img src="assets/photos/bi2189.jpg" alt="Penyambutan peserta oleh manajemen Integrated Terminal Jakarta"><figcaption>Penyambutan oleh manajemen ITJ</figcaption></figure>
+      <div class="facts">
+        <p><b>Lokasi</b>Fuel Terminal Plumpang, Koja, Jakarta Utara, bagian dari Integrated Terminal Jakarta</p>
+        <p><b>Tuan rumah</b>Integrated Terminal Manager Jakarta, Bapak Yohanes, bersama Bapak Taufan Enggar dan Ibu Asri Wulandari</p>
+        <p><b>Kegiatan</b>Pemaparan manajemen, tur lapangan, briefing HSSE dan case challenge kapasitas pengisian</p>
+      </div>
+    </div>
+    <div class="rows">
+      <div class="row" data-a style="--i:3"><div class="L" style="background:var(--blue)">A</div><div class="R"><div class="top"><h3>Company Profile &amp; Business Model</h3><span>Kel 13 · PIC Auditia Anwar</span></div><p>Profil perusahaan · Business unit ITJ · Model bisnis · Rantai nilai dan stakeholder</p></div></div>
+      <div class="row" data-a style="--i:4"><div class="L" style="background:var(--green-text)">B</div><div class="R"><div class="top"><h3>End-to-End Process &amp; Field Observation</h3><span>Kel 9 · PIC Ananda Haholongan S.</span></div><p>Proses dari pasokan sampai pelanggan · Proses teknis di terminal · Organisasi dan koordinasi · Temuan lapangan</p></div></div>
+      <div class="row" data-a style="--i:5"><div class="L" style="background:var(--red)">C</div><div class="R"><div class="top"><h3>Core Business Challenges &amp; Root Cause</h3><span>Kel 11 · PIC Sebastian Hutagalung</span></div><p>Tiga tantangan utama · Analisis akar masalah · Dampak dan risiko bisnis · Kesenjangan kapabilitas</p></div></div>
+      <div class="row" data-a style="--i:6"><div class="L" style="background:var(--navy)">D</div><div class="R"><div class="top"><h3>Transformation, Innovation &amp; Action Plan</h3><span>Kel 12 · PIC Calvin Putra</span></div><p>Program transformasi yang sudah berjalan · Usulan inovasi · Rencana aksi dan KPI · Dampak dan pelajaran</p></div></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI individu Ananda (Kel 9), Ashar (Kel 11) dan Damas (Kel 12); pembagian tugas materi Rabuan ALP</p></div>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 3 DIVIDER A -->
+<section class="slide div" style="--sc:var(--blue);--sc-t:var(--blue-text)">
+  <img class="d-logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="d-txt">
+    <div class="letter" data-a>A</div>
+    <h2 data-a style="--i:1">Company Profile &amp; Business Model</h2>
+    <p class="grp" data-a style="--i:2"><b>Kelompok 13</b> · PIC Auditia Anwar</p>
+    <ol data-a style="--i:3">
+      <li><span class="mono">A1</span>Profil perusahaan</li>
+      <li><span class="mono">A2</span>Rantai nilai dan stakeholder</li>
+      <li><span class="mono">A3</span>Business unit: Integrated Terminal Jakarta</li>
+      <li><span class="mono">A4</span>Model bisnis</li>
+    </ol>
+  </div>
+  <div class="d-ph"><img src="assets/photos/bi2081.jpg" alt="Pemaparan proses bisnis Pertamina Patra Niaga di ruang rapat ITJ"></div>
+  <div class="slant" style="left:860px"><i style="left:0;background:var(--red)"></i><i style="left:36px;background:var(--green)"></i><i style="left:72px;background:var(--blue)"></i></div>
+  <div class="tri"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ================================================= 4 A1 PROFILE -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Subholding Downstream yang menyalurkan energi sampai ke pelanggan akhir</h2><p class="lede" data-a style="--i:1">Sejak 2026 kilang, kapal, terminal dan pemasaran hilir berada di bawah satu entitas: Pertamina Patra Niaga</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body a1">
+    <div data-a style="--i:2">
+      <div class="tag">Profil perusahaan</div>
+      <div class="stat-list">
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /> <path d="M4 18l-1 -5h18l-2 4" /> <path d="M5 13v-6h8l4 6" /> <path d="M7 7v-4h-1" /> </svg><div><div class="fig red">179</div><div class="cap">unit kapal</div></div></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /> </svg><div><div class="fig">4.137</div><div class="cap">mobil tangki BBM</div></div></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /> <path d="M3 9l4 0" /> </svg><div><div class="fig">1.687</div><div class="cap">mobil tangki LPG</div></div></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M21 13c0 -3.87 -3.37 -7 -10 -7h-8" /> <path d="M3 15h16a2 2 0 0 0 2 -2" /> <path d="M3 6v5h17.5" /> <path d="M3 11v4" /> <path d="M8 11v-5" /> <path d="M13 11v-4.5" /> <path d="M3 19h18" /> </svg><div><div class="fig">694</div><div class="cap">gerbong ketel (RTW)</div></div></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4" /> <path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5" /> </svg><div><div class="fig">1.772<small>km</small></div><div class="cap">pipa BBM</div></div></div>
+      </div>
+    </div>
+    <div data-a style="--i:3">
+      <div class="tag">Transformasi 2026</div>
+      <div class="tl">
+        <div><i class="chev"></i><div><b>1 Februari 2026</b><p>Integrasi hilir tahap 1: kilang, logistik dan pemasaran hilir disatukan. Patra Niaga menjadi entitas penerus, termasuk segmen bisnis Pertamina International Shipping</p></div></div>
+        <div><i class="chev"></i><div><b>1 September 2026</b><p>Tahap 2: Pertamina Energy Terminal bergabung ke Patra Niaga</p></div></div>
+      </div>
+      <figure class="photo"><img src="assets/photos/bi2081.jpg" alt="Pemaparan proses bisnis di ruang rapat ITJ" style="object-position:70% 40%"><figcaption>Pemaparan proses bisnis oleh manajemen ITJ</figcaption></figure>
+    </div>
+    <div data-a style="--i:4">
+      <div class="tag">Lini bisnis</div>
+      <div class="lines">
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M14 11h1a2 2 0 0 1 2 2v3a1.5 1.5 0 0 0 3 0v-7l-3 -3" /> <path d="M4 20v-14a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v14" /> <path d="M3 20l12 0" /> <path d="M18 7v1a1 1 0 0 0 1 1h1" /> <path d="M4 11l10 0" /> </svg><h4>BBM ritel &amp; komersial, LPG</h4><p>SPBU, agen LPG dan pelanggan korporat</p></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3l4 7" /> </svg><h4>Aviasi, marine, petrokimia</h4><p>Avtur di DPPU, bunker kapal, bahan baku industri</p></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546" /> </svg><h4>Pelumas</h4><p>Melalui anak usaha Pertamina Lubricants</p></div>
+        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M3 21l18 0" /> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /> <path d="M5 21l0 -10.15" /> <path d="M19 21l0 -10.15" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> </svg><h4>NFR &amp; MyPertamina</h4><p>Bisnis non-BBM dan solusi mobilitas</p></div>
+      </div>
+      <div class="hl"><h4>Peran dalam ketahanan energi</h4><p>Menjaga energi tetap tersedia, terjangkau dan bermutu sampai konsumen, termasuk wilayah 3T, lewat BBM Satu Harga, SPBU Nelayan dan LPG bersubsidi</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 13 (13.1 Proses Bisnis PPN; 13.3 Business Model, catatan riset: ANTARA 4 Feb 2026, detikFinance 1 Sep 2026); laporan BI Anggit (Kel 9)</p></div>
+  <span class="code">A1 · Kel 13</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 5 A2 VALUE CHAIN -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Dari sumur dan impor sampai ke tangan pelanggan</h2><p class="lede" data-a style="--i:1">Kunjungan berfokus pada hilir: sejak BBM tiba di terminal utama sampai diterima pelanggan</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body a2b">
+    <div class="vc">
+      <div class="stage" data-a style="--i:2"><div class="tag">Upstream · sumber</div><div class="box">
+        <p><b>Impor crude &amp; produk</b>Trading dan ekspor</p>
+        <p><b>Produksi domestik</b>Trading dan ekspor</p>
+        <p><b>E&amp;P dalam &amp; luar negeri</b>Gas trading dan transmisi</p>
+      </div></div>
+      <div class="stage" data-a style="--i:3"><div class="tag">Midstream · olah</div><div class="box">
+        <p><b>Kilang</b>BBM dan avtur</p>
+        <p><b>Petrochemical plant</b>Bahan baku industri</p>
+        <p><b>LPG plant</b>Elpiji</p>
+      </div></div>
+      <div class="stage focus" data-a style="--i:4"><div class="tag">Downstream · distribusi &amp; niaga</div><div class="box">
+        <div class="flow">
+          <div><span class="n">1</span><b>Tanker</b>&nbsp;membawa produk ke terminal utama</div>
+          <div><span class="n">2</span><b>Main terminal</b>&nbsp;menerima dan menimbun</div>
+          <div><span class="n">3</span><b>Pipa</b>&nbsp;ke transit terminal atau DPPU</div>
+          <div><span class="n">4</span><b>Mobil tangki &amp; RTW</b>&nbsp;ke titik serah</div>
+        </div>
+        <p class="focus-lbl">Fokus kunjungan ITJ Plumpang</p>
+      </div></div>
+      <div class="stage" data-a style="--i:5"><div class="tag">Pelanggan</div><div class="box">
+        <p><b>Retail</b>SPBU, SPBE, agen LPG</p>
+        <p><b>Bulk industri</b>Volume besar</p>
+        <p><b>End customer</b>Pengguna akhir</p>
+      </div></div>
+    </div>
+    <div class="sh">
+      <div class="tag" data-a style="--i:6">Stakeholder dan hubungan antarunit</div>
+      <div class="card" data-a style="--i:7"><h4>Regulator &amp; pemegang saham</h4><p>Kementerian ESDM, BPH Migas, Danantara. Penugasan BBM dan harga diatur pemerintah</p></div>
+      <div class="card" data-a style="--i:8"><h4>Mitra operasi</h4><p>Transportir dan awak mobil tangki, operator terminal, agen LPG dan distributor</p></div>
+      <div class="card" data-a style="--i:9"><h4>Mitra penjualan</h4><p>±7.000 SPBU, sekitar 200 dioperasikan langsung Pertamina; tenant NFR dan mitra digital</p></div>
+      <div class="card" data-a style="--i:10"><h4>Antarunit</h4><p>Kilang Balongan → pipa 212 km → ITJ → mobil tangki → SPBU di bawah fungsi Retail, bukan Supply &amp; Distribution</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 13 (13.1 dari slide "Our Business Process" PPN; 13.3 mitra kunci); deck ALP Kel 12 (6 Nov 2026, regulator); laporan BI Ananda dan Anggit (Kel 9); deck ALP Kel 9 (wawancara Supply &amp; Distribution)</p></div>
+  <span class="code">A2 · Kel 13</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 6 A3 BU OVERVIEW -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Integrated Terminal Jakarta, jantung pasokan energi Ibu Kota</h2><p class="lede" data-a style="--i:1">Menjamin stok BBM aman, mutu terjaga dan distribusi lancar, 24 jam tanpa henti</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body a3">
+    <figure class="photo" data-a style="--i:2"><img src="assets/photos/bi2611.jpg" alt="Gerbang Integrated Terminal Jakarta dengan antrean mobil tangki"><figcaption>Gerbang Integrated Terminal Jakarta, 7 Oktober 2026</figcaption></figure>
+    <div>
+      <div data-a style="--i:3">
+        <div class="tag" style="width:560px">Tiga fasilitas, satu terminal terintegrasi</div>
+        <div class="fac"><span>Fuel Terminal Plumpang</span><span>Fuel Terminal Tanjung Priok</span><span>LPG Terminal Tanjung Priok</span></div>
+      </div>
+      <div class="flow3" data-a style="--i:4">
+        <div><span class="n">1</span><div><h4>Receiving</h4><p>Pipa 212 km dari IT Balongan dan kapal tanker lewat jetty</p></div></div>
+        <div><span class="n">2</span><div><h4>Storage &amp; QC</h4><p>Tangki timbun; uji laboratorium visual, densitas dan RON</p></div></div>
+        <div><span class="n">3</span><div><h4>Distribution</h4><p>Ke SPBU, Pertashop, SPBUN, industri, TNI dan Polri; wilayah Jabodetabek, Bandung, Garut</p></div></div>
+      </div>
+      <div class="figs" data-a style="--i:5">
+        <div><div class="fig red">±324<small>ribu kL</small></div><div class="cap">kapasitas timbun dari 3 fasilitas</div></div>
+        <div><div class="fig">17–20%</div><div class="cap">pemenuhan BBM nasional dari FT Plumpang</div></div>
+        <div><div class="fig">&gt;1.000</div><div class="cap">lembaga penyalur dan kanal distribusi</div></div>
+        <div><div class="fig">246</div><div class="cap">mobil tangki, &gt;5.500 kL sekali jalan</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 13 (13.2 Business Unit Overview: Pertamina Patra Niaga, Kompas.com 15 Feb 2026, Kantor Staf Presiden 22 Jun 2026; 13.4 wilayah penyaluran). Kel 11 menulis &gt;120 lembaga penyalur (IDN Financials, Feb 2026)</p></div>
+  <span class="code">A3 · Kel 13</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 7 A4 BUSINESS MODEL -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Model bisnis: dari pengadaan energi sampai margin di titik layanan</h2><p class="lede" data-a style="--i:1">Enam komponen model bisnis Pertamina Patra Niaga dalam perimeter hilir terintegrasi 2026</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body">
+    <div class="bm">
+      <div class="card" data-a style="--i:2"><div class="top"><span class="n">1</span><h3>Pemasok utama</h3></div><ul class="dots"><li>Crude dan produk kilang domestik</li><li>Pengadaan BBM dan produk energi impor</li><li>Pasokan LPG dan material eksternal</li><li>Vendor jasa: angkutan dan handling</li></ul></div>
+      <div class="card" data-a style="--i:3"><div class="top"><span class="n">2</span><h3>Produk &amp; layanan</h3></div><ul class="dots"><li>BBM ritel, LPG dan BBM komersial</li><li>Avtur, marine dan petrokimia</li><li>Pelumas lewat anak usaha</li><li>NFR, MyPertamina dan solusi mobilitas</li></ul></div>
+      <div class="card" data-a style="--i:4"><div class="top"><span class="n">3</span><h3>Segmen pelanggan</h3></div><ul class="dots"><li>B2C: pengendara, rumah tangga, komunitas</li><li>B2B: industri, maskapai, pelayaran</li><li>B2G: kebutuhan energi sektor publik</li><li>Kebutuhan: pasokan andal, mutu, akses</li></ul></div>
+      <div class="card" data-a style="--i:5"><div class="top"><span class="n">4</span><h3>Mitra kunci</h3></div><ul class="dots"><li>Dealer SPBU dan jaringan Pertamina Retail</li><li>Agen LPG dan distributor hilir</li><li>Mitra transportasi dan operasi terminal</li><li>Tenant NFR, mitra digital dan mobilitas</li></ul></div>
+      <div class="card" data-a style="--i:6"><div class="top"><span class="n">5</span><h3>Sumber pendapatan</h3></div><ul class="dots"><li>Penjualan ritel BBM dan LPG</li><li>Penjualan B2B: industri, aviasi, marine</li><li>Bisnis petrokimia dan pelumas</li><li>Pendapatan NFR dan jasa aset</li></ul></div>
+      <div class="card" data-a style="--i:7"><div class="top"><span class="n">6</span><h3>Struktur biaya</h3></div><ul class="dots"><li>Pengadaan crude, produk dan energi lain</li><li>Pengolahan, angkutan, penimbunan, distribusi</li><li>SDM, HSSE, IT dan pemeliharaan aset</li><li>Depresiasi dan biaya keuangan; CAPEX terpisah</li></ul></div>
+    </div>
+    <div class="vflow" data-a style="--i:8">
+      <div class="tag">Pasok &amp; olah</div><div class="tag">Timbun &amp; salurkan</div><div class="tag">Layani &amp; monetisasi</div>
+      <div class="ins">Ketahanan dan profitabilitas bergantung pada kemampuan mengubah pasokan, logistik dan jangkauan pelanggan menjadi pengiriman yang andal dengan margin yang disiplin</div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 13 (13.3 Business Model; PPN Annual &amp; Sustainability Report 2023, Pertamina Retail, ANTARA Feb 2026, detikFinance Sep 2026). Laporan 2023 terbit sebelum restrukturisasi 2026; porsi pendapatan per segmen tidak dicantumkan</p></div>
+  <span class="code">A4 · Kel 13</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 8 DIVIDER B -->
+<section class="slide div" style="--sc:var(--green-text);--sc-t:var(--green-text)">
+  <img class="d-logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="d-txt">
+    <div class="letter" data-a>B</div>
+    <h2 data-a style="--i:1">End-to-End Business Process &amp; Field Observation</h2>
+    <p class="grp" data-a style="--i:2"><b>Kelompok 9</b> · PIC Ananda Haholongan S.</p>
+    <ol data-a style="--i:3">
+      <li><span class="mono">B1</span>Proses end-to-end</li>
+      <li><span class="mono">B2</span>Proses teknis operasional</li>
+      <li><span class="mono">B3</span>Organisasi dan koordinasi</li>
+      <li><span class="mono">B4</span>Observasi lapangan</li>
+    </ol>
+    <p class="note" data-a style="--i:4">Draf disusun dari laporan BI individu sembilan anggota Kel 9 (S01–S09) dan materi Kel 11–13. Menunggu deck resmi Kel 9</p>
+  </div>
+  <div class="d-ph"><img src="assets/photos/bi2319.jpg" alt="Peserta berjalan menuju area operasi terminal" style="object-position:40% 50%"></div>
+  <div class="slant" style="left:860px"><i style="left:0;background:var(--red)"></i><i style="left:36px;background:var(--green)"></i><i style="left:72px;background:var(--blue)"></i></div>
+  <div class="tri"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ================================================= 9 B1 E2E -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Proses end-to-end: penerimaan, penimbunan, penyaluran</h2><p class="lede" data-a style="--i:1">Kerangka tiga proses yang muncul di hampir semua laporan peserta, dari sumber pasokan sampai nozzle kendaraan</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body b1">
+    <div class="stats" data-a style="--i:2">
+      <div><div class="fig red">26</div><div class="cap">tangki timbun, ukuran 10.000 dan 20.000 KL</div></div>
+      <div><div class="fig">17.000–19.000</div><div class="cap">KL per hari disalurkan IT Jakarta Plumpang<em>Kel 13 (13.4) mencatat 16.504 kL/hari</em></div></div>
+      <div><div class="fig">212<small>km</small></div><div class="cap">pipa Balongan–Jakarta</div></div>
+      <div><div class="fig">24<small>jam</small></div><div class="cap">operasi tanpa henti untuk DKI, Jawa Barat, Banten</div></div>
+    </div>
+    <figure class="photo" data-a style="--i:3"><img src="assets/photos/bi2614.jpg" alt="Mobil tangki melaju di jalan dalam kawasan terminal" style="object-position:50% 60%"><figcaption>Mobil tangki keluar menuju SPBU, ITJ Plumpang</figcaption></figure>
+    <div class="steps">
+      <div class="card" data-a style="--i:4"><div class="top"><span class="n">1</span><h4>Sumber pasokan</h4></div><p>Kilang Balongan dan Cilacap, impor (Singapura, Malaysia), antar terminal</p></div>
+      <div class="card" data-a style="--i:5"><div class="top"><span class="n">2</span><h4>Penerimaan</h4></div><p>Lewat pipa dan kapal tanker; jadwal kapal diselaraskan dengan kapasitas tangki</p></div>
+      <div class="card" data-a style="--i:6"><div class="top"><span class="n">3</span><h4>Penimbunan &amp; mutu</h4></div><p>Pemantauan stok, pemisahan produk, uji visual, densitas dan RON</p></div>
+      <div class="card hl" data-a style="--i:7"><div class="top"><span class="n">4</span><h4>Penyaluran</h4></div><p>Mobil tangki berkompartemen 8 KL, 16–32 KL per truk, bisa membawa lebih dari satu produk</p></div>
+      <div class="card" data-a style="--i:8"><div class="top"><span class="n">5</span><h4>Pelanggan</h4></div><p>SPBU, industri, DPPU bandara, agen dan pangkalan LPG; mutu dijaga sampai nozzle</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Ananda, Anggit, Rizka (Kel 9; S01, S03, S08); Kel 13 (13.2, 13.4); paparan manajemen dicatat Kel 11 (C1). Angka throughput berbeda antarsumber dan ditampilkan apa adanya</p></div>
+  <span class="code">B1 · draf Kel 9</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 10 B2 TECHNICAL -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Dari gate in sampai gate out: proses teknis mobil tangki</h2><p class="lede" data-a style="--i:1">Rangkaian pemeriksaan yang panjang dan ketat sebelum BBM meninggalkan terminal</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body b2b">
+    <div class="gate">
+      <div data-a style="--i:2"><span class="n">1</span><h4>Gate in</h4><p>Validasi dokumen dan hak akses kendaraan</p></div>
+      <div data-a style="--i:3"><span class="n">2</span><h4>Fit check awak</h4><p>Kesiapan dan pemeriksaan kesehatan pengemudi serta awak</p></div>
+      <div data-a style="--i:4"><span class="n">3</span><h4>Pemeriksaan kendaraan</h4><p>Kelayakan mobil tangki dan kebersihan kompartemen</p></div>
+      <div data-a style="--i:5"><span class="n">4</span><h4>Loading instruction</h4><p>Penjadwalan dan alokasi produk per kompartemen</p></div>
+      <div class="hl" data-a style="--i:6"><span class="n">5</span><h4>Pengisian di gantry</h4><p>Terminal Automation System; otomatis dan self-service</p></div>
+      <div data-a style="--i:7"><span class="n">6</span><h4>Segel &amp; gate out</h4><p>Penyegelan, cek kesesuaian jenis dan volume, keluar terminal</p></div>
+    </div>
+    <div class="b2low">
+      <table class="pt" data-a style="--i:8">
+        <thead><tr><th>Parameter</th><th>Catatan peserta</th><th style="width:150px">Sumber</th></tr></thead>
+        <tbody>
+          <tr><td>Kompartemen</td><td>8 KL per kompartemen; truk 16, 24 atau 32 KL; di Jakarta umumnya 2–4 kompartemen</td><td class="ev">S01 S03</td></tr>
+          <tr class="warn"><td>Titik pengisian</td><td>12 line TAS (Kel 13) · 34 filling point (Kel 11, Bisnis.com) · ±14 bay fisik, 12 aktif saat kunjungan (Jocelyn). Perlu verifikasi host</td><td class="ev">13.4 C1 S33</td></tr>
+          <tr><td>Kontrol mutu</td><td>Empat titik inspeksi: keluar terminal, tiba di SPBU, saat dipompa, di nozzle</td><td class="ev">S01 S03</td></tr>
+          <tr><td>Proteksi kebakaran</td><td>Hydrant, foam chamber, water sprayer, early warning system</td><td class="ev">S03</td></tr>
+          <tr><td>Saat sistem terganggu</td><td>Gangguan jaringan atau server membuat pencatatan beralih manual dan perlu pemeriksaan ulang</td><td class="ev">S15 S18</td></tr>
+        </tbody>
+      </table>
+      <figure class="photo" data-a style="--i:9"><img src="assets/photos/bi2433.jpg" alt="Petugas dengan rompi New Gantry System memberi penjelasan kepada peserta"><figcaption>Penjelasan di area New Gantry System</figcaption></figure>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Rizka, Anggit, Ananda (Kel 9; S08, S01, S03); Riki, Yolanda (Kel 11; S15, S18); Erlinda (Kel 12; S25); Jocelyn (Kel 13; S33). Urutan tahap tidak identik di semua laporan</p></div>
+  <span class="code">B2 · draf Kel 9</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 11 B3 ORGANIZATION -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Siapa melakukan apa, dan bagaimana mereka berkoordinasi</h2><p class="lede" data-a style="--i:1">Terminal hanya satu mata rantai: armada dan sebagian besar SPBU dikelola mitra di luar kendali langsung Pertamina</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body b3">
+    <div class="roles">
+      <div class="chain" data-a style="--i:2"><span>Terminal ITJ</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg><span>Transportir</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg><span>SPBU mitra</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg><span>Konsumen</span></div>
+      <div class="card" data-a style="--i:3"><div class="top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M3 21h18" /> <path d="M5 21v-12l5 4v-4l5 4h4" /> <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" /> <path d="M9 17h1" /> <path d="M14 17h1" /> </svg><h4>Integrated Terminal Manager</h4></div><p>Memimpin operasi penerimaan, penimbunan dan penyaluran di ITJ</p><span class="ev">S03</span></div>
+      <div class="card" data-a style="--i:4"><div class="top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" /> <path d="M9 14l2 2l4 -4" /> </svg><h4>Supervisor operasi &amp; shift</h4></div><p>Mengatur pengisian di filling shed, pengawasan SOP di bay</p><span class="ev">S12 · D3 Kel 12</span></div>
+      <div class="card" data-a style="--i:5"><div class="top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /> <path d="M15 19l2 2l4 -4" /> </svg><h4>HSSE</h4></div><p>Golden Rules, 10 Corporate Life Saving Rules, izin kerja, keselamatan transportasi darat</p><span class="ev">S03 S07</span></div>
+      <div class="card" data-a style="--i:6"><div class="top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-2" /> <path d="M3 15a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -2" /> <path d="M7 8l0 .01" /> <path d="M7 16l0 .01" /> </svg><h4>Fungsi IT</h4></div><p>Terminal Automation System dan jaringan pencatatan pengisian</p><span class="ev">13.4 · S15 S18</span></div>
+      <div class="card" data-a style="--i:7"><div class="top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /> </svg><h4>Transportir &amp; awak</h4></div><p>Armada tidak seluruhnya milik Pertamina; awak wajib fit check sebelum loading</p><span class="ev">S01 S08 S25</span></div>
+      <div class="card" data-a style="--i:8"><div class="top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M14 11h1a2 2 0 0 1 2 2v3a1.5 1.5 0 0 0 3 0v-7l-3 -3" /> <path d="M4 20v-14a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v14" /> <path d="M3 20l12 0" /> <path d="M18 7v1a1 1 0 0 0 1 1h1" /> <path d="M4 11l10 0" /> </svg><h4>Fungsi Retail &amp; SPBU</h4></div><p>COCO, CODO, DODO; sekitar 200 dari ±7.000 SPBU dioperasikan Pertamina</p><span class="ev">S01 S03</span></div>
+    </div>
+    <div class="coord">
+      <div data-a style="--i:9"><div class="tag">Mekanisme koordinasi</div>
+        <h4 class="sub" style="margin-top:16px">Pola pasokan RAE</h4>
+        <div class="rae"><div><b>Regular</b><span>sumber dan jalur utama</span></div><div><b>Alternative</b><span>sumber atau terminal lain</span></div><div><b>Emergency</b><span>Crisis Center, BCP</span></div></div>
+      </div>
+      <div data-a style="--i:10"><h4 class="sub">Empat pilar manajemen risiko PPN</h4>
+        <div class="pill4"><span>Enterprise Risk Management</span><span>Early Warning System</span><span>Business Resilience</span><span>Internal Control</span></div>
+      </div>
+      <div class="hl" data-a style="--i:11"><h4>Celah yang dicatat Kel 9</h4><p>BCP baru tersedia di level depot dan belum menjangkau SPBU. Belum ada protokol eskalasi berjenjang maupun tim respons khusus</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Ananda, Anggit, Rizka (Kel 9; S03, S01, S08); Sebastian (Kel 11; S12); Erlinda, Isma (Kel 12; S25, S29); deck D3 Kel 12 (tata kelola pilot)</p></div>
+  <span class="code">B3 · draf Kel 9</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 12 B4 FIELD -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Observasi lapangan: yang kami lihat dan dengar</h2><p class="lede" data-a style="--i:1">Temuan faktual dari kunjungan 7 Oktober 2026, dipisahkan dari interpretasi</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body b4">
+    <div class="pgrid" data-a style="--i:2">
+      <figure class="photo"><img src="assets/photos/bi2401.jpg" alt="Briefing HSSE di depan mobil tangki"><figcaption>Briefing HSSE di area pengisian</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2347.jpg" alt="Penjelasan jalur pipa terminal"><figcaption>Penjelasan jalur pipa</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2539.jpg" alt="Foto bersama peserta di depan gerbang ITJ"><figcaption>Peserta di gerbang ITJ</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2633.jpg" alt="Presentasi case challenge: Investment &amp; Operational Trade-Off"><figcaption>Case challenge kapasitas pengisian</figcaption></figure>
+    </div>
+    <div class="finds">
+      <div data-a style="--i:3"><span class="n">1</span><div><h4>Budaya HSSE terlihat nyata</h4><p>Disiplin keselamatan pada staf dan pimpinan; Patuh, Intervensi, Peduli diingatkan di area kerja <span class="ev">S07</span></p></div></div>
+      <div data-a style="--i:4"><span class="n">2</span><div><h4>Gate in sampai gate out panjang dan ketat</h4><p>Termasuk pemeriksaan kesehatan awak mobil tangki <span class="ev">S08</span></p></div></div>
+      <div data-a style="--i:5"><span class="n">3</span><div><h4>Otomasi masih bergantung pada jaringan</h4><p>Saat jaringan atau server terganggu, pencatatan beralih manual <span class="ev">S15 S18</span></p></div></div>
+      <div data-a style="--i:6"><span class="n">4</span><div><h4>Order harus pas dengan kompartemen</h4><p>Jumlah dan campuran pesanan SPBU mengikuti kapasitas truk, bukan hanya stok terminal <span class="ev">S06</span></p></div></div>
+      <div data-a style="--i:7"><span class="n">5</span><div><h4>Case challenge: 20.000 KL dalam 24 jam</h4><p>Skenario 8 bay, maksimal 3 selang per bay, truk 24 KL tiga kompartemen, CAPEX maksimal US$24 juta <span class="ev">S10 S37</span></p></div></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Alifarsyad, Rizka, Anggito (Kel 9; S07, S08, S06); Riki, Yolanda, Zidan (Kel 11; S15, S18, S10); Nabila (Kel 13; S37). Parameter case challenge adalah skenario latihan, bukan fasilitas aktual</p></div>
+  <span class="code">B4 · draf Kel 9</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 13 DIVIDER C -->
+<section class="slide div" style="--sc:var(--red);--sc-t:var(--red-text)">
+  <img class="d-logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="d-txt">
+    <div class="letter" data-a>C</div>
+    <h2 data-a style="--i:1">Core Business Challenges &amp; Root Cause Analysis</h2>
+    <p class="grp" data-a style="--i:2"><b>Kelompok 11</b> · PIC Sebastian Hutagalung</p>
+    <ol data-a style="--i:3">
+      <li><span class="mono">C1</span>Tiga tantangan bisnis utama</li>
+      <li><span class="mono">C2</span>Analisis akar masalah</li>
+      <li><span class="mono">C3</span>Dampak dan risiko bisnis</li>
+      <li><span class="mono">C4</span>Kesenjangan kapabilitas</li>
+    </ol>
+  </div>
+  <div class="d-ph"><img src="assets/photos/bi2388.jpg" alt="Briefing di area pengisian mobil tangki" style="object-position:55% 50%"></div>
+  <div class="slant" style="left:860px"><i style="left:0;background:var(--red)"></i><i style="left:36px;background:var(--green)"></i><i style="left:72px;background:var(--blue)"></i></div>
+  <div class="tri"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ================================================= 14 C1 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Tiga tantangan utama IT Jakarta Plumpang</h2><p class="lede" data-a style="--i:1">Volume besar, otomasi yang bergantung pada jaringan, dan objek vital yang berdampingan dengan permukiman</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body c1">
+    <div class="col" data-a style="--i:2">
+      <div class="head"><span class="n">1</span><div><h3>Keandalan &amp; kapasitas distribusi</h3><p>Filling point, armada dan jadwal harus sinkron dengan permintaan harian yang besar</p></div></div>
+      <div class="card"><h4>Bukti dan data pendukung</h4><ul class="dots">
+        <li>±17.000–19.000 KL/hari <span class="ev">M</span> lewat 34 filling point <span class="ev">R</span></li>
+        <li>±45% kebutuhan DKI, Jawa Barat, Banten; hingga 20% distribusi nasional <span class="ev">R</span></li>
+        <li>Jadwal dipengaruhi kompartemen truk, bay, arm dan pola order SPBU, termasuk SPBU swasta <span class="ev">M D</span></li>
+        <li>Perluasan pipa terkendala aturan lahan; truk sebagai alternatif menambah biaya dan beban lalu lintas <span class="ev">M</span></li>
+      </ul></div>
+    </div>
+    <div class="col hl-col" data-a style="--i:3">
+      <div class="head"><span class="n">2</span><div><h3>Keandalan sistem otomasi &amp; data</h3><p>Terminal bergantung pada otomasi pengisian dan pencatatan digital</p></div></div>
+      <div class="card"><h4>Bukti dan data pendukung</h4><ul class="dots">
+        <li>Pengisian otomatis dan self-service; saat jaringan atau server terganggu, pencatatan beralih manual <span class="ev">O D</span></li>
+        <li>Pencatatan manual memperlambat loading dan butuh rekonsiliasi data <span class="ev">D</span></li>
+        <li>Konteks nasional: 161 SPBU Sumbagsel disanksi Jan–Sep 2026; kontrol digital masih bisa ditembus <span class="ev">R</span></li>
+      </ul></div>
+    </div>
+    <div class="col" data-a style="--i:4">
+      <div class="head"><span class="n">3</span><div><h3>Keselamatan &amp; kepatuhan di kawasan padat</h3><p>Objek vital nasional yang berdampingan langsung dengan permukiman</p></div></div>
+      <div class="card"><h4>Bukti dan data pendukung</h4><ul class="dots">
+        <li>Kebakaran Depo Plumpang 3 Maret 2023 menjadi sorotan nasional <span class="ev">R</span></li>
+        <li>±783 bangunan masuk rencana buffer zone; rumah warga menempel di tembok terminal <span class="ev">R</span></li>
+        <li>Kepatuhan HSSE, uji mutu dan izin laik operasi menjadi syarat operasi <span class="ev">M</span></li>
+        <li>Konteks armada: audit 50 mobil tangki di Jambi menemukan 79 potensi bahaya <span class="ev">R</span></li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber Kel 11:</b> M paparan manajemen · O observasi · D dialog · R dokumen: Bisnis.com 28 Des 2025 dan 20 Mar 2023; IDN Financials Feb 2026; sintesis BI Syndicate 5. Data Sumbagsel dan Jambi dipakai sebagai konteks, bukan data Plumpang</p></div>
+  <span class="code">C1 · Kel 11 · Sebastian</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 15 C2 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Dari gejala ke akar masalah</h2><p class="lede" data-a style="--i:1">Akar masalah yang berstatus hipotesis harus diuji dengan data host sebelum Project Charter</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body">
+    <div class="rca">
+      <div class="tag first" data-a style="--i:2"></div><div class="tag" data-a style="--i:2">Gejala</div><div class="tag" data-a style="--i:3">Penyebab langsung</div><div class="tag root" data-a style="--i:4">Akar masalah</div><div class="tag st" data-a style="--i:5">Status bukti</div>
+
+      <div class="rl" data-a style="--i:6"><span class="n">1</span><h4>Keandalan &amp; kapasitas distribusi</h4></div>
+      <div class="cell" data-a style="--i:6">Antrean mobil tangki di filling point saat puncak; pengiriman ke SPBU terlambat</div>
+      <div class="cell" data-a style="--i:6">Order SPBU tidak merata; kompartemen truk tidak cocok dengan volume order; utilisasi bay tidak seimbang</div>
+      <div class="cell root" data-a style="--i:6">Perencanaan order, penjadwalan bay dan armada belum terintegrasi berbasis data; ekspansi pipa terhambat tata ruang</div>
+      <div class="cell st" data-a style="--i:6">Sebagian fakta (M); perlu data antrean dan utilisasi bay</div>
+
+      <div class="rl" data-a style="--i:7"><span class="n">2</span><h4>Keandalan sistem otomasi &amp; data</h4></div>
+      <div class="cell" data-a style="--i:7">Pencatatan beralih manual; loading melambat; selisih data</div>
+      <div class="cell" data-a style="--i:7">Gangguan jaringan atau server pada sistem otomasi terminal</div>
+      <div class="cell root" data-a style="--i:7">Arsitektur bergantung pada konektivitas, tanpa mode offline dan rekonsiliasi otomatis yang teruji</div>
+      <div class="cell st" data-a style="--i:7">Pemicu fakta (O, D); akar masalah masih hipotesis</div>
+
+      <div class="rl" data-a style="--i:8"><span class="n">3</span><h4>Keselamatan &amp; kepatuhan di kawasan padat</h4></div>
+      <div class="cell" data-a style="--i:8">Kebakaran 2023, temuan bahaya armada, tekanan publik dan regulator</div>
+      <div class="cell" data-a style="--i:8">Jarak aman dengan permukiman minim; kondisi kendaraan dan perilaku transportir bervariasi</div>
+      <div class="cell root" data-a style="--i:8">Tata ruang historis tidak menjaga buffer zone; pengawasan HSSE pihak ketiga belum seragam</div>
+      <div class="cell st" data-a style="--i:8">Fakta publik (R); kondisi armada Plumpang perlu audit</div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> analisis Kel 11 atas temuan B1 (F1–F3), paparan manajemen dan dialog BI; fishbone dan 5 Whys untuk tantangan 2 ada di deck pemetaan BI Kel 11</p></div>
+  <span class="code">C2 · Kel 11 · Boy, Zidan</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 16 C3 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Dampak bisnis dan risiko bila tantangan dibiarkan</h2><p class="lede" data-a style="--i:1">Tujuh dimensi dampak; T1–T3 merujuk ke tiga tantangan di C1</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body">
+    <div class="imp">
+      <div class="card" data-a style="--i:2"><div class="top"><h4>Finansial</h4><span class="lvl hi">Tinggi</span></div><ul class="dots"><li>Biaya distribusi per KL naik: lembur, armada tambahan, truk vs pipa <span class="t">T1</span></li><li>Selisih data dan rekonsiliasi manual menambah losses <span class="t">T2</span></li></ul></div>
+      <div class="card" data-a style="--i:3"><div class="top"><h4>Operasional</h4><span class="lvl hi">Tinggi</span></div><ul class="dots"><li>Antrean dan cycle time naik, throughput turun saat Nataru dan Lebaran <span class="t">T1</span></li><li>Loading melambat saat fallback manual <span class="t">T2</span></li></ul></div>
+      <div class="card" data-a style="--i:4"><div class="top"><h4>Pelanggan</h4><span class="lvl hi">Tinggi</span></div><ul class="dots"><li>Risiko stockout di &gt;1.000 SPBU dan &gt;120 lembaga penyalur <span class="t">T1</span></li><li>Antrean SPBU menurunkan kepercayaan publik <span class="t">T1 T2</span></li></ul></div>
+      <div class="card" data-a style="--i:5"><div class="top"><h4>Keselamatan</h4><span class="lvl hi">Tinggi</span></div><ul class="dots"><li>Kebakaran atau ledakan berdampak pada pekerja dan warga <span class="t">T3</span></li><li>Kecelakaan mobil tangki di jalur padat <span class="t">T1 T3</span></li></ul></div>
+      <div class="card" data-a style="--i:6"><div class="top"><h4>Organisasi &amp; reputasi</h4><span class="lvl md">Sedang</span></div><ul class="dots"><li>Sorotan regulator dan publik atas objek vital nasional <span class="t">T3</span></li><li>Beban koordinasi lintas fungsi dan mitra meningkat <span class="t">T1</span></li></ul></div>
+      <div class="card" data-a style="--i:7"><div class="top"><h4>Lingkungan</h4><span class="lvl md">Sedang</span></div><ul class="dots"><li>Tumpahan atau kebocoran produk dan uap BBM <span class="t">T3</span></li><li>Emisi dan kemacetan dari tambahan trip truk <span class="t">T1</span></li></ul></div>
+      <div class="card" data-a style="--i:8"><div class="top"><h4>Mutu produk</h4><span class="lvl md">Sedang</span></div><ul class="dots"><li>Risiko salah produk atau kontaminasi saat penanganan manual <span class="t">T2</span></li><li>Uji mutu di lab terminal harus terjaga di bawah tekanan volume <span class="t">T1</span></li></ul></div>
+      <div class="card prio" data-a style="--i:9"><div class="top"><h4>Risiko prioritas</h4></div><ol><li><span class="n sm">1</span>Gangguan distribusi, stockout SPBU</li><li><span class="n sm">2</span>Insiden keselamatan di kawasan padat</li><li><span class="n sm">3</span>Gangguan sistem otomasi dan integritas data</li></ol></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> analisis Kel 11; Bisnis.com 1 Jan 2025 (&gt;1.000 SPBU dilayani); IDN Financials Feb 2026 (&gt;120 lembaga penyalur, lab uji mutu). Tingkat dampak kualitatif; kuantifikasi menunggu data host</p></div>
+  <span class="code">C3 · Kel 11 · Shabby, Ali</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 17 C4 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Lima kapabilitas yang perlu diperkuat</h2><p class="lede" data-a style="--i:1">Agar IT Plumpang andal, efisien dan aman tanpa langsung menambah aset</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body c4">
+    <div class="cap5">
+      <div class="hdr" data-a style="--i:2"><span>Kapabilitas</span><span>Kondisi saat ini</span><span></span><span>Harus diperkuat</span></div>
+      <div class="r" data-a style="--i:3"><div class="name"><span class="n sm">1</span><div><b>Strategy unity</b><span>Keselarasan strategi</span></div></div><div class="now">Target pasokan, efisiensi biaya dan keselamatan dikelola sebagai KPI terpisah</div><div class="arr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg></div><div class="to">KPI terminal terpadu: throughput, cycle time, biaya/KL dan HSSE dalam satu dashboard</div></div>
+      <div class="r" data-a style="--i:4"><div class="name"><span class="n sm">2</span><div><b>Collaboration</b><span>Kerja sama &amp; koordinasi</span></div></div><div class="now">Order SPBU, transportir dan perencanaan terminal belum terhubung; isu lahan butuh Pemda</div><div class="arr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg></div><div class="to">Forum perencanaan order–suplai dengan SPBU dan transportir; koordinasi tata ruang dengan Pemda dan ESDM</div></div>
+      <div class="r" data-a style="--i:5"><div class="name"><span class="n sm">3</span><div><b>Efficiency</b><span>Efisiensi aset &amp; biaya</span></div></div><div class="now">Tambah bay atau armada sering jadi solusi utama; utilisasi bay belum dioptimalkan</div><div class="arr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg></div><div class="to">Penjadwalan bay dan slot booking berbasis data sebelum menambah CAPEX</div></div>
+      <div class="r" data-a style="--i:6"><div class="name"><span class="n sm">4</span><div><b>Accountability</b><span>Akuntabilitas &amp; kepatuhan</span></div></div><div class="now">Pengawasan HSSE transportir belum seragam; kepemilikan data saat fallback belum jelas</div><div class="arr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg></div><div class="to">SLA dan audit berkala transportir; RACI jelas untuk pencatatan manual dan rekonsiliasi</div></div>
+      <div class="r" data-a style="--i:7"><div class="name"><span class="n sm">5</span><div><b>Innovation</b><span>Inovasi digital</span></div></div><div class="now">Otomasi bergantung pada jaringan; belum ada simulasi kapasitas terminal</div><div class="arr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /> </svg></div><div class="to">Mode offline dan rekonsiliasi otomatis; simulasi atau digital twin konfigurasi bay</div></div>
+    </div>
+    <div class="card hl" data-a style="--i:8"><h4>Prinsip menutup gap</h4><ol><li><span class="n sm">1</span>Optimalkan aset yang ada sebelum menambah kapasitas</li><li><span class="n sm">2</span>Satukan data order, stok, bay dan armada</li><li><span class="n sm">3</span>Keselamatan sebagai batas, bukan variabel yang dikorbankan</li></ol></div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> analisis Kel 11 atas C1–C3; kerangka lima kapabilitas pembagian tugas Rabuan; insight latihan 8 bay (sintesis BI Syndicate 5)</p></div>
+  <span class="code">C4 · Kel 11 · Rangga</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 18 DIVIDER D -->
+<section class="slide div" style="--sc:var(--navy);--sc-t:var(--navy)">
+  <img class="d-logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="d-txt">
+    <div class="letter" data-a>D</div>
+    <h2 data-a style="--i:1">Transformation, Innovation &amp; Action Plan</h2>
+    <p class="grp" data-a style="--i:2"><b>Kelompok 12</b> · PIC Calvin Putra</p>
+    <ol data-a style="--i:3">
+      <li><span class="mono">D1</span>Transformasi yang sudah berjalan</li>
+      <li><span class="mono">D2</span>Usulan inovasi</li>
+      <li><span class="mono">D3</span>Rencana aksi dan KPI</li>
+      <li><span class="mono">D4</span>Dampak yang diharapkan dan pelajaran kunci</li>
+    </ol>
+  </div>
+  <div class="d-ph"><img src="assets/photos/bi2637.jpg" alt="Presentasi case challenge Investment &amp; Operational Trade-Off" style="object-position:45% 50%"></div>
+  <div class="slant" style="left:860px"><i style="left:0;background:var(--red)"></i><i style="left:36px;background:var(--green)"></i><i style="left:72px;background:var(--blue)"></i></div>
+  <div class="tri"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ================================================= 19 D1 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Patra Niaga tidak berangkat dari nol</h2><p class="lede" data-a style="--i:1">Setiap tantangan di C1 sudah punya program; gap terbesar ada pada ketahanan saat sistem gagal</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body d1">
+    <div class="col" data-a style="--i:2">
+      <div class="top"><span class="n">1</span><h3>Keandalan &amp; kapasitas distribusi</h3></div>
+      <div class="prog"><h4>Auto truck scheduling IT Plumpang <span class="ev">2015</span></h4><p>Penjadwalan mobil tangki otomatis di terminal</p></div>
+      <div class="prog"><h4>PIEDCC / Pertamina Hub <span class="ev">2023</span></h4><p>Command center stok SPBU real-time; stok kritis memicu estimasi kirim ulang dari terminal</p></div>
+      <div class="prog"><h4>Relokasi bertahap ke JIGT Kalibaru <span class="ev">2023</span></h4><p>Green terminal 64 ha hingga 6 juta barel, bersama PIS dan Pelindo</p></div>
+      <div class="gap"><b>Gap tersisa</b><p>Jadwal truk belum membaca pola order SPBU dan kecocokan kompartemen; antrean puncak masih terjadi</p></div>
+    </div>
+    <div class="col" data-a style="--i:3">
+      <div class="top"><span class="n">2</span><h3>Keandalan sistem otomasi &amp; data</h3></div>
+      <div class="prog"><h4>Otomasi pengisian &amp; self-service <span class="ev">O D</span></h4><p>Filling point otomatis dengan pencatatan digital; beralih manual saat jaringan terganggu</p></div>
+      <div class="prog"><h4>Digitalisasi SPBU &amp; Subsidi Tepat <span class="ev">2021</span></h4><p>5.518 SPBU terdigitalisasi; kendaraan tak terdaftar diblokir otomatis dengan data Korlantas</p></div>
+      <div class="prog"><h4>Digitalisasi armada kapal EDTP 3.0 <span class="ev">2026</span></h4><p>Tracking real-time posisi dan pelayaran pasokan inbound lewat PIDCC</p></div>
+      <div class="gap"><b>Gap tersisa</b><p>Belum ada mode offline yang teruji dan rekonsiliasi otomatis; fallback masih bergantung pada form manual</p></div>
+    </div>
+    <div class="col" data-a style="--i:4">
+      <div class="top"><span class="n">3</span><h3>Keselamatan &amp; kepatuhan di kawasan padat</h3></div>
+      <div class="prog"><h4>Perbaikan pasca kebakaran 2023 <span class="ev">2023</span></h4><p>Auto shut-off pencegah overflow, pagar perimeter ditinggikan, deteksi gangguan digital</p></div>
+      <div class="prog"><h4>Fire drill &amp; early warning bersama Pemprov DKI <span class="ev">2023</span></h4><p>Kesiapsiagaan warga sekitar; rencana buffer zone dihidupkan kembali</p></div>
+      <div class="prog"><h4>SmartMT: digitalisasi mobil tangki <span class="ev">pilot</span></h4><p>Menekan risiko teknis, human error dan keamanan; pilot di FT Ujung Berung</p></div>
+      <div class="gap"><b>Gap tersisa</b><p>Pengawasan HSSE transportir belum seragam; penerapan SmartMT di Plumpang perlu dikonfirmasi host</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber Kel 12:</b> Petromindo 12 Des 2015; Pertamina.com 29 Des 2023; Kontan 9 Agu 2023; VOI 29 Des 2023; Bisnis.com 22 Jan 2021; BCA Sekuritas 15 Apr 2026; VOI (SmartMT); The Jakarta Post 17 Mar 2023; O, D = temuan BI</p></div>
+  <span class="code">D1 · Kel 12 · Calvin</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 20 D2 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Smart &amp; Resilient Loading Plumpang</h2><p class="lede" data-a style="--i:1">Tiga modul di atas sistem yang sudah ada, dimulai dari mode offline sebagai quick win</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body d2b">
+    <div class="fl6" data-a style="--i:2">
+      <div class="tag"><span class="mono">B</span>Order SPBU H-1</div>
+      <div class="tag"><span class="mono">B</span>Slot &amp; kompartemen MT</div>
+      <div class="tag"><span class="mono">C</span>Gate in + inspeksi HSSE digital</div>
+      <div class="tag"><span class="mono">A</span>Loading online atau offline</div>
+      <div class="tag"><span class="mono">A</span>Rekonsiliasi otomatis</div>
+      <div class="tag"><span class="mono">C</span>Cockpit KPI ke PIEDCC</div>
+    </div>
+    <div class="mods">
+      <div class="card hl" data-a style="--i:3"><div class="top"><span class="mono">A</span><div><h3>Resilient Loading Mode</h3><span>T2 · Innovation, Accountability</span></div></div>
+        <h5>Mekanisme</h5><p>Saat koneksi ke server putus, tablet di filling point beralih ke mode offline: scan QR loading order, catat volume meter, nomor segel dan ID sopir. Setelah pulih, data tersinkron dan dicocokkan dengan TAS; selisih di atas toleransi masuk antrean verifikasi supervisor</p>
+        <h5>Nilai tambah</h5><p>Loading tetap mendekati kecepatan normal; rekonsiliasi dari hari ke jam; jejak audit lengkap</p></div>
+      <div class="card" data-a style="--i:4"><div class="top"><span class="mono">B</span><div><h3>Order-to-Bay Smart Slot</h3><span>T1 · Efficiency, Collaboration</span></div></div>
+        <h5>Mekanisme</h5><p>Order SPBU H-1 dipetakan ke kompartemen MT, lalu dialokasikan ke slot filling point sesuai produk dan kapasitas arm. Transportir menerima jam kedatangan. Mengembangkan auto truck scheduling yang sudah ada</p>
+        <h5>Nilai tambah</h5><p>Antrean puncak turun, utilisasi bay merata, penambahan bay atau armada bisa ditunda</p></div>
+      <div class="card" data-a style="--i:5"><div class="top"><span class="mono">C</span><div><h3>Terminal &amp; HSSE Cockpit</h3><span>T3 · Strategy unity, Accountability</span></div></div>
+        <h5>Mekanisme</h5><p>Satu dashboard: throughput, turnaround time, biaya/KL, status mode offline dan scorecard HSSE transportir dari inspeksi pre-loading digital. MT dengan temuan kritis tidak mendapat slot</p>
+        <h5>Nilai tambah</h5><p>KPI terpadu, akuntabilitas pihak ketiga, data siap untuk audit regulator</p></div>
+    </div>
+    <div class="qw" data-a style="--i:6">
+      <div>Quick win ALP ≤ 6 minggu</div>
+      <div>Modul A versi sederhana: SOP fallback digital, form offline di tablet, rekonsiliasi berbasis spreadsheet</div>
+      <div>Pilot di 2–4 filling point, tanpa mengganti TAS dan tanpa CAPEX baru</div>
+      <div>Hasil pertama terbaca di M12 (Milestone 2)</div>
+      <div>Modul B dan C menjadi rekomendasi scale-up di final report</div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> analisis Kel 12 atas C1–C4 dan D1. Detail teknis (toleransi selisih, perangkat, integrasi) divalidasi bersama fungsi IT dan operasi terminal sebelum Project Charter</p></div>
+  <span class="code">D2 · Kel 12 · Calvin</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 21 D3 PLAN -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Rencana aksi: pilot M11–M13, terbaca di Milestone 2</h2><p class="lede" data-a style="--i:1">Jadwal disusun mundur dari Milestone 2; scale-up diputuskan dari business case</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body">
+    <div class="gantt" data-a style="--i:2">
+      <div class="h">Tahapan implementasi</div><div class="h">PIC</div>
+      <div class="h m">M7</div><div class="h m">M8</div><div class="h m">M9</div><div class="h m">M10</div><div class="h m">M11</div><div class="h m">M12</div><div class="h m">M13</div><div class="h m">M14</div><div class="h m">M15</div><div class="h m">M16</div><div class="h m">Pasca-ALP</div>
+      <div class="c t" style="grid-row:2;grid-column:1">1 Validasi masalah &amp; baseline data</div>
+      <div class="c" style="grid-row:2;grid-column:2">Tim ALP (data) · Spv. Operasi</div>
+      <div class="c" style="grid-row:2;grid-column:3"></div>
+      <div class="c" style="grid-row:2;grid-column:4"></div>
+      <div class="c" style="grid-row:2;grid-column:5"></div>
+      <div class="c" style="grid-row:2;grid-column:6"></div>
+      <div class="c" style="grid-row:2;grid-column:7"></div>
+      <div class="c" style="grid-row:2;grid-column:8"></div>
+      <div class="c" style="grid-row:2;grid-column:9"></div>
+      <div class="c" style="grid-row:2;grid-column:10"></div>
+      <div class="c" style="grid-row:2;grid-column:11"></div>
+      <div class="c" style="grid-row:2;grid-column:12"></div>
+      <div class="c" style="grid-row:2;grid-column:13"></div>
+      <div class="bar" style="grid-row:2;grid-column:3/5;border:0"><i></i></div>
+      <div class="c t" style="grid-row:3;grid-column:1">2 Desain SOP, form offline &amp; aturan rekonsiliasi</div>
+      <div class="c" style="grid-row:3;grid-column:2">Tim ALP (desain) · Fungsi IT</div>
+      <div class="c" style="grid-row:3;grid-column:3"></div>
+      <div class="c" style="grid-row:3;grid-column:4"></div>
+      <div class="c" style="grid-row:3;grid-column:5"></div>
+      <div class="c" style="grid-row:3;grid-column:6"></div>
+      <div class="c" style="grid-row:3;grid-column:7"></div>
+      <div class="c" style="grid-row:3;grid-column:8"></div>
+      <div class="c" style="grid-row:3;grid-column:9"></div>
+      <div class="c" style="grid-row:3;grid-column:10"></div>
+      <div class="c" style="grid-row:3;grid-column:11"></div>
+      <div class="c" style="grid-row:3;grid-column:12"></div>
+      <div class="c" style="grid-row:3;grid-column:13"></div>
+      <div class="bar" style="grid-row:3;grid-column:5/7;border:0"><i></i></div>
+      <div class="c t" style="grid-row:4;grid-column:1">3 Pilot Modul A di 2–4 filling point + drill gangguan</div>
+      <div class="c" style="grid-row:4;grid-column:2">Terminal Manager · Spv. shift</div>
+      <div class="c" style="grid-row:4;grid-column:3"></div>
+      <div class="c" style="grid-row:4;grid-column:4"></div>
+      <div class="c" style="grid-row:4;grid-column:5"></div>
+      <div class="c" style="grid-row:4;grid-column:6"></div>
+      <div class="c" style="grid-row:4;grid-column:7"></div>
+      <div class="c" style="grid-row:4;grid-column:8"></div>
+      <div class="c" style="grid-row:4;grid-column:9"></div>
+      <div class="c" style="grid-row:4;grid-column:10"></div>
+      <div class="c" style="grid-row:4;grid-column:11"></div>
+      <div class="c" style="grid-row:4;grid-column:12"></div>
+      <div class="c" style="grid-row:4;grid-column:13"></div>
+      <div class="bar" style="grid-row:4;grid-column:7/10;border:0"><i></i></div>
+      <div class="c t" style="grid-row:5;grid-column:1">4 Ukur dampak &amp; business case scale-up</div>
+      <div class="c" style="grid-row:5;grid-column:2">Tim ALP · mentor &amp; coach</div>
+      <div class="c" style="grid-row:5;grid-column:3"></div>
+      <div class="c" style="grid-row:5;grid-column:4"></div>
+      <div class="c" style="grid-row:5;grid-column:5"></div>
+      <div class="c" style="grid-row:5;grid-column:6"></div>
+      <div class="c" style="grid-row:5;grid-column:7"></div>
+      <div class="c" style="grid-row:5;grid-column:8"></div>
+      <div class="c" style="grid-row:5;grid-column:9"></div>
+      <div class="c" style="grid-row:5;grid-column:10"></div>
+      <div class="c" style="grid-row:5;grid-column:11"></div>
+      <div class="c" style="grid-row:5;grid-column:12"></div>
+      <div class="c" style="grid-row:5;grid-column:13"></div>
+      <div class="bar" style="grid-row:5;grid-column:9/12;border:0"><i></i></div>
+      <div class="c t" style="grid-row:6;grid-column:1">5 Final report &amp; presentasi</div>
+      <div class="c" style="grid-row:6;grid-column:2">Tim ALP</div>
+      <div class="c" style="grid-row:6;grid-column:3"></div>
+      <div class="c" style="grid-row:6;grid-column:4"></div>
+      <div class="c" style="grid-row:6;grid-column:5"></div>
+      <div class="c" style="grid-row:6;grid-column:6"></div>
+      <div class="c" style="grid-row:6;grid-column:7"></div>
+      <div class="c" style="grid-row:6;grid-column:8"></div>
+      <div class="c" style="grid-row:6;grid-column:9"></div>
+      <div class="c" style="grid-row:6;grid-column:10"></div>
+      <div class="c" style="grid-row:6;grid-column:11"></div>
+      <div class="c" style="grid-row:6;grid-column:12"></div>
+      <div class="c" style="grid-row:6;grid-column:13"></div>
+      <div class="bar" style="grid-row:6;grid-column:12/13;border:0"><i></i></div>
+      <div class="c t" style="grid-row:7;grid-column:1">6 Scale-up Modul A ke 34 filling point; Modul B &amp; C</div>
+      <div class="c" style="grid-row:7;grid-column:2">Fungsi Distribusi &amp; IT PPN</div>
+      <div class="c" style="grid-row:7;grid-column:3"></div>
+      <div class="c" style="grid-row:7;grid-column:4"></div>
+      <div class="c" style="grid-row:7;grid-column:5"></div>
+      <div class="c" style="grid-row:7;grid-column:6"></div>
+      <div class="c" style="grid-row:7;grid-column:7"></div>
+      <div class="c" style="grid-row:7;grid-column:8"></div>
+      <div class="c" style="grid-row:7;grid-column:9"></div>
+      <div class="c" style="grid-row:7;grid-column:10"></div>
+      <div class="c" style="grid-row:7;grid-column:11"></div>
+      <div class="c" style="grid-row:7;grid-column:12"></div>
+      <div class="c" style="grid-row:7;grid-column:13"></div>
+      <div class="bar post" style="grid-row:7;grid-column:13/14;border:0"><em>6–12 bln</em><i></i></div>
+      <div class="ms" style="grid-row:8;grid-column:1/3;justify-content:flex-start;padding-left:18px;font-family:inherit;font-weight:600;color:var(--ink-3)">Milestone ALP</div>
+      <div class="ms" style="grid-row:8;grid-column:8"><b>MS2</b></div>
+      <div class="ms" style="grid-row:8;grid-column:12"><b>MS3</b></div>
+    </div>
+    <div class="d3c">
+      <div class="card" data-a style="--i:3"><h4>PIC &amp; tata kelola</h4><ul class="dots"><li><b>Sponsor:</b> Terminal Manager IT Jakarta Plumpang</li><li><b>Process owner:</b> Supervisor operasi / filling</li><li><b>Pendukung:</b> Fungsi IT (TAS, jaringan), Spv. HSSE</li><li><b>Tim ALP:</b> project lead, data analyst, liaison, desain</li></ul></div>
+      <div class="card" data-a style="--i:4"><h4>Kebutuhan sumber daya</h4><ul class="dots"><li><b>Data:</b> log downtime TAS dan rekonsiliasi 6 bulan, log gate in/out</li><li><b>Perangkat:</b> 2–4 tablet atau PC yang ada, Wi-Fi lokal</li><li><b>Orang:</b> 2 sesi pelatihan operator, 1 PIC per shift</li><li><b>Anggaran:</b> pilot tanpa CAPEX</li></ul></div>
+      <div class="card hl" data-a style="--i:5"><h4 style="color:var(--red-text)">Gate keputusan di MS2 (M12)</h4><ul class="dots"><li><b>Lanjut:</b> loading saat fallback ≤ 1,2× normal dan ≥ 95% transaksi terekonsiliasi ≤ 24 jam</li><li><b>Ubah:</b> target tercapai sebagian atau operator menilai sulit</li><li><b>Stop:</b> muncul risiko HSSE atau selisih data naik</li></ul></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 12. Kalender ALP M6–M16 (Milestone 2 di M12, final di M16); PIC sisi BUMN masih usulan; 34 filling point dari Bisnis.com 28 Des 2025. Materi Kel 12 menulis pelaksana "Kel 11"; di sini ditulis Tim ALP</p></div>
+  <span class="code">D3 · Kel 12 · Calvin</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 22 D3 KPI -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Enam indikator keberhasilan dan cara mengujinya</h2><p class="lede" data-a style="--i:1">Baseline diukur M7–M8 dari log host; target dikunci setelah itu</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body">
+    <table class="kpi" data-a style="--i:2">
+      <thead><tr><th>Indikator keberhasilan</th><th>Baseline</th><th>Target pilot (M13)</th><th>Target 12 bulan</th><th>Sumber data</th></tr></thead>
+      <tbody>
+        <tr><td>Waktu loading per MT saat fallback, dibanding normal</td><td>Diukur M7–M8</td><td class="m tp">≤ 1,2× normal</td><td class="m">≤ 1,1× normal</td><td>Timestamp form offline, log TAS</td></tr>
+        <tr><td>Transaksi fallback terekonsiliasi ≤ 24 jam</td><td>Diukur M7–M8</td><td class="m tp">≥ 95%</td><td class="m">100%</td><td>Log rekonsiliasi</td></tr>
+        <tr><td>Selisih volume fallback vs meter/TAS</td><td>Diukur M7–M8</td><td class="m tp">Turun ≥ 50%</td><td>Dalam toleransi metrologi</td><td>Audit sampel transaksi</td></tr>
+        <tr><td>Turnaround time MT gate in → gate out, jam puncak</td><td>Diukur M7–M8</td><td class="m">Modul B</td><td class="m">Turun ≥ 15%</td><td>Log gate dan TAS</td></tr>
+        <tr><td>Kepatuhan inspeksi pre-loading digital MT</td><td>Diukur M7–M8</td><td class="m tp">100% MT pilot</td><td class="m">100% MT</td><td>Checklist digital HSSE</td></tr>
+        <tr><td>Operator menilai prosedur fallback lebih mudah</td><td>Belum ada</td><td class="m tp">≥ 80%</td><td class="m">≥ 85%</td><td>Survei singkat operator</td></tr>
+      </tbody>
+    </table>
+    <div class="meth">
+      <div class="card" data-a style="--i:3"><div class="top"><span class="n sm">1</span><h4>Before–after dengan pembanding</h4></div><p>Filling point pilot vs non-pilot pada periode yang sama</p></div>
+      <div class="card" data-a style="--i:4"><div class="top"><span class="n sm">2</span><h4>Drill gangguan terjadwal</h4></div><p>Simulasi putus jaringan 2× seminggu, diukur dengan timestamp dan log</p></div>
+      <div class="card" data-a style="--i:5"><div class="top"><span class="n sm">3</span><h4>Review mingguan</h4></div><p>Bersama supervisor shift; temuan masuk perbaikan form dan SOP</p></div>
+      <div class="card" data-a style="--i:6"><div class="top"><span class="n sm">4</span><h4>Verifikasi host</h4></div><p>Hasil disahkan Terminal Manager dan fungsi IT sebelum MS2</p></div>
+      <div class="card" data-a style="--i:7"><div class="top"><span class="n sm">5</span><h4>Dokumentasi bukti</h4></div><p>Log, foto dan tangkapan layar disimpan sebagai evidence Milestone 2</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 12. Target bersifat usulan kelompok; indikator 1–3 dan 6 diukur saat pilot, indikator 4 menunggu Modul B, indikator 5 berlaku untuk MT di filling point pilot</p></div>
+  <span class="code">D3 · Kel 12 · Calvin</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 23 D4 -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Terminal yang tetap melayani saat sistemnya terganggu</h2><p class="lede" data-a style="--i:1">Nilai terbesar bukan efisiensi harian, melainkan ketahanan</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body d4">
+    <div class="imp5">
+      <div data-a style="--i:2"><span class="n">1</span><div><h4>Finansial</h4><p>Throughput terjaga saat gangguan; losses dari selisih data turun; CAPEX bay atau armada bisa ditunda</p></div></div>
+      <div data-a style="--i:3"><span class="n">2</span><div><h4>Operasional</h4><p>Loading tetap berjalan saat jaringan terganggu; rekonsiliasi dari hari ke jam; antrean puncak turun</p></div></div>
+      <div data-a style="--i:4"><span class="n">3</span><div><h4>Pelanggan</h4><p>Risiko terlambat ke &gt;1.000 SPBU dan &gt;120 lembaga penyalur berkurang; jam kirim lebih pasti</p></div></div>
+      <div data-a style="--i:5"><span class="n">4</span><div><h4>Organisasi</h4><p>RACI jelas untuk data saat fallback; transportir terikat SLA dan scorecard HSSE</p></div></div>
+      <div data-a style="--i:6"><span class="n">5</span><div><h4>Kapabilitas jangka panjang</h4><p>Resilience by design jadi standar sistem digital terminal; fondasi digital twin dan operasi JIGT Kalibaru</p></div></div>
+    </div>
+    <div class="hour" data-a style="--i:4">
+      <h4>Nilai satu jam gangguan</h4>
+      <div class="fig">±750</div>
+      <div class="cap">KL per jam rata-rata penyaluran (18.000 KL/hari ÷ 24)</div>
+      <div class="div2">
+        <div class="fig2">±375 KL</div>
+        <p>tertunda setiap jam bila fallback manual memangkas kecepatan loading separuh, setara ±23 rit mobil tangki 16 KL ke SPBU</p>
+      </div>
+      <small>Estimasi kelompok; asumsi penurunan 50% diuji dengan data host</small>
+    </div>
+    <div class="les" data-a style="--i:6">
+      <div class="tag">Pelajaran kunci</div>
+      <ol>
+        <li><span class="n sm">1</span><div><b>Ketahanan harus didesain</b><span>Otomasi tanpa mode gagal yang dirancang menciptakan titik rapuh baru</span></div></li>
+        <li><span class="n sm">2</span><div><b>Optimalkan yang sudah ada</b><span>Auto truck scheduling dan PIEDCC adalah fondasi, bukan untuk diganti</span></div></li>
+        <li><span class="n sm">3</span><div><b>Terminal adalah ekosistem</b><span>SPBU, transportir dan Pemda ikut dalam desain solusi</span></div></li>
+        <li><span class="n sm">4</span><div><b>Keselamatan adalah batas</b><span>Setiap efisiensi diuji terhadap HSSE sebelum dijalankan</span></div></li>
+        <li><span class="n sm">5</span><div><b>Ukur sebelum mengklaim</b><span>Baseline dari log host menjadi syarat Project Charter</span></div></li>
+      </ol>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> analisis Kel 12; volume 17.000–19.000 KL/hari (paparan manajemen); Bisnis.com 1 Jan 2025; IDN Financials Feb 2026; Kontan 9 Agu 2023. Dampak finansial final dihitung di business case M14–M15</p></div>
+  <span class="code">D4 · Kel 12 · Calvin</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 24 SOURCES -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Sumber</h2><p class="lede" data-a style="--i:1">Semua angka dan kutipan berasal dari materi kelompok dan laporan BI peserta; perbedaan angka ditampilkan apa adanya</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body srcs">
+    <div data-a style="--i:2">
+      <h4 style="border-color:var(--blue)">A · Kelompok 13</h4>
+      <p><b>13.1</b> Proses Bisnis Pertamina Patra Niaga, dari slide "Our Business Process" PPN</p>
+      <p><b>13.2</b> Business Unit Overview ITJ Plumpang: Pertamina Patra Niaga; Kompas.com, 15 Feb 2026; Kantor Staf Presiden, 22 Jun 2026</p>
+      <p><b>13.3</b> Business Model: PPN Annual Report dan Sustainability Report 2023; Pertamina Retail; ANTARA, 4 Feb 2026; detikFinance, 1 Sep 2026; PHE laporan keuangan audit 2025</p>
+      <p><b>13.4</b> Pusat Kendali Operasi IT Plumpang (wilayah penyaluran, 16.504 kL/hari, 12 line TAS)</p>
+      <h4 style="border-color:var(--green);margin-top:22px">B · Kelompok 9 (draf)</h4>
+      <p>Laporan BI individu S01–S09: Anggit, Dara, Ananda, Ratu, Irsan, Anggito, Alifarsyad, Rizka, Krisna. Pendukung: S10–S39 dari Kel 11, 12, 13 sesuai kode di slide</p>
+    </div>
+    <div data-a style="--i:3">
+      <h4 style="border-color:var(--red)">C · Kelompok 11</h4>
+      <p>Deck Pemetaan Business Immersion, slide C1–C4 (Sebastian; Boy, Zidan; Shabby, Ali; Rangga)</p>
+      <p>Bisnis.com, 28 Des 2025 (34 filling point; 45% DKI–Jabar–Banten); Bisnis.com, 20 Mar 2023 (buffer zone 783 bangunan); Bisnis.com, 1 Jan 2025 (&gt;1.000 SPBU); IDN Financials, Feb 2026 (&gt;120 lembaga penyalur, 20% nasional, lab uji mutu)</p>
+      <p>Sintesis BI Syndicate 5 (Sumbagsel 2026, audit Jambi 2025) sebagai konteks</p>
+      <h4 style="border-color:var(--navy);margin-top:22px">D · Kelompok 12</h4>
+      <p>Slide D1–D4 (Calvin). Petromindo, 12 Des 2015; Pertamina.com, 29 Des 2023; Kontan, 9 Agu 2023; VOI, 29 Des 2023; Bisnis.com, 22 Jan 2021; BCA Sekuritas, 15 Apr 2026; VOI (SmartMT); The Jakarta Post, 17 Mar 2023</p>
+    </div>
+    <div data-a style="--i:4">
+      <h4 style="border-color:var(--ink-3)">Angka yang berbeda antarsumber</h4>
+      <p><b>Penyaluran harian:</b> 16.504 kL (Kel 13, 13.4) · 17.000–19.000 KL (paparan manajemen via Kel 11; Ananda, Kel 9)</p>
+      <p><b>Lembaga penyalur:</b> &gt;1.000 lembaga dan kanal (Kel 13) · &gt;120 lembaga penyalur (Kel 11, Kel 12)</p>
+      <p><b>Titik pengisian:</b> 12 line TAS (Kel 13) · 34 filling point (Kel 11) · ±14 bay fisik, 12 aktif (Jocelyn)</p>
+      <h4 style="border-color:var(--ink-3);margin-top:22px">Foto dan identitas</h4>
+      <p>Foto dokumentasi Business Immersion peserta, ITJ Plumpang, 7 Oktober 2026</p>
+      <p>Logo Pertamina Patra Niaga (berkas SVG resmi); huruf Rethink Sans seperti di pertaminapatraniaga.com; ikon Tabler</p>
+      <p>Referensi gaya: deck Business Immersion PT Semen Indonesia (Persero)</p>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src">Folder ALP Rabuan, Google Drive P3MD SBM ITB, diakses 10 November 2026</p></div>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 25 CLOSING -->
+<section class="slide close">
+  <div class="bg"><img src="assets/photos/bi2774.jpg" alt="Foto bersama peserta dan manajemen di depan gerbang Integrated Terminal Jakarta"></div>
+  <div class="t"><h2 data-a>Terima kasih</h2><p data-a style="--i:1">Integrated Terminal Jakarta · 7 Oktober 2026</p></div>
+  <div class="tri"><i></i><i></i><i></i></div>
+</section>
+
+</div>
+<div id="hint">← → navigasi · F layar penuh</div>
+
+<script>
+(function () {
+  var W = 1920, H = 1080;
+  var qs = new URLSearchParams(location.search);
+  var root = document.documentElement;
+  if (qs.has("print")) root.classList.add("print");
+  if (qs.has("shot")) root.classList.add("shot");
+  var stage = document.getElementById("stage");
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var total = slides.length, cur = -1;
+
+  slides.forEach(function (s, i) {
+    var pg = s.querySelector(".pg span");
+    if (pg) pg.textContent = i + 1;
+  });
+
+  function fit() {
+    if (root.classList.contains("print")) return;
+    var k = Math.min(innerWidth / W, innerHeight / H);
+    stage.style.transform = "translate(" + (innerWidth - W * k) / 2 + "px," + (innerHeight - H * k) / 2 + "px) scale(" + k + ")";
+  }
+  addEventListener("resize", fit); fit();
+
+  function go(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    if (n === cur) return;
+    if (cur >= 0) slides[cur].classList.remove("on");
+    cur = n;
+    slides[cur].classList.add("on");
+    history.replaceState(null, "", "#" + (cur + 1));
+  }
+
+  addEventListener("keydown", function (e) {
+    if (["ArrowRight", "PageDown", " ", "Enter"].indexOf(e.key) >= 0) { e.preventDefault(); go(cur + 1); }
+    else if (["ArrowLeft", "PageUp", "Backspace"].indexOf(e.key) >= 0) { e.preventDefault(); go(cur - 1); }
+    else if (e.key === "Home") go(0);
+    else if (e.key === "End") go(total - 1);
+    else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
+  });
+  addEventListener("click", function (e) { if (e.clientX > innerWidth / 3) go(cur + 1); else go(cur - 1); });
+
+  var start = parseInt(location.hash.slice(1), 10);
+  go(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+</body>
+</html>

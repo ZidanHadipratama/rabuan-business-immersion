@@ -1,0 +1,48 @@
+/* Pertamina design tokens.
+   Logo colours: official PPN SVG (assets/brand/ppn-color.svg).
+   Neutrals: pertaminapatraniaga.com stylesheet. Type: Rethink Sans (pertaminapatraniaga.com).
+   Fuel dye colours: GridOto, 7 Jul 2021 (Pertalite hijau, Pertamax biru, Pertamax Turbo merah). */
+@font-face { font-family: "Rethink Sans"; src: url(../fonts/rethink-sans-latin.woff2) format("woff2"); font-weight: 400 800; font-display: block;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Rethink Sans"; src: url(../fonts/rethink-sans-latin-ext.woff2) format("woff2"); font-weight: 400 800; font-display: block;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "JetBrains Mono"; src: url(../fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-display: block; }
+@font-face { font-family: "JetBrains Mono"; src: url(../fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-display: block; }
+
+:root {
+  --red: #EA1E30;
+  --blue: #086DB5;
+  --green: #AAC237;
+  --black: #060707;
+
+  --navy: #05416D;
+  --navy-2: #0762A3;
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --ink-3: #5B6B80;
+  --paper: #F8FAFC;
+  --paper-2: #F1F5F9;
+  --rule: #D5DEE8;
+  --steel: #9AA9BA;
+
+  --on-navy: #EAF2F9;
+  --on-navy-2: #A9C3DA;
+
+  --dye-pertalite: #2FA84F;
+  --dye-pertamax: #1E6FD9;
+  --dye-turbo: #D9232F;
+
+  --hazard: #F2C200;
+
+  --sec-a: var(--blue);
+  --sec-b: #5E6F12;   /* logo green darkened for text on paper (≥4.5:1) */
+  --red-text: #C41425; /* brand red darkened for small text on paper */
+  --sec-c: var(--red);
+  --sec-d: var(--navy);
+
+  --sans: "Rethink Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --gutter: 112px;
+  --top: 96px;
+}
