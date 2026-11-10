@@ -129,14 +129,20 @@ ul.dots li::before { content: ""; position: absolute; left: 2px; top: .62em; wid
 
 /* A1 */
 .a1 { display: grid; grid-template-columns: 1108px 1fr; grid-template-rows: minmax(0, 1fr); gap: 48px; }
-.fleet { position: relative; margin-top: 12px; width: 1108px; aspect-ratio: 1536 / 560; }
-.fleet img { width: 100%; height: 100%; display: block; mix-blend-mode: multiply; }
-.fleet figcaption { position: absolute; right: 0; bottom: 0; font-size: 15px; color: var(--ink-3); }
+.fleet { position: relative; margin-top: 12px; width: 1108px; height: 404px; overflow: hidden; }
+.fleet img { position: absolute; left: 0; top: -84px; width: 100%; height: auto; display: block; mix-blend-mode: multiply; }
+.fleet figcaption { position: absolute; right: 0; top: 0; font-size: 15px; color: var(--ink-3); }
 .fp { position: absolute; display: flex; gap: 10px; align-items: flex-start; }
 .fp > .ic { width: 34px; height: 34px; margin-top: 6px; color: var(--ink-3); stroke-width: 1.5; }
 .fp .fig { font-size: 46px; }
 .fp .cap { margin-top: 2px; font-size: 18px; white-space: nowrap; }
 .fp::after { content: ""; position: absolute; left: 16px; top: 100%; width: 2px; height: var(--l); margin-top: 6px; background: linear-gradient(var(--ink-3), rgba(91,107,128,0)); }
+/* A1 fleet: each figure sits under its asset, centred on it, with a short tick up into the drawing */
+.fleet .fp { bottom: 0; width: 0; justify-content: center; text-align: center; }
+.fleet .fp > div { flex: none; }
+.fleet .fp .fig { font-size: 44px; }
+.fleet .fp::after { left: -1px; top: auto; bottom: 100%; height: var(--l); margin: 0 0 4px; background: var(--ink-3); }
+.fleet .fp::before { content: ""; position: absolute; left: -4px; bottom: calc(100% + var(--l) + 2px); width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); }
 .fp.dn::after { top: auto; bottom: 100%; margin: 0 0 6px; background: linear-gradient(rgba(91,107,128,0), var(--ink-3)); }
 .tl2 { margin-top: 18px; display: grid; grid-template-columns: 1.25fr 1fr; gap: 36px; }
 .tl2 > div { display: grid; grid-template-columns: 34px 1fr; gap: 16px; }
@@ -307,6 +313,79 @@ table.pt tr.warn td { background: var(--red-tint); }
 .finds > div { display: grid; grid-template-columns: 46px 1fr; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
 .finds h4 { font-size: 21px; line-height: 1.25; font-weight: 700; }
 .finds p { margin-top: 4px; font-size: 18px; line-height: 1.35; }
+
+/* B (Kel 9 deck 9-1, 9-2) */
+.mix { display: flex; gap: 2px; height: 14px; margin-top: 14px; }
+.mix i { display: block; }
+.mixl { list-style: none; margin-top: 10px; display: grid; gap: 4px; font-size: 17px; color: var(--ink-2); }
+.mixl li { display: flex; align-items: center; gap: 10px; }
+.mixl b { width: 14px; height: 14px; }
+.io { margin-top: 12px; display: grid; grid-template-columns: 64px 1fr; gap: 5px 10px; font-size: 17px; line-height: 1.3; }
+.io dt { font: 500 14px/1.6 "JetBrains Mono", monospace; color: var(--ink-3); }
+.io dd { color: var(--ink); }
+.gate > div p.par { margin-top: 10px; font-size: 18px; font-weight: 600; line-height: 1.3; color: var(--blue-text); }
+.gate > div.hl p.par { color: var(--red-text); }
+.chain2.six { grid-template-columns: repeat(6, 1fr); }
+.chain2.six .tl-line { left: 8%; right: 8%; }
+.chain2.six b { font-size: 18px; }
+.chain2.six em { font-size: 15px; line-height: 1.3; max-width: 160px; }
+.loop { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; color: var(--ink-3); }
+.loop .ic { width: 22px; height: 22px; color: var(--blue); }
+.mech { list-style: none; margin-top: 16px; display: grid; gap: 10px; }
+.mech li { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: center; padding: 14px 18px; background: var(--panel); font-size: 18px; color: var(--ink-2); }
+.mech .ic { width: 34px; height: 34px; color: var(--blue); stroke-width: 1.5; }
+.mech b { display: block; font-size: 21px; color: var(--ink); }
+.k3 { list-style: none; margin-top: 12px; display: grid; gap: 10px; }
+.k3 li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; font-size: 18px; line-height: 1.3; }
+.k3 b { display: block; font-size: 19px; color: var(--ink); }
+.b4r { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+.kp5 { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px 20px; padding: 20px 24px; background: var(--panel); }
+.kp5 .fig { font-size: 44px; }
+.kp5 .cap { margin-top: 4px; font-size: 17px; }
+.kp5 .nt { align-self: end; font-size: 15px; line-height: 1.35; color: var(--ink-3); }
+.kp5 .nt b { display: block; color: var(--ink-2); }
+.b4r .finds { flex: 1; min-height: 0; }
+.finds .n { font-size: 18px; }
+.b5 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) auto auto; gap: 18px 24px; }
+.tm { display: flex; flex-direction: column; gap: 10px; padding: 22px 26px; background: var(--panel); min-height: 0; }
+.tm > .mono { font-size: 16px; color: var(--red-text); }
+.tm h3 { font-size: 26px; line-height: 1.15; }
+.tm > p { font-size: 18px; line-height: 1.38; }
+.tm .dots { gap: 6px; }
+.tm .dots li { font-size: 18px; line-height: 1.35; }
+.tm .hyp { margin-top: auto; font-size: 15px; color: var(--ink-3); }
+.cyc { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.cyc span { padding: 7px 12px; background: #fff; font-size: 17px; font-weight: 600; color: var(--ink); }
+.cyc i { font-style: normal; font-size: 18px; color: var(--red-text); font-weight: 700; }
+.tm .hero { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; padding: 6px 0 14px; border-bottom: 1px solid var(--line); }
+.tm .hero .fig { font-size: 52px; }
+.tm .hero p { font-size: 18px; line-height: 1.38; }
+.why { list-style: none; display: grid; gap: 12px; margin-top: 4px; }
+.why li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; font-size: 18px; line-height: 1.3; color: var(--ink-2); }
+.why .ic { width: 34px; height: 34px; color: var(--red); stroke-width: 1.5; }
+.why b { display: block; font-size: 20px; color: var(--ink); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.two > div { padding: 12px 14px; background: #fff; font-size: 17px; line-height: 1.32; color: var(--ink-2); box-shadow: inset 3px 0 0 var(--red); }
+.two b { display: block; font-size: 18px; color: var(--ink); margin-bottom: 4px; }
+.cyc .ic { width: 24px; height: 24px; color: var(--red-text); stroke-width: 2; }
+.tm blockquote { padding: 12px 16px; background: #fff; font-size: 19px; font-weight: 600; line-height: 1.32; color: var(--ink); box-shadow: inset 3px 0 0 var(--navy); }
+.tm blockquote cite { display: block; margin-top: 4px; font-style: normal; font-size: 15px; font-weight: 500; color: var(--red-text); }
+.k3s { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; }
+.k3s .fig { font-size: 34px; }
+.k3s .cap { margin-top: 4px; font-size: 15px; }
+.lay { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 6px; }
+.lay > div { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 14px 20px; background: var(--blue-tint); }
+.lay b { font-size: 21px; color: var(--ink); }
+.lay p { font-size: 17px; line-height: 1.3; }
+.lay .st { padding: 6px 12px; font-size: 16px; font-weight: 700; color: #fff; background: var(--red); }
+.lay .st.ok { background: var(--green-text); }
+.lay .hl { background: var(--red-tint); }
+.rec { grid-column: 1 / -1; display: grid; grid-template-columns: 200px repeat(4, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.rec .rl { font-size: 21px; font-weight: 700; color: var(--navy); line-height: 1.2; padding-top: 4px; }
+.rec > div:not(.rl) { display: grid; grid-template-columns: 38px 1fr; gap: 4px 12px; }
+.rec .ic { grid-row: span 2; width: 34px; height: 34px; color: var(--blue); stroke-width: 1.5; }
+.rec h4 { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.rec p { font-size: 17px; line-height: 1.35; }
 
 /* C1 */
 .c1 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: minmax(0, 1fr); gap: 32px; }
@@ -545,7 +624,7 @@ html.print #hint, html.shot #hint { display: none; }
     </div>
     <div class="rows">
       <div class="row" data-a data-s="1" data-fx="left"><div class="L" style="background:var(--blue)">A</div><div class="R"><div class="top"><h3>Company Profile &amp; Business Model</h3><span>Kel 13 · PIC Auditia Anwar</span></div><p>Profil perusahaan · Business unit ITJ · Model bisnis · Rantai nilai dan stakeholder</p></div></div>
-      <div class="row" data-a data-s="1" data-fx="left"><div class="L" style="background:var(--green-text)">B</div><div class="R"><div class="top"><h3>End-to-End Process &amp; Field Observation</h3><span>Kel 9 · PIC Ananda Haholongan S.</span></div><p>Proses dari pasokan sampai pelanggan · Proses teknis di terminal · Organisasi dan koordinasi · Temuan lapangan</p></div></div>
+      <div class="row" data-a data-s="1" data-fx="left"><div class="L" style="background:var(--green-text)">B</div><div class="R"><div class="top"><h3>End-to-End Process &amp; Field Observation</h3><span>Kel 9 · PIC Ananda Haholongan S.</span></div><p>Proses dari pasokan sampai pelanggan · Proses teknis di terminal · Organisasi dan koordinasi · Observasi dan temuan lapangan</p></div></div>
       <div class="row" data-a data-s="1" data-fx="left"><div class="L" style="background:var(--red)">C</div><div class="R"><div class="top"><h3>Core Business Challenges &amp; Root Cause</h3><span>Kel 11 · PIC Sebastian Hutagalung</span></div><p>Tiga tantangan utama · Analisis akar masalah · Dampak dan risiko bisnis · Kesenjangan kapabilitas</p></div></div>
       <div class="row" data-a data-s="1" data-fx="left"><div class="L" style="background:var(--navy)">D</div><div class="R"><div class="top"><h3>Transformation, Innovation &amp; Action Plan</h3><span>Kel 12 · PIC Calvin Putra</span></div><p>Program transformasi yang sudah berjalan · Usulan inovasi · Rencana aksi dan KPI · Dampak dan pelajaran</p></div></div>
     </div>
@@ -582,11 +661,11 @@ html.print #hint, html.shot #hint { display: none; }
       <div class="tag" data-a data-s="1" style="width:560px">Profil perusahaan: armada distribusi</div>
       <figure class="fleet" data-a data-s="1" data-fx="fade">
         <img src="assets/illus/fleet.jpg" alt="Ilustrasi isometrik aset distribusi: kapal tanker di jetty, pipa, gerbong ketel, mobil tangki BBM dan mobil tangki LPG">
-        <div class="fp" style="left:1%;top:4%;--l:100px"><i data-ic="ship"></i><div><div class="fig red">179</div><div class="cap">unit kapal</div></div></div>
-        <div class="fp" style="left:24%;top:22%;--l:96px"><i data-ic="route"></i><div><div class="fig">1.772<small>km</small></div><div class="cap">pipa BBM</div></div></div>
-        <div class="fp" style="left:38%;top:3%;--l:86px"><i data-ic="train"></i><div><div class="fig">694</div><div class="cap">gerbong ketel (RTW)</div></div></div>
-        <div class="fp" style="left:60%;top:3%;--l:118px"><i data-ic="truck"></i><div><div class="fig">4.137</div><div class="cap">mobil tangki BBM</div></div></div>
-        <div class="fp" style="left:82%;top:19%;--l:92px"><i data-ic="truck-delivery"></i><div><div class="fig">1.687</div><div class="cap">mobil tangki LPG</div></div></div>
+        <div class="fp" style="left:13%;--l:34px"><div><div class="fig red">179</div><div class="cap">unit kapal</div></div></div>
+        <div class="fp" style="left:28%;--l:58px"><div><div class="fig">1.772<small>km</small></div><div class="cap">pipa BBM</div></div></div>
+        <div class="fp" style="left:47%;--l:24px"><div><div class="fig">694</div><div class="cap">gerbong ketel (RTW)</div></div></div>
+        <div class="fp" style="left:70%;--l:24px"><div><div class="fig">4.137</div><div class="cap">mobil tangki BBM</div></div></div>
+        <div class="fp" style="left:91%;--l:24px"><div><div class="fig">1.687</div><div class="cap">mobil tangki LPG</div></div></div>
         <figcaption>Ilustrasi, bukan skala</figcaption>
       </figure>
       <div class="tag" data-a data-s="2" style="width:560px;margin-top:22px">Transformasi 2026</div>
@@ -723,8 +802,9 @@ html.print #hint, html.shot #hint { display: none; }
       <li><span class="mono">B2</span>Proses teknis operasional</li>
       <li><span class="mono">B3</span>Organisasi dan koordinasi</li>
       <li><span class="mono">B4</span>Observasi lapangan</li>
+      <li><span class="mono">B5</span>Temuan dan rekomendasi</li>
     </ol>
-    <p class="note" data-a style="--i:4">Draf disusun dari laporan BI individu sembilan anggota Kel 9 (S01–S09) dan materi Kel 11–13. Menunggu deck resmi Kel 9</p>
+    <p class="note" data-a style="--i:4">Disusun dari deck Kel 9: 9-1 proses bisnis dan 9-2 field observation, folder Rabuan, 10 November 2026</p>
   </div>
   <div class="d-ph" data-a data-fx="slash" data-clip="polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%)"><img src="assets/photos/bi2319.jpg" alt="Peserta berjalan menuju area operasi terminal" style="object-position:40% 50%"></div>
   <div class="slant" data-a data-fx="stripes" style="left:860px"><i style="left:0;background:var(--red)"></i><i style="left:36px;background:var(--green)"></i><i style="left:72px;background:var(--blue)"></i></div>
@@ -733,49 +813,48 @@ html.print #hint, html.shot #hint { display: none; }
 
 <!-- ================================================= 9 B1 E2E -->
 <section class="slide">
-  <div class="hd"><h2 data-a>Proses end-to-end: penerimaan, penimbunan, penyaluran</h2><p class="lede" data-a style="--i:1">Kerangka tiga proses yang muncul di hampir semua laporan peserta, dari sumber pasokan sampai nozzle kendaraan</p></div>
+  <div class="hd"><h2 data-a>End-to-end: dari sumur minyak sampai nozzle SPBU</h2><p class="lede" data-a style="--i:1">Lima simpul rantai pasok, masing-masing dengan input, aktivitas dan output</p></div>
   <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
   <div class="body b1">
     <div class="stats" data-a data-s="1" data-fx="kids">
-      <div><div class="fig red">26</div><div class="cap">tangki timbun, ukuran 10.000 dan 20.000 KL</div></div>
-      <div><div class="fig">17.000–19.000</div><div class="cap">KL per hari disalurkan IT Jakarta Plumpang<em>Kel 13 (13.4) mencatat 16.504 kL/hari</em></div></div>
-      <div><div class="fig">212<small>km</small></div><div class="cap">pipa Balongan–Jakarta</div></div>
-      <div><div class="fig">24<small>jam</small></div><div class="cap">operasi tanpa henti untuk DKI, Jawa Barat, Banten</div></div>
+      <div><div class="fig red">105,08<small>jt KL</small></div><div class="cap">volume penjualan 2025</div>
+        <div class="mix" data-grow><i style="flex:70.76;background:var(--navy)"></i><i style="flex:22.07;background:var(--blue)"></i><i style="flex:12.26;background:var(--green-text)"></i></div>
+        <ul class="mixl"><li><b style="background:var(--navy)"></b>Ritel 70,76</li><li><b style="background:var(--blue)"></b>Korporat 22,07</li><li><b style="background:var(--green-text)"></b>Anak usaha 12,26</li></ul></div>
+      <div><div class="fig">120+</div><div class="cap">lokasi terminal BBM</div></div>
+      <div><div class="fig">8</div><div class="cap">regional</div></div>
     </div>
     <div class="illw" data-a style="--i:3"><figure class="ill">
       <img src="assets/illus/terminal.jpg" alt="Ilustrasi isometrik terminal BBM: kapal tanker di jetty, pipa, tangki timbun, laboratorium, filling shed dan gerbang keluar">
-      <span class="pin" style="left:17%;top:14%"><b class="n">1</b><em>Kapal tanker &amp; pipa</em></span>
-      <span class="pin" style="left:6%;top:56%"><b class="n">2</b><em>Pipa dari Balongan</em></span>
-      <span class="pin" style="left:50%;top:3%"><b class="n">3</b><em>Tangki timbun &amp; lab mutu</em></span>
-      <span class="pin hot" style="left:52%;top:47%"><b class="n">4</b><em>Filling shed</em></span>
-      <span class="pin" style="left:84%;top:58%"><b class="n">5</b><em>Gate out ke SPBU</em></span>
+      <span class="pin" style="left:17%;top:14%"><b class="n">1</b><em>Hulu–kapal: tanker sandar</em></span>
+      <span class="pin hot" style="left:50%;top:3%"><b class="n">2</b><em>Terminal BBM: timbun, uji mutu, muat</em></span>
+      <span class="pin" style="left:80%;top:58%"><b class="n">3</b><em>Angkut darat ke SPBU</em></span>
       <figcaption>Ilustrasi alur terminal, bukan skala dan tata letak aktual</figcaption>
     </figure></div>
     <div class="steps">
-      <div class="card" data-a data-s="2"><div class="top"><span class="n">1</span><h4>Sumber pasokan</h4></div><p>Kilang Balongan dan Cilacap, impor (Singapura, Malaysia), antar terminal</p></div>
-      <div class="card" data-a data-s="2"><div class="top"><span class="n">2</span><h4>Penerimaan</h4></div><p>Lewat pipa dan kapal tanker; jadwal kapal diselaraskan dengan kapasitas tangki</p></div>
-      <div class="card" data-a data-s="2"><div class="top"><span class="n">3</span><h4>Penimbunan &amp; mutu</h4></div><p>Pemantauan stok, pemisahan produk, uji visual, densitas dan RON</p></div>
-      <div class="card hl" data-a data-s="2"><div class="top"><span class="n">4</span><h4>Penyaluran</h4></div><p>Mobil tangki berkompartemen 8 KL, 16–32 KL per truk, bisa membawa lebih dari satu produk</p></div>
-      <div class="card" data-a data-s="2"><div class="top"><span class="n">5</span><h4>Pelanggan</h4></div><p>SPBU, industri, DPPU bandara, agen dan pangkalan LPG; mutu dijaga sampai nozzle</p></div>
+      <div class="card" data-a data-s="2"><div class="top"><span class="n">1</span><h4>Hulu–Kapal</h4></div><dl class="io"><dt>Input</dt><dd>Crude &amp; produk impor</dd><dt>Proses</dt><dd>Olah di kilang, angkut kapal</dd><dt>Output</dt><dd>BBM &amp; LPG siap salur</dd></dl></div>
+      <div class="card hl" data-a data-s="2"><div class="top"><span class="n">2</span><h4>Terminal BBM</h4></div><dl class="io"><dt>Input</dt><dd>Pasokan kapal / pipa</dd><dt>Proses</dt><dd>Timbun, uji mutu, muat</dd><dt>Output</dt><dd>Stok siap muat</dd></dl></div>
+      <div class="card" data-a data-s="2"><div class="top"><span class="n">3</span><h4>Angkut Darat</h4></div><dl class="io"><dt>Input</dt><dd>Jadwal muat</dd><dt>Proses</dt><dd>Kirim 16–32 KL per truk</dd><dt>Output</dt><dd>BBM tiba di SPBU</dd></dl></div>
+      <div class="card" data-a data-s="2"><div class="top"><span class="n">4</span><h4>SPBU</h4></div><dl class="io"><dt>Input</dt><dd>Order isi ulang</dd><dt>Proses</dt><dd>Bongkar, simpan, layani</dd><dt>Output</dt><dd>BBM di nozzle</dd></dl></div>
+      <div class="card" data-a data-s="2"><div class="top"><span class="n">5</span><h4>Pelanggan</h4></div><dl class="io"><dt>Input</dt><dd>Kebutuhan mobilitas &amp; industri</dd><dt>Proses</dt><dd>Isi BBM (QR MyPertamina)</dd><dt>Output</dt><dd>Layanan energi diterima</dd></dl></div>
     </div>
   </div>
-  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Ananda, Anggit, Rizka (Kel 9; S01, S03, S08); Kel 13 (13.2, 13.4); paparan manajemen dicatat Kel 11 (C1). Angka throughput berbeda antarsumber dan ditampilkan apa adanya</p></div>
-  <span class="code">B1 · draf Kel 9</span>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 9, deck 9-1 slide 1 (Laporan Tahunan PPN 2025; catatan wawancara lapangan IT Jakarta). Volume penjualan 2025 dalam juta KL</p></div>
+  <span class="code">B1 · Kel 9</span>
   <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
 </section>
 
 <!-- ================================================= 10 B2 TECHNICAL -->
 <section class="slide">
-  <div class="hd"><h2 data-a>Dari gate in sampai gate out: proses teknis mobil tangki</h2><p class="lede" data-a style="--i:1">Rangkaian pemeriksaan yang panjang dan ketat sebelum BBM meninggalkan terminal</p></div>
+  <div class="hd"><h2 data-a>Enam tahap teknis, dari penerimaan sampai SPBU</h2><p class="lede" data-a style="--i:1">Setiap tahap punya fasilitas dan parameter yang terukur; pemuatan di filling shed sudah otomatis</p></div>
   <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
   <div class="body b2b">
     <div class="gate">
-      <div data-a data-s="1"><span class="n">1</span><i data-ic="barrier-block"></i><h4>Gate in</h4><p>Validasi dokumen dan hak akses kendaraan</p></div>
-      <div data-a data-s="1"><span class="n">2</span><i data-ic="stethoscope"></i><h4>Fit check awak</h4><p>Kesiapan dan pemeriksaan kesehatan pengemudi serta awak</p></div>
-      <div data-a data-s="1"><span class="n">3</span><i data-ic="zoom-check"></i><h4>Pemeriksaan kendaraan</h4><p>Kelayakan mobil tangki dan kebersihan kompartemen</p></div>
-      <div data-a data-s="1"><span class="n">4</span><i data-ic="clipboard-list"></i><h4>Loading instruction</h4><p>Penjadwalan dan alokasi produk per kompartemen</p></div>
-      <div class="hl" data-a data-s="1"><span class="n">5</span><i data-ic="droplet-half-2"></i><h4>Pengisian di gantry</h4><p>Terminal Automation System; otomatis dan self-service</p></div>
-      <div data-a data-s="1"><span class="n">6</span><i data-ic="lock-check"></i><h4>Segel &amp; gate out</h4><p>Penyegelan, cek kesesuaian jenis dan volume, keluar terminal</p></div>
+      <div data-a data-s="1"><span class="n">1</span><i data-ic="ship"></i><h4>Penerimaan</h4><p>Kapal tanker dan pipa</p><p class="par">Tanjung Priok via vessel</p></div>
+      <div data-a data-s="1"><span class="n">2</span><i data-ic="building-warehouse"></i><h4>Penimbunan</h4><p>Tangki timbun</p><p class="par">26 tangki · ±324 rb KL</p></div>
+      <div data-a data-s="1"><span class="n">3</span><i data-ic="flask"></i><h4>Uji mutu</h4><p>Lab ISO/IEC 17025</p><p class="par">Pertalite RON 90 · Pertamax 92</p></div>
+      <div class="hl" data-a data-s="1"><span class="n">4</span><i data-ic="truck-loading"></i><h4>Pemuatan</h4><p>Pompa dan loading rack</p><p class="par">Kompartemen 8 KL · truk 16–32 KL</p></div>
+      <div data-a data-s="1"><span class="n">5</span><i data-ic="truck"></i><h4>Pengangkutan</h4><p>Mobil tangki</p><p class="par">Terminal → SPBU, lalu cuci kompartemen</p></div>
+      <div data-a data-s="1"><span class="n">6</span><i data-ic="gas-station"></i><h4>Penerimaan SPBU</h4><p>Tangki pendam dan dispenser</p><p class="par">QR MyPertamina maks. 50 L/hari</p></div>
     </div>
     <div class="b2low">
       <div class="trk" data-a data-s="2">
@@ -783,88 +862,138 @@ html.print #hint, html.shot #hint { display: none; }
           <img src="assets/illus/truck.jpg" alt="Ilustrasi potongan mobil tangki dengan tiga kompartemen berisi produk berbeda">
           <span class="kl" style="left:41%">8 KL</span><span class="kl" style="left:60%">8 KL</span><span class="kl" style="left:79%">8 KL</span>
         </figure>
-        <p><b>Truk 24 KL = 3 kompartemen × 8 KL.</b> Truk 16–32 KL; di Jakarta umumnya 2–4 kompartemen, satu truk bisa membawa lebih dari satu produk <span class="ev">S01 S03</span></p>
+        <p><b>Tiap kompartemen satu produk.</b> Contoh Kel 9: 4 × 8 KL (2 Pertalite, 2 Pertamax) = 32 KL. Truk di atas 8 KL bersekat 1–5 ruang; armada resmi 5–40 KL <span class="ev">9-1 · 9-2</span></p>
       </div>
       <table class="pt" data-a data-s="3">
-        <thead><tr><th>Parameter</th><th>Catatan peserta</th><th style="width:110px">Sumber</th></tr></thead>
+        <thead><tr><th>Parameter</th><th>Catatan Kel 9</th><th style="width:90px">Sumber</th></tr></thead>
         <tbody>
-          <tr class="warn"><td>Titik pengisian</td><td>12 line TAS (Kel 13) · 34 filling point (Kel 11) · ±14 bay, 12 aktif (Jocelyn); perlu verifikasi host</td><td class="ev">13.4 C1 S33</td></tr>
-          <tr><td>Kontrol mutu</td><td>Empat titik inspeksi: keluar terminal, tiba di SPBU, saat dipompa, di nozzle</td><td class="ev">S01 S03</td></tr>
-          <tr><td>Proteksi kebakaran</td><td>Hydrant, foam chamber, water sprayer, early warning system</td><td class="ev">S03</td></tr>
-          <tr><td>Saat sistem terganggu</td><td>Pencatatan beralih manual dan perlu pemeriksaan ulang</td><td class="ev">S15 S18</td></tr>
+          <tr class="warn"><td>Laju pengisian</td><td>800–1.000 L/menit sebelum otomasi; 2.200 L/menit dengan New Gantry System (sejak 2010)</td><td class="ev">9-2</td></tr>
+          <tr><td>Filling shed</td><td>39 flowmeter, turun dari 74 unit; truk 32 KL terisi ±15 menit, belum termasuk administrasi</td><td class="ev">9-2</td></tr>
+          <tr><td>Inspeksi mutu</td><td>Empat lapis: keluar terminal, tiba di SPBU, saat dipompa, di nozzle</td><td class="ev">9-1</td></tr>
+          <tr><td>Di jalan</td><td>249 mobil tangki aktif; maks. 40 km/jam berisi, 60 km/jam kosong</td><td class="ev">9-2</td></tr>
         </tbody>
       </table>
       <figure class="photo" data-a data-s="3"><img src="assets/photos/bi2433.jpg" alt="Petugas dengan rompi New Gantry System memberi penjelasan kepada peserta"><figcaption>Penjelasan di area New Gantry System</figcaption></figure>
     </div>
   </div>
-  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Rizka, Anggit, Ananda (Kel 9; S08, S01, S03); Riki, Yolanda (Kel 11; S15, S18); Erlinda (Kel 12; S25); Jocelyn (Kel 13; S33). Urutan tahap tidak identik di semua laporan</p></div>
-  <span class="code">B2 · draf Kel 9</span>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 9, deck 9-1 slide 3–4 (Profil Operasional PPN Regional JBB; Laporan Tahunan PPN 2025; Bisnis.com 28 Des 2025; wawancara IT Jakarta) dan deck 9-2 slide 8–9 (Pertamina 2018, 2022). Jumlah tangki berbeda di 9-2, lihat B4</p></div>
+  <span class="code">B2 · Kel 9</span>
   <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
 </section>
 
 <!-- ================================================= 11 B3 ORGANIZATION -->
 <section class="slide">
-  <div class="hd"><h2 data-a>Siapa melakukan apa, dan bagaimana mereka berkoordinasi</h2><p class="lede" data-a style="--i:1">Terminal hanya satu mata rantai: armada dan sebagian besar SPBU dikelola mitra di luar kendali langsung Pertamina</p></div>
+  <div class="hd"><h2 data-a>Siapa memegang setiap langkah, dan bagaimana berkoordinasi</h2><p class="lede" data-a style="--i:1">Enam pelaku dalam satu siklus isi ulang SPBU, dari pusat sampai lapangan</p></div>
   <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
   <div class="body b3">
-    <div class="roles">
-      <div class="chain2" data-a><i class="tl-line"></i><div><span class="nd"><i data-ic="building-factory-2"></i></span><b>Terminal ITJ</b><em>Pertamina</em></div><div><span class="nd mit"><i data-ic="truck"></i></span><b>Transportir</b><em>mitra</em></div><div><span class="nd mit"><i data-ic="gas-station"></i></span><b>SPBU</b><em>mayoritas mitra</em></div><div><span class="nd"><i data-ic="users"></i></span><b>Konsumen</b><em>pengguna akhir</em></div></div>
-      <div class="card" data-a data-s="1"><div class="top"><i data-ic="building-factory-2"></i><h4>Integrated Terminal Manager</h4></div><p>Memimpin operasi penerimaan, penimbunan dan penyaluran di ITJ</p><span class="ev">S03</span></div>
-      <div class="card" data-a data-s="1"><div class="top"><i data-ic="clipboard-check"></i><h4>Supervisor operasi &amp; shift</h4></div><p>Mengatur pengisian di filling shed, pengawasan SOP di bay</p><span class="ev">S12 · D3 Kel 12</span></div>
-      <div class="card" data-a data-s="1"><div class="top"><i data-ic="shield-check"></i><h4>HSSE</h4></div><p>Golden Rules, 10 Corporate Life Saving Rules, izin kerja, keselamatan transportasi darat</p><span class="ev">S03 S07</span></div>
-      <div class="card" data-a data-s="1"><div class="top"><i data-ic="server"></i><h4>Fungsi IT</h4></div><p>Terminal Automation System dan jaringan pencatatan pengisian</p><span class="ev">13.4 · S15 S18</span></div>
-      <div class="card" data-a data-s="1"><div class="top"><i data-ic="truck"></i><h4>Transportir &amp; awak</h4></div><p>Armada tidak seluruhnya milik Pertamina; awak wajib fit check sebelum loading</p><span class="ev">S01 S08 S25</span></div>
-      <div class="card" data-a data-s="1"><div class="top"><i data-ic="gas-station"></i><h4>Fungsi Retail &amp; SPBU</h4></div><p>COCO, CODO, DODO; sekitar 200 dari ±7.000 SPBU dioperasikan Pertamina</p><span class="ev">S01 S03</span></div>
+    <div class="roles" style="grid-template-rows:auto auto auto auto minmax(0, 1fr)">
+      <div class="chain2 six" data-a><i class="tl-line"></i>
+        <div><span class="nd mit"><i data-ic="gas-station"></i></span><b>1 SPBU</b><em>Pantau stok, kirim order</em></div>
+        <div><span class="nd"><i data-ic="map-2"></i></span><b>2 Sales Area</b><em>Verifikasi &amp; alokasi</em></div>
+        <div><span class="nd"><i data-ic="calendar-time"></i></span><b>3 Region · Terminal</b><em>Siapkan stok &amp; jadwal</em></div>
+        <div><span class="nd"><i data-ic="building-warehouse"></i></span><b>4 Terminal</b><em>Muat &amp; uji mutu</em></div>
+        <div><span class="nd mit"><i data-ic="truck"></i></span><b>5 Transportir</b><em>Kirim ke SPBU</em></div>
+        <div><span class="nd mit"><i data-ic="users"></i></span><b>6 SPBU · Konsumen</b><em>Bongkar &amp; isi di nozzle</em></div>
+      </div>
+      <p class="loop" data-a style="--i:1"><i data-ic="repeat"></i>Lingkar balik: truk kembali ke terminal, cuci kompartemen, siap kirim lagi</p>
+      <div class="card" data-a data-s="1"><div class="top"><i data-ic="building-skyscraper"></i><h4>Pusat</h4></div><p>BOD dan direktorat; Command Center memantau stok nasional</p><span class="ev">hierarki</span></div>
+      <div class="card" data-a data-s="1"><div class="top"><i data-ic="map-2"></i><h4>Regional</h4></div><p>8 regional; fungsi Sales &amp; Distribution dan terminal</p><span class="ev">hierarki</span></div>
+      <div class="card" data-a data-s="1"><div class="top"><i data-ic="building-community"></i><h4>Sales Area</h4></div><p>Membina SPBU, menerima laporan stok dan antrean</p><span class="ev">hierarki</span></div>
+      <div class="card" data-a data-s="1"><div class="top"><i data-ic="gas-station"></i><h4>SPBU</h4></div><p>COCO (Pertare) dan mitra; layanan ke konsumen</p><span class="ev">hierarki</span></div>
+      <div class="card" data-a data-s="1"><div class="top"><i data-ic="truck"></i><h4>Patra Logistik · Pertare</h4></div><p>Angkut BBM; SPBU COCO dan Bright</p><span class="ev">anak usaha</span></div>
+      <div class="card" data-a data-s="1"><div class="top"><i data-ic="ship"></i><h4>PIS</h4></div><p>Pengangkutan laut, 110 kapal tanker</p><span class="ev">anak usaha</span></div>
       <div class="strip" data-a data-fx="photos"><figure class="photo"><img src="assets/photos/bi2392.jpg" alt="Pemandu terminal memberi arahan kepada peserta di area perpipaan dekat filling shed" style="object-position:50% 35%"><figcaption>Arahan petugas di area perpipaan</figcaption></figure><figure class="photo"><img src="assets/photos/bi2353.jpg" alt="Peserta berbaris di jalur kisi logam menghadap pemandu" style="object-position:50% 40%"><figcaption>Rombongan dipandu menyusuri jalur pipa</figcaption></figure></div>
     </div>
     <div class="coord">
       <div data-a data-s="2"><div class="tag">Mekanisme koordinasi</div>
-        <h4 class="sub" style="margin-top:16px">Pola pasokan RAE</h4>
-        <svg class="raes" viewBox="0 0 560 170" role="img" aria-label="Tiga jalur pasokan: regular, alternative, emergency">
-          <circle cx="40" cy="85" r="30" fill="#05416D"/><text x="40" y="91" class="rl">Pasok</text>
-          <circle cx="520" cy="85" r="30" fill="#086DB5"/><text x="520" y="91" class="rl">ITJ</text>
-          <path data-draw d="M70,85 C170,10 390,10 490,85" fill="none" stroke="#05416D" stroke-width="5"/>
-          <path data-wipe d="M70,85 L490,85" fill="none" stroke="#086DB5" stroke-width="5" stroke-dasharray="14 9"/>
-          <path data-wipe d="M70,85 C170,160 390,160 490,85" fill="none" stroke="#EA1E30" stroke-width="5" stroke-dasharray="3 9" stroke-linecap="round"/>
-          <rect x="196" y="8" width="168" height="34" fill="#fff"/><text x="280" y="31" class="rt" fill="#05416D">Regular · jalur utama</text>
-          <rect x="176" y="68" width="208" height="34" fill="#fff"/><text x="280" y="91" class="rt" fill="#0762A3">Alternative · terminal lain</text>
-          <rect x="186" y="128" width="188" height="34" fill="#fff"/><text x="280" y="151" class="rt" fill="#C41425">Emergency · Crisis Center</text>
-        </svg>
+        <ul class="mech">
+          <li><i data-ic="device-desktop-analytics"></i><div><b>Command Center</b>pantau stok nasional</div></li>
+          <li><i data-ic="users-group"></i><div><b>Rapat harian</b>Region dan terminal</div></li>
+          <li><i data-ic="calendar-time"></i><div><b>Satgas musiman</b>Nataru, Idul Fitri</div></li>
+          <li><i data-ic="shield-check"></i><div><b>Eksternal</b>BPH Migas, Pemda, Polri</div></li>
+        </ul>
       </div>
-      <div data-a data-s="3"><h4 class="sub">Empat pilar manajemen risiko PPN</h4>
-        <div class="pill4"><span>Enterprise Risk Management</span><span>Early Warning System</span><span>Business Resilience</span><span>Internal Control</span></div>
-      </div>
-      <div class="hl" data-a data-s="3"><h4>Celah yang dicatat Kel 9</h4><p>BCP baru tersedia di level depot dan belum menjangkau SPBU. Belum ada protokol eskalasi berjenjang maupun tim respons khusus</p></div>
+      <div class="hl" data-a data-s="3"><h4>Tiga titik SPBU bisa kosong</h4>
+        <ol class="k3"><li><span class="n sm">1</span><div><b>Di order</b>stok tidak dipantau tepat waktu</div></li><li><span class="n sm">2</span><div><b>Di jadwal kirim</b>kesalahan sistem kirim</div></li><li><span class="n sm">3</span><div><b>Di nozzle</b>panic buying menguras stok</div></li></ol></div>
     </div>
   </div>
-  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Ananda, Anggit, Rizka (Kel 9; S03, S01, S08); Sebastian (Kel 11; S12); Erlinda, Isma (Kel 12; S25, S29); deck D3 Kel 12 (tata kelola pilot)</p></div>
-  <span class="code">B3 · draf Kel 9</span>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 9, deck 9-1 slide 2 dan 5 (Laporan Tahunan PPN 2025: struktur organisasi, entitas anak, program Satgas; wawancara IT Jakarta; paparan Business Immersion). Pembagian langkah per pelaku adalah sintesis Kel 9</p></div>
+  <span class="code">B3 · Kel 9</span>
   <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
 </section>
 
 <!-- ================================================= 12 B4 FIELD -->
 <section class="slide">
-  <div class="hd"><h2 data-a>Observasi lapangan: yang kami lihat dan dengar</h2><p class="lede" data-a style="--i:1">Temuan faktual dari kunjungan 7 Oktober 2026, dipisahkan dari interpretasi</p></div>
+  <div class="hd"><h2 data-a>Observasi lapangan: ITJ dalam satu layar</h2><p class="lede" data-a style="--i:1">Kunjungan 7 Oktober 2026: satu terminal, tiga peran: timbun, uji mutu dan salurkan</p></div>
   <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
   <div class="body b4">
     <div class="pgrid" data-a data-fx="photos">
-      <figure class="photo"><img src="assets/photos/bi2401.jpg" alt="Briefing HSSE di depan mobil tangki"><figcaption>Briefing HSSE di area pengisian</figcaption></figure>
-      <figure class="photo"><img src="assets/photos/bi2294.jpg" alt="Pemandu berhelm memberi arahan keselamatan di lorong bus" style="object-position:30% 40%"><figcaption>Arahan keselamatan di bus</figcaption></figure>
-      <figure class="photo"><img src="assets/photos/bi2233.jpg" alt="Peserta diperiksa tekanan darahnya sebelum masuk area operasi" style="object-position:40% 50%"><figcaption>Cek kesehatan sebelum tur</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2401.jpg" alt="Briefing keselamatan di depan mobil tangki"><figcaption>Briefing keselamatan di area pemuatan</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2294.jpg" alt="Pemandu berhelm memberi arahan keselamatan di lorong bus" style="object-position:30% 40%"><figcaption>Briefing keselamatan di bus</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2233.jpg" alt="Peserta diperiksa tekanan darahnya sebelum masuk area operasi" style="object-position:40% 50%"><figcaption>Cek kesehatan peserta</figcaption></figure>
       <figure class="photo"><img src="assets/photos/bi2347.jpg" alt="Penjelasan jalur pipa terminal"><figcaption>Penjelasan jalur pipa</figcaption></figure>
-      <figure class="photo"><img src="assets/photos/bi2539.jpg" alt="Foto bersama peserta di depan gerbang ITJ"><figcaption>Peserta di gerbang ITJ</figcaption></figure>
-      <figure class="photo"><img src="assets/photos/bi2633.jpg" alt="Presentasi case challenge: Investment &amp; Operational Trade-Off"><figcaption>Case challenge kapasitas pengisian</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2614.jpg" alt="Mobil tangki di jalan dalam kawasan terminal dengan kerucut lalu lintas"><figcaption>Jalur mobil tangki di kawasan</figcaption></figure>
+      <figure class="photo"><img src="assets/photos/bi2633.jpg" alt="Presentasi case challenge: Investment &amp; Operational Trade-Off"><figcaption>Sesi tanya jawab dan case</figcaption></figure>
     </div>
-    <div class="finds">
-      <div data-a data-s="1" data-fx="left"><span class="n">1</span><div><h4>Budaya HSSE terlihat nyata</h4><p>Disiplin keselamatan pada staf dan pimpinan; Patuh, Intervensi, Peduli diingatkan di area kerja <span class="ev">S07</span></p></div></div>
-      <div data-a data-s="2" data-fx="left"><span class="n">2</span><div><h4>Gate in sampai gate out panjang dan ketat</h4><p>Termasuk pemeriksaan kesehatan awak mobil tangki <span class="ev">S08</span></p></div></div>
-      <div data-a data-s="3" data-fx="left"><span class="n">3</span><div><h4>Otomasi masih bergantung pada jaringan</h4><p>Saat jaringan atau server terganggu, pencatatan beralih manual <span class="ev">S15 S18</span></p></div></div>
-      <div data-a data-s="4" data-fx="left"><span class="n">4</span><div><h4>Order harus pas dengan kompartemen</h4><p>Jumlah dan campuran pesanan SPBU mengikuti kapasitas truk, bukan hanya stok terminal <span class="ev">S06</span></p></div></div>
-      <div data-a data-s="5" data-fx="left"><span class="n">5</span><div><h4>Case challenge: 20.000 KL dalam 24 jam</h4><p>Skenario 8 bay, maksimal 3 selang per bay, truk 24 KL tiga kompartemen, CAPEX maksimal US$24 juta <span class="ev">S10 S37</span></p></div></div>
+    <div class="b4r">
+      <div class="kp5" data-a data-s="1" data-fx="kids">
+        <div class="big"><div class="fig red">291.889</div><div class="cap">KL kapasitas timbun</div></div>
+        <div><div class="fig">24</div><div class="cap">tangki timbun</div></div>
+        <div><div class="fig">791</div><div class="cap">SPBU dilayani</div></div>
+        <div class="big"><div class="fig">16.504</div><div class="cap">KL/hari rata-rata disalurkan</div></div>
+        <div><div class="fig">20<small>%</small></div><div class="cap">distribusi BBM nasional</div></div>
+        <div class="nt"><b>Beda angka di Kel 9</b>9-1 menulis 26 tangki, ±324 rb KL</div>
+      </div>
+      <div class="finds">
+        <div data-a data-s="2" data-fx="left"><span class="n">F1</span><div><h4>Prosedur masuk ketat</h4><p>PDL + APD lengkap, safety induction, cek tekanan darah, selalu didampingi; rokok, api dan HP dilarang di area proses</p></div></div>
+        <div data-a data-s="3" data-fx="left"><span class="n">F2</span><div><h4>Mobil tangki berlabel jelas</h4><p>24.000 L dan 32.000 L, nomor darurat 135 dan peringatan blind spot</p></div></div>
+        <div data-a data-s="4" data-fx="left"><span class="n">F3</span><div><h4>Jalur keluar terpisah</h4><p>Mobil tangki keluar lewat jalur khusus dengan rambu dan barrier</p></div></div>
+        <div data-a data-s="5" data-fx="left"><span class="n">F4</span><div><h4>Tangki besar, banyak bay</h4><p>Tangki timbun 5.000 dan 10.000 m³ dan beberapa bay pemuatan</p></div></div>
+      </div>
     </div>
   </div>
-  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> laporan BI Alifarsyad, Rizka, Anggito (Kel 9; S07, S08, S06); Riki, Yolanda, Zidan (Kel 11; S15, S18, S10); Nabila (Kel 13; S37). Parameter case challenge adalah skenario latihan, bukan fasilitas aktual</p></div>
-  <span class="code">B4 · draf Kel 9</span>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 9, deck 9-2 slide 3 dan 5 (Kementerian ESDM 2023; Pertamina 2018–2026) dan deck 9-1 slide 6 (dokumentasi dan observasi tim di IT Jakarta). 16.504 KL/hari sama dengan catatan Kel 13 (13.4)</p></div>
+  <span class="code">B4 · Kel 9</span>
+  <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
+</section>
+
+<!-- ================================================= 13 B5 FINDINGS -->
+<section class="slide">
+  <div class="hd"><h2 data-a>Antrean lahir di ujung rantai, bukan di terminal</h2><p class="lede" data-a style="--i:1">Yang belum terintegrasi bukan pipanya, tetapi sinyal permintaan dari SPBU</p></div>
+  <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
+  <div class="body b5">
+    <div class="tm" data-a data-s="1"><span class="mono">Temuan 01</span><h3>Antrean tidak terjadi di terminal</h3>
+      <div class="hero"><div class="fig">±20<small>km</small></div><p>Terminal mengeluarkan BBM sesuai jadwal; antrean baru muncul sejauh ini, di depan nozzle SPBU</p></div>
+      <ul class="why">
+        <li><i data-ic="clock-hour-4"></i><div><b>Jam kirim menumpuk</b>pengiriman datang di jam yang sama</div></li>
+        <li><i data-ic="gas-station"></i><div><b>Kapasitas pompa</b>nozzle dan kasir jadi bottleneck</div></li>
+        <li><i data-ic="trending-up"></i><div><b>Lonjakan lokal</b>permintaan naik mendadak</div></li>
+      </ul></div>
+    <div class="tm" data-a data-s="2"><span class="mono">Temuan 02</span><h3>Stok habis, padahal tangki penuh</h3>
+      <div class="hero"><div class="fig">791</div><p>SPBU dilayani ITJ. Stok terminal terkalkulasi; stok di SPBU tidak terbaca</p></div>
+      <div class="two"><div><b>SPBU swasta</b>Pengawasan terbatas; laporan stok masih manual</div><div><b>SPBU Pertamina Group</b>Standar internal ada; eksekusi belum seragam</div></div>
+      <ul class="dots"><li>Order berbasis perkiraan, bukan konsumsi</li><li>Tidak ada sinyal permintaan dari SPBU</li></ul>
+      <p class="hyp">Hipotesis kerja: perlu diuji dengan data penjualan harian per SPBU</p></div>
+    <div class="tm" data-a data-s="3"><span class="mono">Temuan 03</span><h3>Stok cukup, permintaan yang tidak</h3>
+      <div class="cyc"><span>Hoaks beredar</span><i>→</i><span>Warga cemas</span><i>→</i><span>Borong &amp; antre</span><i>→</i><span>Foto antrean jadi hoaks baru</span><i data-ic="repeat"></i></div>
+      <blockquote>“Presiden imbau warga bawa bekal saat antre BBM”<cite>dinyatakan hoaks oleh Polri</cite></blockquote>
+      <div class="k3s"><div><div class="fig red">&gt;5<small>jam</small></div><div class="cap">antrean SPBU</div></div><div><div class="fig">20–25<small>rb</small></div><div class="cap">Rp/L Pertalite eceran</div></div><div><div class="fig">2<small>pekan</small></div><div class="cap">kelangkaan</div></div></div>
+      <p class="hyp">Sumatera Utara, Desember 2025. Kapasitas terminal dirancang untuk permintaan normal, bukan kepanikan</p></div>
+    <div class="lay" data-a data-s="4" data-fx="kids">
+      <div><b>Pasokan</b><p>Kilang, kapal dan stok terminal mencukupi</p><span class="st ok">Kuat</span></div>
+      <div><b>Distribusi</b><p>Filling shed dan 249 truk bekerja sesuai jadwal</p><span class="st ok">Jalan</span></div>
+      <div class="bad hl"><b>Retail &amp; permintaan</b><p>Stok manual, order perkiraan, panic buying, hoaks</p><span class="st">Bottleneck</span></div>
+    </div>
+    <div class="rec" data-a data-s="5" data-fx="kids">
+      <div class="rl">Rekomendasi Kel 9</div>
+      <div><i data-ic="device-desktop-analytics"></i><h4>Data stok real-time</h4><p>Satu dashboard untuk 791 SPBU; replenishment otomatis</p></div>
+      <div><i data-ic="clock-hour-4"></i><h4>Ratakan jam kirim</h4><p>Sebar pengiriman sepanjang hari, potong antrean truk dan pompa</p></div>
+      <div><i data-ic="speakerphone"></i><h4>Satu kanal anti-hoaks</h4><p>Bantah cepat, angka jelas, satu suara</p></div>
+      <div><i data-ic="gauge"></i><h4>Ukur antrean</h4><p>Waktu tunggu di SPBU jadi KPI layanan, bukan hanya volume</p></div>
+    </div>
+  </div>
+  <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber:</b> Kel 9, deck 9-2 slide 10–14; RRI 8 Des 2025 (Sumatera Utara); Tribratanews Polri 2026 (contoh hoaks). Rekomendasi Kel 9 dapat diuji dalam satu kuartal; berbeda fokus dengan usulan Kel 12 di D2</p></div>
+  <span class="code">B5 · Kel 9</span>
   <div class="tri"><i></i><i></i><i></i></div><div class="pg"><span></span></div>
 </section>
 
@@ -1037,16 +1166,16 @@ html.print #hint, html.shot #hint { display: none; }
   <img class="logo" src="assets/brand/ppn-color.svg" alt="Pertamina Patra Niaga">
   <div class="body d1">
     <div class="tline"><i class="tl-line" data-a data-fx="none"></i>
-      <div class="yr"><div class="yl" data-a data-fx="left"><i></i><span>2015</span></div><div class="chips" data-a data-s="1" data-fx="kids"><div class="chip c1"><span class="n sm">1</span><div><b>Auto truck scheduling</b><p>Penjadwalan MT otomatis di IT Plumpang <span class="ev">Petromindo</span></p></div></div></div></div>
-      <div class="yr"><div class="yl" data-a data-fx="left"><i></i><span>2021</span></div><div class="chips" data-a data-s="1" data-fx="kids"><div class="chip c2"><span class="n sm">2</span><div><b>Digitalisasi SPBU &amp; Subsidi Tepat</b><p>5.518 SPBU; kendaraan tak terdaftar diblokir <span class="ev">Bisnis.com</span></p></div></div></div></div>
-      <div class="yr wide"><div class="yl" data-a data-fx="left"><i></i><span>2023</span></div><div class="chips" data-a data-s="1" data-fx="kids"><div class="chip c1"><span class="n sm">1</span><div><b>PIEDCC / Pertamina Hub</b><p>Command center stok SPBU real-time <span class="ev">Pertamina.com</span></p></div></div><div class="chip c1"><span class="n sm">1</span><div><b>Relokasi ke JIGT Kalibaru</b><p>Green terminal 64 ha, hingga 6 juta barel <span class="ev">Kontan</span></p></div></div><div class="chip c3"><span class="n sm">3</span><div><b>Perbaikan pasca kebakaran</b><p>Auto shut-off, pagar perimeter, deteksi digital <span class="ev">Jakarta Post</span></p></div></div><div class="chip c3"><span class="n sm">3</span><div><b>Fire drill &amp; early warning</b><p>Bersama Pemprov DKI; buffer zone dihidupkan <span class="ev">VOI</span></p></div></div></div></div>
-      <div class="yr"><div class="yl" data-a data-fx="left"><i></i><span>2026</span></div><div class="chips" data-a data-s="1" data-fx="kids"><div class="chip c2"><span class="n sm">2</span><div><b>EDTP 3.0</b><p>Tracking real-time armada kapal inbound <span class="ev">BCA Sekuritas</span></p></div></div></div></div>
-      <div class="yr"><div class="yl" data-a data-fx="left"><i></i><span>Berjalan</span></div><div class="chips" data-a data-s="1" data-fx="kids"><div class="chip c2"><span class="n sm">2</span><div><b>Otomasi pengisian</b><p>Self-service; manual saat jaringan putus <span class="ev">O D</span></p></div></div><div class="chip c3"><span class="n sm">3</span><div><b>SmartMT (pilot)</b><p>Digitalisasi mobil tangki, FT Ujung Berung <span class="ev">VOI</span></p></div></div></div></div>
+      <div class="yr"><div class="yl" data-a data-s="1" data-fx="left"><i></i><span>2015</span></div><div class="chips" data-a data-s="1" data-fx="kids"><div class="chip c1"><span class="n sm">1</span><div><b>Auto truck scheduling</b><p>Penjadwalan MT otomatis di IT Plumpang <span class="ev">Petromindo</span></p></div></div></div></div>
+      <div class="yr"><div class="yl" data-a data-s="2" data-fx="left"><i></i><span>2021</span></div><div class="chips" data-a data-s="2" data-fx="kids"><div class="chip c2"><span class="n sm">2</span><div><b>Digitalisasi SPBU &amp; Subsidi Tepat</b><p>5.518 SPBU; kendaraan tak terdaftar diblokir <span class="ev">Bisnis.com</span></p></div></div></div></div>
+      <div class="yr wide"><div class="yl" data-a data-s="3" data-fx="left"><i></i><span>2023</span></div><div class="chips" data-a data-s="3" data-fx="kids"><div class="chip c1"><span class="n sm">1</span><div><b>PIEDCC / Pertamina Hub</b><p>Command center stok SPBU real-time <span class="ev">Pertamina.com</span></p></div></div><div class="chip c1"><span class="n sm">1</span><div><b>Relokasi ke JIGT Kalibaru</b><p>Green terminal 64 ha, hingga 6 juta barel <span class="ev">Kontan</span></p></div></div><div class="chip c3"><span class="n sm">3</span><div><b>Perbaikan pasca kebakaran</b><p>Auto shut-off, pagar perimeter, deteksi digital <span class="ev">Jakarta Post</span></p></div></div><div class="chip c3"><span class="n sm">3</span><div><b>Fire drill &amp; early warning</b><p>Bersama Pemprov DKI; buffer zone dihidupkan <span class="ev">VOI</span></p></div></div></div></div>
+      <div class="yr"><div class="yl" data-a data-s="4" data-fx="left"><i></i><span>2026</span></div><div class="chips" data-a data-s="4" data-fx="kids"><div class="chip c2"><span class="n sm">2</span><div><b>EDTP 3.0</b><p>Tracking real-time armada kapal inbound <span class="ev">BCA Sekuritas</span></p></div></div></div></div>
+      <div class="yr"><div class="yl" data-a data-s="5" data-fx="left"><i></i><span>Berjalan</span></div><div class="chips" data-a data-s="5" data-fx="kids"><div class="chip c2"><span class="n sm">2</span><div><b>Otomasi pengisian</b><p>Self-service; manual saat jaringan putus <span class="ev">O D</span></p></div></div><div class="chip c3"><span class="n sm">3</span><div><b>SmartMT (pilot)</b><p>Digitalisasi mobil tangki, FT Ujung Berung <span class="ev">VOI</span></p></div></div></div></div>
     </div>
     <div class="gaps">
-      <div class="g" data-a data-s="2"><div class="top"><span class="n">1</span><h3>Keandalan &amp; kapasitas distribusi</h3></div><div class="gap"><b>Gap tersisa</b><p>Jadwal truk belum membaca pola order SPBU dan kecocokan kompartemen; antrean puncak masih terjadi</p></div></div>
-      <div class="g hlg" data-a data-s="2"><div class="top"><span class="n">2</span><h3>Keandalan sistem otomasi &amp; data</h3></div><div class="gap"><b>Gap terbesar</b><p>Belum ada mode offline yang teruji dan rekonsiliasi otomatis; fallback masih form manual</p></div></div>
-      <div class="g" data-a data-s="2"><div class="top"><span class="n">3</span><h3>Keselamatan &amp; kepatuhan di kawasan padat</h3></div><div class="gap"><b>Gap tersisa</b><p>Pengawasan HSSE transportir belum seragam; SmartMT di Plumpang perlu dikonfirmasi host</p></div></div>
+      <div class="g" data-a data-s="6"><div class="top"><span class="n">1</span><h3>Keandalan &amp; kapasitas distribusi</h3></div><div class="gap"><b>Gap tersisa</b><p>Jadwal truk belum membaca pola order SPBU dan kecocokan kompartemen; antrean puncak masih terjadi</p></div></div>
+      <div class="g hlg" data-a data-s="6"><div class="top"><span class="n">2</span><h3>Keandalan sistem otomasi &amp; data</h3></div><div class="gap"><b>Gap terbesar</b><p>Belum ada mode offline yang teruji dan rekonsiliasi otomatis; fallback masih form manual</p></div></div>
+      <div class="g" data-a data-s="6"><div class="top"><span class="n">3</span><h3>Keselamatan &amp; kepatuhan di kawasan padat</h3></div><div class="gap"><b>Gap tersisa</b><p>Pengawasan HSSE transportir belum seragam; SmartMT di Plumpang perlu dikonfirmasi host</p></div></div>
     </div>
   </div>
   <div class="ft"><span class="tagline">Energizing Your Journey</span><p class="src"><b>Sumber Kel 12:</b> Petromindo 12 Des 2015; Pertamina.com 29 Des 2023; Kontan 9 Agu 2023; VOI 29 Des 2023; Bisnis.com 22 Jan 2021; BCA Sekuritas 15 Apr 2026; VOI (SmartMT); The Jakarta Post 17 Mar 2023; O, D = temuan BI</p></div>
@@ -1200,8 +1329,9 @@ html.print #hint, html.shot #hint { display: none; }
       <p><b>13.2</b> Business Unit Overview ITJ Plumpang: Pertamina Patra Niaga; Kompas.com, 15 Feb 2026; Kantor Staf Presiden, 22 Jun 2026</p>
       <p><b>13.3</b> Business Model: PPN Annual Report dan Sustainability Report 2023; Pertamina Retail; ANTARA, 4 Feb 2026; detikFinance, 1 Sep 2026; PHE laporan keuangan audit 2025</p>
       <p><b>13.4</b> Pusat Kendali Operasi IT Plumpang (wilayah penyaluran, 16.504 kL/hari, 12 line TAS)</p>
-      <h4 style="border-color:var(--green);margin-top:22px">B · Kelompok 9 (draf)</h4>
-      <p>Laporan BI individu S01–S09: Anggit, Dara, Ananda, Ratu, Irsan, Anggito, Alifarsyad, Rizka, Krisna. Pendukung: S10–S39 dari Kel 11, 12, 13 sesuai kode di slide</p>
+      <h4 style="border-color:var(--green);margin-top:22px">B · Kelompok 9</h4>
+      <p><b>9-1</b> End-to-End Process, Technical Operational Process, Organization &amp; Coordination, Field Observation: Laporan Tahunan PPN 2025; Profil Operasional PPN Regional JBB; Bisnis.com, 28 Des 2025; wawancara IT Jakarta</p>
+      <p><b>9-2</b> Field Observation ITJ: Kementerian ESDM 2023; Pertamina 2018–2026; RRI, 8 Des 2025; Tribratanews Polri 2026</p>
     </div>
     <div data-a style="--i:3">
       <h4 style="border-color:var(--red)">C · Kelompok 11</h4>
@@ -1213,7 +1343,8 @@ html.print #hint, html.shot #hint { display: none; }
     </div>
     <div data-a style="--i:4">
       <h4 style="border-color:var(--ink-3)">Angka yang berbeda antarsumber</h4>
-      <p><b>Penyaluran harian:</b> 16.504 kL (Kel 13, 13.4) · 17.000–19.000 KL (paparan manajemen via Kel 11; Ananda, Kel 9)</p>
+      <p><b>Penyaluran harian:</b> 16.504 kL (Kel 13, 13.4; Kel 9, 9-2) · 17.000–19.000 KL (paparan manajemen via Kel 11)</p>
+      <p><b>Tangki timbun:</b> 24 tangki, 291.889 KL (Kel 9, 9-2) · 26 tangki, ±324 rb KL (Kel 9, 9-1)</p>
       <p><b>Lembaga penyalur:</b> &gt;1.000 lembaga dan kanal (Kel 13) · &gt;120 lembaga penyalur (Kel 11, Kel 12)</p>
       <p><b>Titik pengisian:</b> 12 line TAS (Kel 13) · 34 filling point (Kel 11) · ±14 bay fisik, 12 aktif (Jocelyn)</p>
       <h4 style="border-color:var(--ink-3);margin-top:22px">Foto dan identitas</h4>
@@ -1228,7 +1359,7 @@ html.print #hint, html.shot #hint { display: none; }
 
 <!-- ================================================= 25 CLOSING -->
 <section class="slide close">
-  <div class="bg" data-a data-fx="push"><img src="assets/photos/bi2774.jpg" alt="Foto bersama peserta dan manajemen di depan gerbang Integrated Terminal Jakarta"></div>
+  <div class="bg" data-a data-fx="push"><img src="assets/photos/bi2505.jpg" alt="Foto bersama peserta berhelm dan berpakaian kerja safety di depan gerbang Integrated Terminal Jakarta"></div>
   <div class="t"><h2 data-a>Terima kasih</h2><p data-a style="--i:1">Integrated Terminal Jakarta · 7 Oktober 2026</p></div>
   <div class="tri"><i></i><i></i><i></i></div>
 </section>

@@ -1,5 +1,12 @@
 # Log
 
+[progress] 2026-11-10 · Deck v3.1 (branch modifikasi-2, worktree Rabuan-modifikasi-2): user fixes + Kel 9 rework
+- Task: copy Rabuan-modifikasi as a new branch and fix four points from the user.
+- Files: src/index.src.html, index.html, SOURCES.md, docs/log.md.
+- Changes: (1) slide 4 A1 fleet: figures moved to a row under the illustration, each centred on its asset (kapal, pipa, gerbong, MT BBM, MT LPG) with a tick and dot; image top whitespace cropped, caption moved top right. (2) Section B rebuilt from Kel 9's own decks 9-1 and 9-2 (uploaded 10 Nov): B1 five nodes with input/process/output + 2025 sales mix, B2 six technical stages + New Gantry System parameters, B3 six-actor refill cycle + hierarchy + coordination + three points where SPBU runs dry, B4 ITJ figures + F1–F4, new B5 findings 01–03, synthesis and four recommendations; "draf" labels removed; divider, agenda and Sources updated. Deck is now 26 slides (D1 moved from 19 to 20). (3) D1 timeline: one year per click (2015, 2021, 2023, 2026, Berjalan), gaps on click 6. (4) Closing photo: bi2505 (group in helmets and coveralls at the ITJ gate) replaces bi2774.
+- Verification: slides 4, 8–13, 20 (steps 1, 3, 6), 25, 26 captured at 1920x1080; no console errors; PDF exported.
+- Next: user review; merge modifikasi-2 when approved.
+
 [progress] 2026-11-10 · Impeccable doctor repairs
 - Task: user asked to fix the doctor findings.
 - Files: DESIGN.md (rewritten into the eight canonical sections with token frontmatter; North Star "Satu Rit BBM"; v2/v3 content kept), .impeccable/design.json (sidecar: colour ramps, shadows, motion, 8 components, narrative), PRODUCT.md (schema stamp, Platform, Positioning, Operating Context, Evidence on Hand, Product Principles; confirmed by user), .impeccable/config.json (buildPath comp, user choice).

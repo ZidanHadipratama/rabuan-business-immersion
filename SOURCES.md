@@ -18,7 +18,7 @@
 - Kel 13 (Rabuan folder): Kelompok 13.1 Proses Bisnis PPN, 13.2 Business Unit Overview ITJ, 13.3 Business Model, 13.4 Pusat Kendali Operasi IT Plumpang (image).
 - Kel 11: `Kel 11/ALP-00_Kelompok_11_Deck_Pemetaan_Business_Immersion.pptx`, slides C1–C4.
 - Kel 12 (Rabuan folder): "Kelompok 12", D1–D4 (Gantt bars read from the rendered slide).
-- Kel 9: no deck as of 10 Nov 2026. Section B drafted from the nine Kel 9 individual BI reports (S01–S09) in `../Video/drive-peserta-kelompok-9-11-12-13/Kelompok 9/`, summarised in `RANGKUMAN-KEGIATAN-PERTAMINA.md` (S-codes used on slides), plus S10–S39 where cited.
+- Kel 9: two decks uploaded to Drive folder `Rabuan` on 10 Nov 2026 by Krisna: "Kelompok 9 - 1" (id 1QeGPMTUmHumEOysQFsruZVGinLE-uDQS; End-to-End Process, refill flow, Technical Operational Process, one-litre journey, Organization & Coordination, Field Observation F1–F4) and "Kelompok 9 - 2" (id 1YD5KxhZgdw-8tOA1X6vaqGVUB6t1YdRu; Field Observation ITJ: scale, supply chain, entry procedure, tanks, New Gantry System, fleet, findings 01–03, synthesis, recommendations). Section B (B1–B5) is built from these decks only; slide footers cite 9-1 / 9-2 and the sources the decks name. Conflict inside Kel 9: 26 tanks, ±324 thousand KL (9-1) vs 24 tanks, 291,889 KL (9-2); both shown. The earlier draft from individual reports (S01–S09) is in git history (branch `modifikasi`).
 
 ## Images (provenance)
 | File | Source |
