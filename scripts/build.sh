@@ -35,11 +35,11 @@ for r, (task, pic, s, e) in enumerate(rows, start=2):
         out.append(f'<div class="c" style="grid-row:{r};grid-column:{3+j}"></div>')
     post = e == 11
     label = '<em>6–12 bln</em>' if post else ''
-    out.append(f'<div class="bar{" post" if post else ""}" style="grid-row:{r};grid-column:{3+s}/{3+e};border:0">{label}<i></i></div>')
+    out.append(f'<div class="bar{" post" if post else ""}" data-a data-s="1" data-fx="none" style="grid-row:{r};grid-column:{3+s}/{3+e};border:0">{label}<i></i></div>')
 ms = 2 + len(rows)
 out.append(f'<div class="ms" style="grid-row:{ms};grid-column:1/3;justify-content:flex-start;padding-left:18px;font-family:inherit;font-weight:600;color:var(--ink-3)">Milestone ALP</div>')
-out.append(f'<div class="ms" style="grid-row:{ms};grid-column:8"><b>MS2</b></div>')
-out.append(f'<div class="ms" style="grid-row:{ms};grid-column:12"><b>MS3</b></div>')
+out.append(f'<div class="ms" data-a data-s="1" data-fx="fade" style="grid-row:{ms};grid-column:8"><b>MS2</b></div>')
+out.append(f'<div class="ms" data-a data-s="1" data-fx="fade" style="grid-row:{ms};grid-column:12"><b>MS3</b></div>')
 
 def symbol(m):
     svg = (icons / f"{m.group(1)}.svg").read_text()

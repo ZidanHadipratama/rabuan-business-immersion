@@ -29,8 +29,11 @@ Corporate consulting deck in the manner of the PT Semen Indonesia Business Immer
 - `.body` is absolutely positioned; never give it `height: 100%` (it becomes 1080 tall). Grids that hold photos need `grid-template-rows: minmax(0, 1fr)`.
 
 ## Motion
-- One entrance per visit: `[data-a]` children fade and rise 18px, 70 ms stagger, curve cubic-bezier(.2,0,0,1). Slides crossfade 350 ms. No 3D, no loops. Reduced motion and `?print` show final state.
+- v3 (10 Nov 2026, branch `modifikasi`): build per click with GSAP 3 core (`vendor/gsap.min.js`, offline). Each slide is one paused timeline; `[data-a]` marks a part of the build, `data-s="n"` the click that reveals it (0 = on arrival), `data-fx` how it enters (rise, left, fade, wipe, photo, photos, kids, slash, stripes, push, none). → / space / click reveals the next build, then moves on; ← steps back one build; ↓ ↑ skip whole slides. Progress dots sit above the tri-bar.
+- What follows from class names, not markup: `.fig` numbers count up in Indonesian format; `.pin` and `.fp` labels pop in order; Gantt bars and `.tl-line` rules grow from the left; `[data-draw]` paths draw, `[data-wipe]` dashed paths wipe; wheel `.seg` sweep in; the one red highlight card (`.hl` and friends) draws its outline last.
+- Focal moment: cover and dividers open the photo along the logo slant from the right edge, stripes drop in, then the text. Closing photo pushes in slowly.
+- One curve family (expo.out for arrivals, expo.inOut for wipes and lines); durations .5 small parts, .8 blocks, 1.2 photos, lines and counters; 90 ms stagger. No 3D, no loops. Reduced motion keeps the builds as .3 s fades; `?print` skips GSAP and shows everything; `#n.k` opens slide n with k builds shown.
 
 ## Rules
 - Every number has its group and source on the slide; disagreeing numbers are shown side by side, never harmonised.
-- Photos are the participants' BI photos only. No generated imagery (13.4 is a Gemini image and is not used as a picture).
+- Photos are the participants' BI photos only (13.4 is a Gemini image and is not used as a picture). Concepts with no photo use Codex isometric illustrations on white, multiplied onto the slide and labelled "ilustrasi, bukan skala".

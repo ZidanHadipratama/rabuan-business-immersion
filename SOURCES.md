@@ -23,8 +23,9 @@
 ## Images (provenance)
 | File | Source |
 |---|---|
-| `assets/photos/bi1970, 2081, 2189, 2319, 2347, 2387, 2388, 2401, 2433, 2505, 2539, 2611, 2614, 2633, 2637, 2725, 2774, 2094, 2120, 2353, 2364, 2392, 2659.jpg` | Participants' Business Immersion photos, ITJ Plumpang, 7 Oct 2026 (Fujifilm, originals DSCFxxxx in `Video/research_notes/business-immersion/originals`), resized to 2400 px |
+| `assets/photos/bi1970, 2081, 2189, 2319, 2347, 2387, 2388, 2401, 2433, 2505, 2539, 2611, 2614, 2633, 2637, 2725, 2774, 2094, 2120, 2353, 2364, 2392, 2659, 2233, 2294.jpg` | Participants' Business Immersion photos, ITJ Plumpang, 7 Oct 2026 (Fujifilm, originals DSCFxxxx in `Video/research_notes/business-immersion/originals`), resized to 2400 px |
 | `assets/illus/terminal.jpg, chain.jpg, truck.jpg, offline.jpg` | AI-generated illustrations (Codex CLI image generation, 10 Nov 2026), no text or logos; labelled on-slide as ilustrasi, bukan skala. Used on A2, B1, B2, D2. Not a depiction of the real ITJ layout |
+| `assets/illus/fleet.jpg, bmodel.jpg, buffer.jpg` | AI-generated illustrations (Codex CLI image generation, 10 Nov 2026, deck v3), same style and rules. fleet: A1 asset fleet carrying the Kel 13 figures; bmodel: A4 value chain strip; buffer: C1 terminal with houses against the wall (buffer zone context from Bisnis.com 20 Mar 2023). Not the real ITJ layout |
 | Wheel (C3), timeline (D1), RAE paths (B3), truck pictogram (D4) | Inline SVG drawn in `src/index.src.html`; icons from Tabler (MIT) |
 
 ## Open number conflicts (shown with their own sources, not harmonised)

@@ -1,5 +1,13 @@
 # Log
 
+[progress] 2026-11-10 · Deck v3 (branch modifikasi, worktree Rabuan-modifikasi): GSAP build per click + more visuals
+- Task: user asked to improve the deck with impeccable, gsap-core, motion-design, motion-prompt and unslop, with many more visuals; chose build per click and new Codex illustrations.
+- Files: src/index.src.html (engine, steps on every slide, A1 and A4 rebuilt, B4 six photos, C1 buffer illustration), scripts/build.sh (Gantt bars and milestones are builds), vendor/gsap.min.js (GSAP 3.15.1 core), assets/illus/{fleet,bmodel,buffer}.jpg (Codex), assets/photos/bi{2233,2294}.jpg, DESIGN.md, SOURCES.md, index.html.
+- Changes: 47 click builds over 18 slides; counters, pins, drawn lines, wipes, highlight outline last; cover and dividers open the photo along the slant. A1: fleet illustration with the five Kel 13 figures as labels (photo that repeated divider A removed). A4: value chain strip with the three stage tags, six cards in one row, insight bar. B4: health check and bus safety briefing photos added. C1: buffer-zone illustration replaces a second HSSE briefing photo.
+- Verification: all 25 slides captured in final state (#n.9) and mid-build frames for cover, divider B, A1, C2, C3, D2, D3, D4; no console errors; PDF 25 pages via ?print; impeccable detect shows only pre-existing heading-level and dashed-line findings.
+- Unslop audit: light slop, polish mode; no copy or facts changed. motion-prompt catalog not used (needs the gallery pick; the motion here is built from the deck's own grammar).
+- Next: user review in the browser; merge `modifikasi` into main when approved.
+
 [progress] 2026-11-10 · Git repository initialised for Rabuan/
 - Task: put the deck under version control and commit the current state with a change log.
 - Files: .gitignore (node_modules/, lib/ unused v1 vendor libs, *.pdf build output), initial commit on branch main (18 MB tracked: src, scripts, docs, assets, fonts, index.html, archive/ v0-v2 without PDFs).
