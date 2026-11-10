@@ -1,5 +1,11 @@
 # Log
 
+[progress] 2026-11-10 · B5 illustrations (Codex)
+- Task: user asked for Codex-generated images to support the presentation.
+- Files: assets/illus/{queue,stock,hoax}.jpg (Codex, trimmed, whites levelled), src/index.src.html (B5 cards 01–03 get one strip each, captioned ilustrasi), index.html, SOURCES.md, PDF.
+- Verification: slide 13 captured at 1920x1080, no overlap; PDF 26 pages.
+- Next: user review.
+
 [progress] 2026-11-10 · Deck v3.1 (branch modifikasi-2, worktree Rabuan-modifikasi-2): user fixes + Kel 9 rework
 - Task: copy Rabuan-modifikasi as a new branch and fix four points from the user.
 - Files: src/index.src.html, index.html, SOURCES.md, docs/log.md.

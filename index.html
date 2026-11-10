@@ -353,6 +353,10 @@ table.pt tr.warn td { background: var(--red-tint); }
 .tm > p { font-size: 18px; line-height: 1.38; }
 .tm .dots { gap: 6px; }
 .tm .dots li { font-size: 18px; line-height: 1.35; }
+.tm .tmi { position: relative; margin-top: auto; }
+.tm .tmi img { display: block; width: 100%; height: 118px; object-fit: contain; mix-blend-mode: multiply; }
+.tm .tmi figcaption { position: absolute; right: 0; bottom: -2px; font-size: 13px; color: var(--ink-3); }
+.tm .tmi + .hyp { margin-top: 4px; }
 .tm .hyp { margin-top: auto; font-size: 15px; color: var(--ink-3); }
 .cyc { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
 .cyc span { padding: 7px 12px; background: #fff; font-size: 17px; font-weight: 600; color: var(--ink); }
@@ -967,17 +971,20 @@ html.print #hint, html.shot #hint { display: none; }
         <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M12 12l3 2" /> <path d="M12 7v5" /> </svg><div><b>Jam kirim menumpuk</b>pengiriman datang di jam yang sama</div></li>
         <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M14 11h1a2 2 0 0 1 2 2v3a1.5 1.5 0 0 0 3 0v-7l-3 -3" /> <path d="M4 20v-14a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v14" /> <path d="M3 20l12 0" /> <path d="M18 7v1a1 1 0 0 0 1 1h1" /> <path d="M4 11l10 0" /> </svg><div><b>Kapasitas pompa</b>nozzle dan kasir jadi bottleneck</div></li>
         <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /> </svg><div><b>Lonjakan lokal</b>permintaan naik mendadak</div></li>
-      </ul></div>
+      </ul>
+      <figure class="tmi"><img src="assets/illus/queue.jpg" alt="Ilustrasi: mobil tangki keluar lancar dari terminal, antrean panjang mobil dan motor di SPBU"><figcaption>ilustrasi</figcaption></figure></div>
     <div class="tm" data-a data-s="2"><span class="mono">Temuan 02</span><h3>Stok habis, padahal tangki penuh</h3>
       <div class="hero"><div class="fig">791</div><p>SPBU dilayani ITJ. Stok terminal terkalkulasi; stok di SPBU tidak terbaca</p></div>
       <div class="two"><div><b>SPBU swasta</b>Pengawasan terbatas; laporan stok masih manual</div><div><b>SPBU Pertamina Group</b>Standar internal ada; eksekusi belum seragam</div></div>
       <ul class="dots"><li>Order berbasis perkiraan, bukan konsumsi</li><li>Tidak ada sinyal permintaan dari SPBU</li></ul>
+      <figure class="tmi"><img src="assets/illus/stock.jpg" alt="Ilustrasi: petugas SPBU mengukur tangki pendam dengan tongkat ukur dan mencatat manual, mobil tangki masih jauh"><figcaption>ilustrasi</figcaption></figure>
       <p class="hyp">Hipotesis kerja: perlu diuji dengan data penjualan harian per SPBU</p></div>
     <div class="tm" data-a data-s="3"><span class="mono">Temuan 03</span><h3>Stok cukup, permintaan yang tidak</h3>
       <div class="cyc"><span>Hoaks beredar</span><i>→</i><span>Warga cemas</span><i>→</i><span>Borong &amp; antre</span><i>→</i><span>Foto antrean jadi hoaks baru</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic" aria-hidden="true" >  <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /> <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /> </svg></div>
       <blockquote>“Presiden imbau warga bawa bekal saat antre BBM”<cite>dinyatakan hoaks oleh Polri</cite></blockquote>
       <div class="k3s"><div><div class="fig red">&gt;5<small>jam</small></div><div class="cap">antrean SPBU</div></div><div><div class="fig">20–25<small>rb</small></div><div class="cap">Rp/L Pertalite eceran</div></div><div><div class="fig">2<small>pekan</small></div><div class="cap">kelangkaan</div></div></div>
-      <p class="hyp">Sumatera Utara, Desember 2025. Kapasitas terminal dirancang untuk permintaan normal, bukan kepanikan</p></div>
+      <figure class="tmi"><img src="assets/illus/hoax.jpg" alt="Ilustrasi: pesan peringatan di ponsel menyebar, warga cemas, lalu memborong BBM dengan jeriken di SPBU"></figure>
+      <p class="hyp">Sumatera Utara, Desember 2025. Kapasitas terminal dirancang untuk permintaan normal, bukan kepanikan · gambar: ilustrasi</p></div>
     <div class="lay" data-a data-s="4" data-fx="kids">
       <div><b>Pasokan</b><p>Kilang, kapal dan stok terminal mencukupi</p><span class="st ok">Kuat</span></div>
       <div><b>Distribusi</b><p>Filling shed dan 249 truk bekerja sesuai jadwal</p><span class="st ok">Jalan</span></div>
