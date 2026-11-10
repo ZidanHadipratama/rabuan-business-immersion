@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T11:57:12+00:00",
+  "title": "Design System: Rabuan ALP deck",
+  "extensions": {
+    "colorMeta": {
+      "logo-red": {
+        "role": "primary",
+        "displayName": "Logo Red",
+        "canonical": "#EA1E30",
+        "tonalRamp": [
+          "#3A1316",
+          "#6B1A21",
+          "#A11B27",
+          "#DE1729",
+          "#E44E5B",
+          "#E48B93",
+          "#EBC1C5",
+          "#F8EDEE"
+        ]
+      },
+      "red-ink": {
+        "role": "primary",
+        "displayName": "Red Ink",
+        "canonical": "#C41425",
+        "tonalRamp": [
+          "#391317",
+          "#6A1B22",
+          "#A01C29",
+          "#DC192C",
+          "#E34F5D",
+          "#E48C94",
+          "#EBC1C5",
+          "#F7EDEE"
+        ]
+      },
+      "red-wash": {
+        "role": "primary",
+        "displayName": "Red Wash",
+        "canonical": "#FDEDEF",
+        "tonalRamp": [
+          "#391318",
+          "#691B25",
+          "#9F1E2E",
+          "#DA1B33",
+          "#E25063",
+          "#E38C97",
+          "#EBC2C7",
+          "#F7EDEE"
+        ]
+      },
+      "logo-blue": {
+        "role": "secondary",
+        "displayName": "Logo Blue",
+        "canonical": "#086DB5",
+        "tonalRamp": [
+          "#112A3C",
+          "#164A6F",
+          "#146BA8",
+          "#0D8DE8",
+          "#46A7EC",
+          "#86C0E9",
+          "#BFDAEE",
+          "#ECF3F8"
+        ]
+      },
+      "blue-ink": {
+        "role": "secondary",
+        "displayName": "Blue Ink",
+        "canonical": "#0762A3",
+        "tonalRamp": [
+          "#112A3C",
+          "#164A6F",
+          "#146BA9",
+          "#0D8DE8",
+          "#46A7EC",
+          "#86C0E9",
+          "#BFDAEE",
+          "#ECF3F8"
+        ]
+      },
+      "blue-wash": {
+        "role": "secondary",
+        "displayName": "Blue Wash",
+        "canonical": "#E8F1F9",
+        "tonalRamp": [
+          "#182734",
+          "#26445F",
+          "#2F618E",
+          "#347FC1",
+          "#649CCE",
+          "#98B9D7",
+          "#C7D7E5",
+          "#EEF2F6"
+        ]
+      },
+      "logo-green": {
+        "role": "tertiary",
+        "displayName": "Logo Green",
+        "canonical": "#AAC237",
+        "tonalRamp": [
+          "#2F3319",
+          "#545E27",
+          "#7C8B31",
+          "#A6BD38",
+          "#BACC66",
+          "#CBD699",
+          "#E0E4C8",
+          "#F5F6EF"
+        ]
+      },
+      "green-ink": {
+        "role": "tertiary",
+        "displayName": "Green Ink",
+        "canonical": "#5E6F12",
+        "tonalRamp": [
+          "#313715",
+          "#59651F",
+          "#839924",
+          "#B1D124",
+          "#C3DA58",
+          "#D0DF91",
+          "#E2E9C4",
+          "#F5F7EE"
+        ]
+      },
+      "green-wash": {
+        "role": "tertiary",
+        "displayName": "Green Wash",
+        "canonical": "#F3F7E3",
+        "tonalRamp": [
+          "#2E3319",
+          "#535D27",
+          "#798B31",
+          "#A2BD38",
+          "#B7CB67",
+          "#CAD69A",
+          "#DFE4C8",
+          "#F4F6EF"
+        ]
+      },
+      "terminal-navy": {
+        "role": "neutral",
+        "displayName": "Terminal Navy",
+        "canonical": "#05416D",
+        "tonalRamp": [
+          "#112A3C",
+          "#16496F",
+          "#156AA8",
+          "#0D8BE8",
+          "#46A6EC",
+          "#86BFE9",
+          "#BFDAEE",
+          "#ECF3F8"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0F172A",
+        "tonalRamp": [
+          "#1B2231",
+          "#2B3959",
+          "#384F85",
+          "#4263B3",
+          "#6E87C4",
+          "#9EADD1",
+          "#CAD1E2",
+          "#EFF1F5"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "#334155",
+        "tonalRamp": [
+          "#20252C",
+          "#36404E",
+          "#4A5B73",
+          "#5C7598",
+          "#8295B0",
+          "#AAB5C5",
+          "#D0D5DD",
+          "#F1F2F4"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "#5B6B80",
+        "tonalRamp": [
+          "#22262A",
+          "#3A414B",
+          "#515D6C",
+          "#66788F",
+          "#8A97A8",
+          "#AEB6C1",
+          "#D2D6DB",
+          "#F1F2F3"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "canonical": "#F1F5F9",
+        "tonalRamp": [
+          "#1D2630",
+          "#2F4256",
+          "#3E5E7F",
+          "#4B7AAA",
+          "#7599BD",
+          "#A2B8CD",
+          "#CCD6E0",
+          "#F0F2F5"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#999999",
+          "#B8B8B8",
+          "#D6D6D6",
+          "#F2F2F2"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Cover title and Terima kasih only."
+      },
+      "section-mark": {
+        "displayName": "Section mark",
+        "purpose": "A–D letter on dividers."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Slide titles."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "One line in Blue Ink under the title."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Big tabular numbers."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and column heads."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Card text, 18–22px."
+      },
+      "label-bar": {
+        "displayName": "Label bar",
+        "purpose": "Text in navy label bars."
+      },
+      "source": {
+        "displayName": "Source",
+        "purpose": "Footer source line."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Slide codes, source codes, months, KPI targets."
+      }
+    },
+    "shadows": [
+      {
+        "name": "step-lift",
+        "value": "0 2px 6px rgba(15, 23, 42, .18)",
+        "purpose": "Red step circles on photos and panels."
+      },
+      {
+        "name": "pin-label",
+        "value": "0 2px 10px rgba(15, 23, 42, .18)",
+        "purpose": "White labels pinned on illustrations."
+      },
+      {
+        "name": "highlight-outline",
+        "value": "inset 0 0 0 3px #EA1E30",
+        "purpose": "The one highlighted card per slide."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-arrive",
+        "value": "expo.out",
+        "purpose": "Every build arrival."
+      },
+      {
+        "name": "ease-wipe",
+        "value": "expo.inOut",
+        "purpose": "Wipes, drawn lines, photo reveals."
+      },
+      {
+        "name": "duration-small",
+        "value": "0.5s",
+        "purpose": "Pins, nodes, small parts."
+      },
+      {
+        "name": "duration-block",
+        "value": "0.8s",
+        "purpose": "Blocks and cards."
+      },
+      {
+        "name": "duration-long",
+        "value": "1.2s",
+        "purpose": "Photos, lines and counters."
+      },
+      {
+        "name": "stagger",
+        "value": "90ms",
+        "purpose": "Between parts of one build."
+      },
+      {
+        "name": "slide-crossfade",
+        "value": "350ms cubic-bezier(.2, 0, 0, 1)",
+        "purpose": "Between slides."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stage",
+        "value": "1920x1080, scaled to fit"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Label bar",
+      "kind": "custom",
+      "refersTo": "label-bar",
+      "description": "Navy bar with a chevron end over every panel and column.",
+      "html": "<div class=\"ds-tag\">Profil perusahaan</div>",
+      "css": ".ds-tag { display: flex; align-items: center; height: 50px; padding: 0 40px 0 24px; background: #05416D; color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif; font-size: 23px; font-weight: 600; clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%); width: 420px; }"
+    },
+    {
+      "name": "Step circle",
+      "kind": "custom",
+      "refersTo": "step-circle",
+      "description": "Red numbered circle for steps and list items.",
+      "html": "<span class=\"ds-n\">1</span><span class=\"ds-n ds-n-navy\">2</span>",
+      "css": ".ds-n { display: inline-grid; place-items: center; width: 46px; height: 46px; margin-right: 8px; border-radius: 50%; background: #EA1E30; color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif; font-size: 23px; font-weight: 700; box-shadow: 0 2px 6px rgba(15,23,42,.18); font-variant-numeric: tabular-nums; } .ds-n-navy { background: #05416D; }"
+    },
+    {
+      "name": "Figure",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Big tabular figure with a grey caption; Red Ink for the key number.",
+      "html": "<div class=\"ds-fig\">4.137</div><div class=\"ds-cap\">mobil tangki BBM</div>",
+      "css": ".ds-fig { font-family: 'Rethink Sans', system-ui, sans-serif; font-size: 60px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: #0762A3; font-variant-numeric: tabular-nums; } .ds-cap { margin-top: 6px; font-family: 'Rethink Sans', system-ui, sans-serif; font-size: 21px; color: #334155; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Square panel card for grouped text.",
+      "html": "<div class=\"ds-card\"><h4>Penimbunan &amp; mutu</h4><p>Pemantauan stok, pemisahan produk, uji visual, densitas dan RON</p></div>",
+      "css": ".ds-card { background: #F1F5F9; padding: 24px 28px; width: 340px; font-family: 'Rethink Sans', system-ui, sans-serif; } .ds-card h4 { font-size: 21px; font-weight: 700; color: #0F172A; margin: 0; } .ds-card p { margin: 10px 0 0; font-size: 19px; line-height: 1.38; color: #334155; }"
+    },
+    {
+      "name": "Highlight card",
+      "kind": "card",
+      "refersTo": "card-highlight",
+      "description": "The one red-outlined card per slide; it carries the conclusion and lands last.",
+      "html": "<div class=\"ds-hl\"><h4>Gap terbesar</h4><p>Belum ada mode offline yang teruji dan rekonsiliasi otomatis</p></div>",
+      "css": ".ds-hl { background: #FDEDEF; box-shadow: inset 0 0 0 3px #EA1E30; padding: 22px 26px; width: 360px; font-family: 'Rethink Sans', system-ui, sans-serif; } .ds-hl h4 { margin: 0; font-size: 20px; font-weight: 700; color: #C41425; } .ds-hl p { margin: 8px 0 0; font-size: 20px; line-height: 1.38; color: #0F172A; }"
+    },
+    {
+      "name": "Photo with caption",
+      "kind": "custom",
+      "refersTo": "photo-caption",
+      "description": "Participant photo with a navy caption block bottom-left.",
+      "html": "<figure class=\"ds-photo\"><div class=\"ds-img\"></div><figcaption>Briefing HSSE di area pengisian</figcaption></figure>",
+      "css": ".ds-photo { position: relative; width: 360px; height: 220px; margin: 0; overflow: hidden; background: #F1F5F9; } .ds-img { position: absolute; inset: 0; background: linear-gradient(135deg, #cbd5e1, #94a3b8); } .ds-photo figcaption { position: absolute; left: 0; bottom: 0; padding: 8px 14px; background: rgba(5,65,109,.92); color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif; font-size: 17px; }"
+    },
+    {
+      "name": "Impact level badge",
+      "kind": "chip",
+      "refersTo": "level-high",
+      "description": "Tinggi / Sedang badge beside an impact heading.",
+      "html": "<span class=\"ds-lvl ds-hi\">Tinggi</span> <span class=\"ds-lvl ds-md\">Sedang</span>",
+      "css": ".ds-lvl { display: inline-block; padding: 5px 12px; font-family: 'Rethink Sans', system-ui, sans-serif; font-size: 16px; font-weight: 600; line-height: 1; border-radius: 4px; } .ds-hi { background: #EA1E30; color: #fff; } .ds-md { background: #CBD5E1; color: #0F172A; }"
+    },
+    {
+      "name": "Footer bar",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Tagline, source line and tri-colour bar on every content slide.",
+      "html": "<div class=\"ds-ft\"><b>Energizing Your Journey</b><span><em>Sumber:</em> Kel 13 (13.2 Business Unit Overview)</span></div><div class=\"ds-tri\"><i></i><i></i><i></i></div>",
+      "css": ".ds-ft { display: flex; gap: 36px; align-items: flex-end; font-family: 'Rethink Sans', system-ui, sans-serif; padding: 0 0 12px; } .ds-ft b { width: 128px; font-size: 17px; line-height: 1.05; color: #05416D; } .ds-ft span { font-size: 15px; color: #5B6B80; } .ds-ft em { font-style: normal; font-weight: 600; color: #334155; } .ds-tri { display: grid; grid-template-columns: 2fr 1fr 1fr; height: 10px; width: 600px; } .ds-tri i:nth-child(1) { background: #086DB5; } .ds-tri i:nth-child(2) { background: #AAC237; } .ds-tri i:nth-child(3) { background: #EA1E30; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Satu Rit BBM",
+    "overview": "The deck is one fuel run from terminal to customer, and the tank truck's sealed compartments are the organising idea: four groups, one truck, one route A → D. The room follows the run: know the company, see the field, find the problem, change it. It refuses the corporate template of title, bullet list and stock icon per slide.\n\nThe grammar is borrowed from the PT Semen Indonesia Business Immersion deck (`../PPT BI SIG.pdf`) and dressed in Pertamina Patra Niaga identity: a white ground, dense corporate slides read on a projector in a lit meeting room, and real BI photos as evidence. v1 (3D/GSAP, rejected; see `archive/`) is the anti-reference: no 3D, no ambient loops, no spectacle that competes with the numbers.\n\nMotion builds the argument one click at a time, so the presenter reveals a slide the way the run unfolds: the vehicle first, then what it carries, then the one thing that matters, drawn last in red.",
+    "keyCharacteristics": [
+      "White 1920×1080 stage, bold sentence-case title top-left, blue lede under it, logo top-right",
+      "Navy label bars with a chevron end; big coloured figures with a grey caption; red numbered circles for steps",
+      "One highlighted card per slide (red outline on red wash), and it always arrives last",
+      "Every content slide ends in the same footer: tagline, source line, slide code, tri-colour bar, page triangle",
+      "Real participant photos for evidence; labelled isometric illustrations only where no photo exists"
+    ],
+    "rules": [
+      {
+        "name": "The One Red Card Rule",
+        "body": "Each slide has at most one red-outlined card, and it carries the slide's conclusion.",
+        "section": "colors"
+      },
+      {
+        "name": "The Section Colour Rule",
+        "body": "A = blue, B = green ink, C = red, D = navy; the colour marks the section, not decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The ® Rule",
+        "body": "`calt`, `liga` and `dlig` stay off: Rethink Sans turns \"(R)\" into ®.",
+        "section": "typography"
+      },
+      {
+        "name": "The Indonesian Number Rule",
+        "body": "Thousands use a dot (4.137), decimals a comma (1,2×); counters keep that format while they run.",
+        "section": "typography"
+      },
+      {
+        "name": "The Inset Outline Rule",
+        "body": "Highlight is an inset 3px red outline (`inset 0 0 0 3px`), never a glow or a drop shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put every number's group and source on the slide; show disagreeing numbers side by side, never harmonised.",
+      "**Do** use participants' BI photos as evidence; use a labelled illustration only for a concept no photo shows.",
+      "**Do** keep one red highlight card per slide and let it land last in the build.",
+      "**Do** keep the footer (tagline, source, code, tri-bar, page triangle) on every content slide.",
+      "**Do** use Tabler outline icons, inlined at build, in the text colour of their role."
+    ],
+    "donts": [
+      "**Don't** use 3D, ambient loops or bouncy easing; v1 was rejected for exactly that.",
+      "**Don't** show 13.4's Gemini image or any generated image as if it were a photo.",
+      "**Don't** give `.body` or a class on it `height: 100%`.",
+      "**Don't** round cards or bars; shape comes from chevrons and diagonal cuts.",
+      "**Don't** set body text below 18px; only captions and source lines go smaller."
+    ]
+  }
+}

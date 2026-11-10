@@ -1,5 +1,11 @@
 # Log
 
+[progress] 2026-11-10 · Impeccable doctor repairs
+- Task: user asked to fix the doctor findings.
+- Files: DESIGN.md (rewritten into the eight canonical sections with token frontmatter; North Star "Satu Rit BBM"; v2/v3 content kept), .impeccable/design.json (sidecar: colour ramps, shadows, motion, 8 components, narrative), PRODUCT.md (schema stamp, Platform, Positioning, Operating Context, Evidence on Hand, Product Principles; confirmed by user), .impeccable/config.json (buildPath comp, user choice).
+- Verification: impeccable doctor now reports only hook-not-installed.
+- Open: `impeccable hooks on` was blocked by the permission classifier (writes .claude/settings.local.json); user to run it.
+
 [progress] 2026-11-10 · Deck v3 (branch modifikasi, worktree Rabuan-modifikasi): GSAP build per click + more visuals
 - Task: user asked to improve the deck with impeccable, gsap-core, motion-design, motion-prompt and unslop, with many more visuals; chose build per click and new Codex illustrations.
 - Files: src/index.src.html (engine, steps on every slide, A1 and A4 rebuilt, B4 six photos, C1 buffer illustration), scripts/build.sh (Gantt bars and milestones are builds), vendor/gsap.min.js (GSAP 3.15.1 core), assets/illus/{fleet,bmodel,buffer}.jpg (Codex), assets/photos/bi{2233,2294}.jpg, DESIGN.md, SOURCES.md, index.html.
