@@ -18,7 +18,7 @@
 - Kel 13 (Rabuan folder): Kelompok 13.1 Proses Bisnis PPN, 13.2 Business Unit Overview ITJ, 13.3 Business Model, 13.4 Pusat Kendali Operasi IT Plumpang (image).
 - Kel 11: `Kel 11/ALP-00_Kelompok_11_Deck_Pemetaan_Business_Immersion.pptx`, slides C1–C4.
 - Kel 12 (Rabuan folder): "Kelompok 12", D1–D4 (Gantt bars read from the rendered slide).
-- Kel 9: two decks uploaded to Drive folder `Rabuan` on 10 Nov 2026 by Krisna: "Kelompok 9 - 1" (id 1QeGPMTUmHumEOysQFsruZVGinLE-uDQS; End-to-End Process, refill flow, Technical Operational Process, one-litre journey, Organization & Coordination, Field Observation F1–F4) and "Kelompok 9 - 2" (id 1YD5KxhZgdw-8tOA1X6vaqGVUB6t1YdRu; Field Observation ITJ: scale, supply chain, entry procedure, tanks, New Gantry System, fleet, findings 01–03, synthesis, recommendations). Section B (B1–B5) is built from these decks only; slide footers cite 9-1 / 9-2 and the sources the decks name. Conflict inside Kel 9: 26 tanks, ±324 thousand KL (9-1) vs 24 tanks, 291,889 KL (9-2); both shown. The earlier draft from individual reports (S01–S09) is in git history (branch `modifikasi`).
+- Kel 9: two decks uploaded to Drive folder `Rabuan` on 10 Nov 2026 by Krisna: "Kelompok 9 - 1" (id 1QeGPMTUmHumEOysQFsruZVGinLE-uDQS; End-to-End Process, refill flow, Technical Operational Process, one-litre journey, Organization & Coordination, Field Observation F1–F4) and "Kelompok 9 - 2" (id 1YD5KxhZgdw-8tOA1X6vaqGVUB6t1YdRu; Field Observation ITJ: scale, supply chain, entry procedure, tanks, New Gantry System, fleet, findings 01–03, synthesis, recommendations). Section B (B1–B4) is built from these decks only (B5 findings slide removed 11 Nov at user request). Conflict inside Kel 9: 26 tanks, ±324 thousand KL (9-1) vs 24 tanks, 291,889 KL (9-2); both shown. The earlier draft from individual reports (S01–S09) is in git history (branch `modifikasi`).
 
 ## Images (provenance)
 | File | Source |
@@ -26,7 +26,6 @@
 | `assets/photos/bi1970, 2081, 2189, 2319, 2347, 2387, 2388, 2401, 2433, 2505, 2539, 2611, 2614, 2633, 2637, 2725, 2774, 2094, 2120, 2353, 2364, 2392, 2659, 2233, 2294.jpg` | Participants' Business Immersion photos, ITJ Plumpang, 7 Oct 2026 (Fujifilm, originals DSCFxxxx in `Video/research_notes/business-immersion/originals`), resized to 2400 px |
 | `assets/illus/terminal.jpg, chain.jpg, truck.jpg, offline.jpg` | AI-generated illustrations (Codex CLI image generation, 10 Nov 2026), no text or logos; labelled on-slide as ilustrasi, bukan skala. Used on A2, B1, B2, D2. Not a depiction of the real ITJ layout |
 | `assets/illus/fleet.jpg, bmodel.jpg, buffer.jpg` | AI-generated illustrations (Codex CLI image generation, 10 Nov 2026, deck v3), same style and rules. fleet: A1 asset fleet carrying the Kel 13 figures; bmodel: A4 value chain strip; buffer: C1 terminal with houses against the wall (buffer zone context from Bisnis.com 20 Mar 2023). Not the real ITJ layout |
-| `assets/illus/queue.jpg, stock.jpg, hoax.jpg` | AI-generated illustrations (Codex CLI image generation, 10 Nov 2026, deck v3.1), same style and rules, trimmed to strips. B5 findings 01–03 of Kel 9: smooth terminal vs SPBU queue; SPBU tank measured by hand while the tanker is still on the road; hoax on a phone leading to panic buying. Labelled "ilustrasi" on-slide; not real scenes |
 | Wheel (C3), timeline (D1), RAE paths (B3), truck pictogram (D4) | Inline SVG drawn in `src/index.src.html`; icons from Tabler (MIT) |
 
 ## Open number conflicts (shown with their own sources, not harmonised)
@@ -39,3 +38,5 @@
 - Style reference: `../PPT BI SIG.pdf` (PT Semen Indonesia Business Immersion, Drive P3MD SBM ITB, uploaded 9 Nov 2026).
 - A2 regulators/shareholder: Kel 12 ALP-00 deck (6 Nov 2026). "SPBU under Retail, not Supply & Distribution": Kel 9 ALP Coaching 1 (interview).
 - D3: Kel 12 names "Kel 11" as executor; the deck writes "Tim ALP" and says so in the slide footer.
+
+- 11 Nov 2026, user request: per-slide "Sumber" footers and on-slide "ilustrasi" captions removed; the Sources slide is now an appendix after the closing slide and this file remains the full record.

@@ -1,5 +1,11 @@
 # Log
 
+[progress] 2026-11-11 · Footers, captions, B5 and appendix
+- Task: user asked to remove the "ilustrasi" captions and the "Sumber" footer on every slide, delete slide 13 (B5), and put the appendix after Terima kasih.
+- Files: src/index.src.html (4 illustration captions and 19 footer source lines removed; B5 section and its divider entry removed; Sources slide moved after closing), index.html, SOURCES.md, assets/illus/{queue,stock,hoax}.jpg deleted (only used on B5), PDF.
+- Verification: slides 4, 8, 9, 14, 23, 24, 25 captured; deck is 25 slides, closing 24, Sources 25; PDF 25 pages.
+- Next: user review.
+
 [progress] 2026-11-10 · B5 illustrations (Codex)
 - Task: user asked for Codex-generated images to support the presentation.
 - Files: assets/illus/{queue,stock,hoax}.jpg (Codex, trimmed, whites levelled), src/index.src.html (B5 cards 01–03 get one strip each, captioned ilustrasi), index.html, SOURCES.md, PDF.
